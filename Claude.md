@@ -21,6 +21,10 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   Epilogue for body copy and bullet text. The mono headings are the site's
   defining trait — don't soften them back to sans.
 - Border radius: 4.8px on buttons, near-square everywhere else
+- Content max-width is 1120px (`--max-w`). Headings and the hero use `clamp()`
+  so type scales with the viewport — change the clamp, not a fixed px size.
+- Stack logos come from Devicon via jsDelivr, pinned to v2.16.0. Each `<img>`
+  removes itself on error, so a CDN miss degrades to a text-only chip.
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
 - Motion: sections fade-slide-up on scroll via IntersectionObserver (`.reveal`,
   staggered with `--d`). Hero has its own staggered entrance, the nav mark and
@@ -44,10 +48,11 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - No testimonials section — deliberately dropped, don't add placeholder quotes.
 - Only 2 projects (Warden, SnapSend) — a 3rd is planned, layout should tolerate
   3+ cards without redesign.
-- Content max-width is still 760px. The reference site is far wider and the
-  experience entries would breathe better with more room — open question,
-  don't widen without asking.
 - No favicon and no Open Graph / social preview tags yet.
+- Hero background is placeholder — a single radial glow. A replacement is
+  planned from a 21st.dev prompt; don't invest in the current one.
+- Zustand is the one stack chip with no logo (Devicon has no Zustand icon).
+  Chips degrade to text-only on their own, so this is fine, not a bug.
 
 ## Workflow preferences
 
