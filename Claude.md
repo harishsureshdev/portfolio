@@ -7,15 +7,25 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 
 ## Design system (do not deviate without asking)
 
-- Background: #0B0A08 (near-black)
-- Text: #E9E8E3 (off-white)
-- Accent: #4DBF74 (green) — used sparingly, primary CTAs and key emphasis only
-- Borders: #282622 — thin borders instead of shadows, everything stays flat
-- Fonts: Epilogue (body/headings), JetBrains Mono (metadata, tags, dates, labels)
+- Dark (default): bg #0B0A08, surface #100F0C, text #E9E8E3, border #282622,
+  accent #4DBF74
+- Light: bg #FAF9F6, surface #FFFFFF, text #15140F, border #E3DFD5,
+  accent #217A45 (darker green — #4DBF74 fails contrast on a light ground)
+- Every color goes through a CSS custom property defined in both palettes.
+  Never hardcode a hex in a rule; add a token instead.
+- Accent used sparingly — primary CTAs, key emphasis, `+` bullets, current-role
+  rail. Text on an accent fill is `--accent-text` (near-black on dark green),
+  not white: white-on-#4DBF74 only reaches ~2.2:1.
+- Borders: thin borders instead of shadows, everything stays flat
+- Fonts: JetBrains Mono for headings, nav, metadata, tags, dates and labels;
+  Epilogue for body copy and bullet text. The mono headings are the site's
+  defining trait — don't soften them back to sans.
 - Border radius: 4.8px on buttons, near-square everywhere else
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
-- Motion: minimal. One entrance animation on the hero, subtle hover/border
-  transitions elsewhere. No fade-slide-up on every section.
+- Motion: sections fade-slide-up on scroll via IntersectionObserver (`.reveal`,
+  staggered with `--d`). Hero has its own staggered entrance, the nav mark and
+  typewriter share a blinking caret, and the current-role dot pulses. Every one
+  of these is disabled under `prefers-reduced-motion` — keep it that way.
 
 ## Content rules
 
@@ -24,15 +34,20 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - Tone: confident, plain, technical. No marketing language, no "passionate about."
 - Sections stay in this order: hero → what I do → experience → projects →
   education → contact.
+- Visual language is modelled on jozsefpallagi.com. Two things from that site
+  were deliberately NOT copied and should stay out: a CV download counter
+  (there's no real number to show) and a "N+ years" badge (doesn't match the
+  actual timeline). Both would be invented metrics.
 
 ## Current known gaps (don't silently "fix" these — ask first)
 
-- resume.pdf does not exist yet — download button should degrade gracefully,
-  not 404 gonzo.
-- Avatar is initials-only ("HS") — no real photo yet.
 - No testimonials section — deliberately dropped, don't add placeholder quotes.
 - Only 2 projects (Warden, SnapSend) — a 3rd is planned, layout should tolerate
   3+ cards without redesign.
+- Content max-width is still 760px. The reference site is far wider and the
+  experience entries would breathe better with more room — open question,
+  don't widen without asking.
+- No favicon and no Open Graph / social preview tags yet.
 
 ## Workflow preferences
 
