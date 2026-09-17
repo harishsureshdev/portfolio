@@ -25,8 +25,9 @@
     <style>
       :root {
         --bg: #0b0a08;
-        --surface: #100f0c;
-        --surface-2: #16140f;
+        --band: #110f0b;
+        --surface: #1a1813;
+        --surface-2: #211f18;
         --text: #e9e8e3;
         --text-muted: #c9d1d9;
         --text-dim: #8a8880;
@@ -50,8 +51,9 @@
       @media (prefers-color-scheme: light) {
         :root:not([data-theme="dark"]) {
           --bg: #faf9f6;
+          --band: #f1eee6;
           --surface: #ffffff;
-          --surface-2: #f4f2ec;
+          --surface-2: #f7f5ef;
           --text: #15140f;
           --text-muted: #4b4942;
           --text-dim: #726e65;
@@ -69,8 +71,9 @@
 
       :root[data-theme="light"] {
         --bg: #faf9f6;
+        --band: #f1eee6;
         --surface: #ffffff;
-        --surface-2: #f4f2ec;
+        --surface-2: #f7f5ef;
         --text: #15140f;
         --text-muted: #4b4942;
         --text-dim: #726e65;
@@ -105,7 +108,6 @@
         font-size: 16px;
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
-        overflow-x: hidden;
         transition:
           background-color 0.3s ease,
           color 0.3s ease;
@@ -181,6 +183,10 @@
       }
       .nav-mark .slash {
         color: var(--accent);
+        font-size: 1.45em;
+        font-weight: 700;
+        margin: 0 2px;
+        transform: translateY(-0.5px);
       }
       @keyframes blink {
         0%,
@@ -418,6 +424,7 @@
         margin-bottom: 8px;
       }
       .stack-list {
+        position: relative;
         font-family: var(--font-mono);
         font-size: 19px;
         color: var(--text-muted);
@@ -425,18 +432,28 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 12px;
+        padding-bottom: 8px;
       }
       .stack-item {
         font-weight: 500;
-        padding-bottom: 3px;
-        border-bottom: 1px solid transparent;
-        transition:
-          color 0.35s ease,
-          border-color 0.35s ease;
+        transition: color 0.45s ease;
       }
       .stack-item.is-active {
         color: var(--accent);
-        border-bottom-color: var(--accent);
+      }
+      /* Width lags behind the slide so the bar stretches as it travels,
+         rather than teleporting between items. */
+      .stack-underline {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        pointer-events: none;
+        transition:
+          transform 0.5s cubic-bezier(0.66, 0, 0.34, 1),
+          width 0.62s cubic-bezier(0.66, 0, 0.34, 1);
       }
       .stack-list .sep {
         color: var(--text-dim);
@@ -507,9 +524,14 @@
       }
 
       /* ---------- Sections ---------- */
+      /* Sections are full-bleed so the divider spans the whole viewport; the
+         inner .wrap holds content to --max-w. */
       section {
         padding: 88px 0;
         border-top: 1px solid var(--border);
+      }
+      section.band {
+        background: var(--band);
       }
       h2 {
         font-family: var(--font-mono);
@@ -1001,398 +1023,411 @@
       </nav>
     </header>
 
-    <main class="wrap">
+    <main>
       <section class="hero">
-        <div class="hero-inner">
-          <div class="portrait">
-            <span class="portrait-chip">profile.jpg</span>
-            <img src="assets/avatar.jpg" alt="Harish Suresh" />
-          </div>
-          <div class="hero-content">
-            <div class="hero-badge">
-              // software engineer · open to SDE roles
+        <div class="wrap">
+          <div class="hero-inner">
+            <div class="portrait">
+              <span class="portrait-chip">profile.jpg</span>
+              <img src="assets/avatar.jpg" alt="Harish Suresh" />
             </div>
-            <h1>Harish Suresh</h1>
-            <p class="summary">
-              I build backend systems and the full-stack products around them —
-              from a network automation platform running across 10,000+ devices
-              to an AI-assisted campaign builder used by a live advertising
-              marketplace. I like the parts other people skip: correctness under
-              concurrency, reliable async processing, and systems that hold up
-              once real traffic hits them.
-            </p>
-            <div class="stack-line">
-              <span class="stack-label">stack &rsaquo;</span>
-              <div class="stack-list" id="stack-list">
-                <span class="stack-item">Java</span><span class="sep">/</span>
-                <span class="stack-item">Spring Boot</span
-                ><span class="sep">/</span>
-                <span class="stack-item">FastAPI</span
-                ><span class="sep">/</span>
-                <span class="stack-item">PostgreSQL</span>
+            <div class="hero-content">
+              <div class="hero-badge">
+                // software engineer · open to SDE roles
               </div>
-            </div>
-            <div class="cta-row">
-              <a class="btn btn-primary" href="resume.pdf" download
-                >Download resume</a
-              >
-              <a
-                class="btn btn-secondary"
-                href="mailto:harishsuresh.contact@gmail.com"
-                >Get in touch</a
-              >
+              <h1>Harish Suresh</h1>
+              <p class="summary">
+                I build backend systems and the full-stack products around them —
+                from a network automation platform running across 10,000+ devices
+                to an AI-assisted campaign builder used by a live advertising
+                marketplace. I like the parts other people skip: correctness under
+                concurrency, reliable async processing, and systems that hold up
+                once real traffic hits them.
+              </p>
+              <div class="stack-line">
+                <span class="stack-label">stack &rsaquo;</span>
+                <div class="stack-list" id="stack-list">
+                  <span class="stack-item">Java</span><span class="sep">/</span>
+                  <span class="stack-item">Spring Boot</span
+                  ><span class="sep">/</span>
+                  <span class="stack-item">FastAPI</span
+                  ><span class="sep">/</span>
+                  <span class="stack-item">PostgreSQL</span>
+                  <span class="stack-underline" id="stack-underline"></span>
+                </div>
+              </div>
+              <div class="cta-row">
+                <a class="btn btn-primary" href="resume.pdf" download
+                  >Download resume</a
+                >
+                <a
+                  class="btn btn-secondary"
+                  href="mailto:harishsuresh.contact@gmail.com"
+                  >Get in touch</a
+                >
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="work">
-        <h2 class="reveal">What I can do</h2>
-        <div class="typer reveal" style="--d: 60ms">
-          <span class="lead">I </span><span class="typed" id="typed"></span
-          ><span class="tcaret"></span>
-        </div>
+      <section class="band" id="work">
+        <div class="wrap">
+          <h2 class="reveal">What I can do</h2>
+          <div class="typer reveal" style="--d: 60ms">
+            <span class="lead">I </span><span class="typed" id="typed"></span
+            ><span class="tcaret"></span>
+          </div>
 
-        <div class="skill-groups">
-          <div class="reveal">
-            <div class="group-label">// Frontend</div>
-            <div class="chip-row">
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />React</span
-              >
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />TypeScript</span
-              >
-              <span class="chip">Zustand</span>
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />Tailwind</span
-              >
+          <div class="skill-groups">
+            <div class="reveal">
+              <div class="group-label">// Frontend</div>
+              <div class="chip-row">
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />React</span
+                >
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />TypeScript</span
+                >
+                <span class="chip">Zustand</span>
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />Tailwind</span
+                >
+              </div>
+            </div>
+            <div class="reveal" style="--d: 90ms">
+              <div class="group-label">// Backend</div>
+              <div class="chip-row">
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />Java</span
+                >
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />Spring Boot</span
+                >
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />FastAPI</span
+                >
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />PostgreSQL</span
+                >
+                <span class="chip"
+                  ><img
+                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redis/redis-original.svg"
+                    alt=""
+                    onerror="this.remove()"
+                  />Redis</span
+                >
+              </div>
             </div>
           </div>
-          <div class="reveal" style="--d: 90ms">
-            <div class="group-label">// Backend</div>
-            <div class="chip-row">
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />Java</span
-              >
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />Spring Boot</span
-              >
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />FastAPI</span
-              >
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />PostgreSQL</span
-              >
-              <span class="chip"
-                ><img
-                  src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redis/redis-original.svg"
-                  alt=""
-                  onerror="this.remove()"
-                />Redis</span
-              >
-            </div>
-          </div>
-        </div>
 
-        <div class="group-label reveal">// Beyond the stack</div>
-        <div class="beyond-grid">
-          <div class="beyond-item reveal">
-            <span class="plus">+</span>
-            <h3>Concurrency correctness</h3>
-            <p>
-              Exclusion constraints and idempotency keys, not retry-and-hope.
-            </p>
-          </div>
-          <div class="beyond-item reveal" style="--d: 60ms">
-            <span class="plus">+</span>
-            <h3>Async processing</h3>
-            <p>Move heavy work off the request path and onto workers.</p>
-          </div>
-          <div class="beyond-item reveal">
-            <span class="plus">+</span>
-            <h3>Tracing &amp; observability</h3>
-            <p>OpenTelemetry spans that cross the API and worker boundary.</p>
-          </div>
-          <div class="beyond-item reveal" style="--d: 60ms">
-            <span class="plus">+</span>
-            <h3>CI/CD pipelines</h3>
-            <p>Automate the path from merge to deployment.</p>
-          </div>
-          <div class="beyond-item reveal">
-            <span class="plus">+</span>
-            <h3>Cloud &amp; containers</h3>
-            <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
-          </div>
-          <div class="beyond-item reveal" style="--d: 60ms">
-            <span class="plus">+</span>
-            <h3>AI in the loop</h3>
-            <p>LangChain agents with policy enforced in code, not in prompts.</p>
+          <div class="group-label reveal">// Beyond the stack</div>
+          <div class="beyond-grid">
+            <div class="beyond-item reveal">
+              <span class="plus">+</span>
+              <h3>Concurrency correctness</h3>
+              <p>
+                Exclusion constraints and idempotency keys, not retry-and-hope.
+              </p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus">+</span>
+              <h3>Async processing</h3>
+              <p>Move heavy work off the request path and onto workers.</p>
+            </div>
+            <div class="beyond-item reveal">
+              <span class="plus">+</span>
+              <h3>Tracing &amp; observability</h3>
+              <p>OpenTelemetry spans that cross the API and worker boundary.</p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus">+</span>
+              <h3>CI/CD pipelines</h3>
+              <p>Automate the path from merge to deployment.</p>
+            </div>
+            <div class="beyond-item reveal">
+              <span class="plus">+</span>
+              <h3>Cloud &amp; containers</h3>
+              <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus">+</span>
+              <h3>AI in the loop</h3>
+              <p>LangChain agents with policy enforced in code, not in prompts.</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section id="experience">
-        <h2 class="reveal">Experience</h2>
-        <p class="section-sub reveal">Where I've worked, and what I owned</p>
-        <div class="timeline">
-          <article class="job is-current reveal">
-            <h3 class="job-id">
-              <span class="org">heartland</span
-              ><span class="role">/software-engineer</span>
-              <span class="ext">.py</span>
-              <span class="badge-current"><span class="dot"></span>current</span>
-            </h3>
-            <div class="job-when">Jun 2026 — present · Remote · Adtua engagement</div>
-            <ul class="job-list">
-              <li>
-                Shipped a React/TypeScript and FastAPI campaign builder for a
-                digital out-of-home ad marketplace, cutting brief turnaround
-                from 2–3 days to same-day across 200 briefs.
-              </li>
-              <li class="hl">
-                <strong
-                  >Designed idempotent FastAPI reservation APIs with Postgres
-                  exclusion constraints</strong
-                >, correctly resolving concurrent screen-booking conflicts under
-                25 integration and concurrency tests.
-              </li>
-              <li>
-                Moved media transcoding and thumbnail generation off the request
-                path into Celery/Redis/S3/FFmpeg workers, with OpenTelemetry
-                tracing across API and worker.
-              </li>
-              <li>
-                Built a LangChain campaign planner with code-enforced
-                eligibility and Qdrant ranking — 40 of 40 eligible briefs
-                planned correctly in a 42-brief pilot, 2 of 2 ineligible
-                correctly rejected.
-              </li>
-            </ul>
-            <div class="tag-row">
-              <span class="tag">React</span>
-              <span class="tag">TypeScript</span>
-              <span class="tag">FastAPI</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">Celery</span>
-              <span class="tag">LangChain</span>
-            </div>
-          </article>
+        <div class="wrap">
+          <h2 class="reveal">Experience</h2>
+          <p class="section-sub reveal">Where I've worked, and what I owned</p>
+          <div class="timeline">
+            <article class="job is-current reveal">
+              <h3 class="job-id">
+                <span class="org">heartland</span
+                ><span class="role">/software-engineer</span>
+                <span class="ext">.py</span>
+                <span class="badge-current"><span class="dot"></span>current</span>
+              </h3>
+              <div class="job-when">Jun 2026 — present · Remote · Adtua engagement</div>
+              <ul class="job-list">
+                <li>
+                  Shipped a React/TypeScript and FastAPI campaign builder for a
+                  digital out-of-home ad marketplace, cutting brief turnaround
+                  from 2–3 days to same-day across 200 briefs.
+                </li>
+                <li class="hl">
+                  <strong
+                    >Designed idempotent FastAPI reservation APIs with Postgres
+                    exclusion constraints</strong
+                  >, correctly resolving concurrent screen-booking conflicts under
+                  25 integration and concurrency tests.
+                </li>
+                <li>
+                  Moved media transcoding and thumbnail generation off the request
+                  path into Celery/Redis/S3/FFmpeg workers, with OpenTelemetry
+                  tracing across API and worker.
+                </li>
+                <li>
+                  Built a LangChain campaign planner with code-enforced
+                  eligibility and Qdrant ranking — 40 of 40 eligible briefs
+                  planned correctly in a 42-brief pilot, 2 of 2 ineligible
+                  correctly rejected.
+                </li>
+              </ul>
+              <div class="tag-row">
+                <span class="tag">React</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Celery</span>
+                <span class="tag">LangChain</span>
+              </div>
+            </article>
 
-          <article class="job reveal">
-            <h3 class="job-id">
-              <span class="org">sify</span
-              ><span class="role">/software-developer</span>
-              <span class="ext">.java</span>
-            </h3>
-            <div class="job-when">Aug 2022 — Jul 2024 · Chennai, India</div>
-            <ul class="job-list">
-              <li>
-                Built and maintained 6 Java/Spring Boot microservices
-                integrating SNMP and NETCONF across 10,000+ production network
-                devices.
-              </li>
-              <li class="hl">
-                <strong
-                  >Built a Java ETL pipeline normalizing vendor data into a Neo4j
-                  graph</strong
-                >
-                of 10k devices and 50k links, cutting nightly refresh from 45 to
-                30 minutes.
-              </li>
-              <li>
-                Secured REST APIs over JPA/Hibernate with OAuth 2.0 and Spring
-                Security RBAC; Redis caching cut average latency from 820ms to
-                310ms.
-              </li>
-              <li>
-                Replaced manual deploys with Jenkins pipelines to ECR/EC2 across
-                12 services, cutting merge-to-deployment from ~28 to 20 minutes.
-              </li>
-            </ul>
-            <div class="tag-row">
-              <span class="tag">Java</span>
-              <span class="tag">Spring Boot</span>
-              <span class="tag">Neo4j</span>
-              <span class="tag">Redis</span>
-              <span class="tag">Jenkins</span>
-              <span class="tag">AWS</span>
-            </div>
-          </article>
+            <article class="job reveal">
+              <h3 class="job-id">
+                <span class="org">sify</span
+                ><span class="role">/software-developer</span>
+                <span class="ext">.java</span>
+              </h3>
+              <div class="job-when">Aug 2022 — Jul 2024 · Chennai, India</div>
+              <ul class="job-list">
+                <li>
+                  Built and maintained 6 Java/Spring Boot microservices
+                  integrating SNMP and NETCONF across 10,000+ production network
+                  devices.
+                </li>
+                <li class="hl">
+                  <strong
+                    >Built a Java ETL pipeline normalizing vendor data into a Neo4j
+                    graph</strong
+                  >
+                  of 10k devices and 50k links, cutting nightly refresh from 45 to
+                  30 minutes.
+                </li>
+                <li>
+                  Secured REST APIs over JPA/Hibernate with OAuth 2.0 and Spring
+                  Security RBAC; Redis caching cut average latency from 820ms to
+                  310ms.
+                </li>
+                <li>
+                  Replaced manual deploys with Jenkins pipelines to ECR/EC2 across
+                  12 services, cutting merge-to-deployment from ~28 to 20 minutes.
+                </li>
+              </ul>
+              <div class="tag-row">
+                <span class="tag">Java</span>
+                <span class="tag">Spring Boot</span>
+                <span class="tag">Neo4j</span>
+                <span class="tag">Redis</span>
+                <span class="tag">Jenkins</span>
+                <span class="tag">AWS</span>
+              </div>
+            </article>
 
-          <article class="job reveal">
-            <h3 class="job-id">
-              <span class="org">sirius</span
-              ><span class="role">/jr-software-developer</span>
-              <span class="ext">.js</span>
-            </h3>
-            <div class="job-when">May 2020 — Aug 2020 · Chennai, India</div>
-            <ul class="job-list">
-              <li>
-                Built full-stack features for a production e-commerce bookstore
-                using React, Redux, Node.js, and MongoDB.
-              </li>
-              <li>
-                Implemented JWT auth with refresh tokens and role-based access
-                for admin and user workflows.
-              </li>
-              <li>
-                Optimized MongoDB queries with aggregation pipelines and
-                indexing, cutting response time from 750ms to under 450ms.
-              </li>
-            </ul>
-            <div class="tag-row">
-              <span class="tag">React</span>
-              <span class="tag">Redux</span>
-              <span class="tag">Node.js</span>
-              <span class="tag">MongoDB</span>
-            </div>
-          </article>
+            <article class="job reveal">
+              <h3 class="job-id">
+                <span class="org">sirius</span
+                ><span class="role">/jr-software-developer</span>
+                <span class="ext">.js</span>
+              </h3>
+              <div class="job-when">May 2020 — Aug 2020 · Chennai, India</div>
+              <ul class="job-list">
+                <li>
+                  Built full-stack features for a production e-commerce bookstore
+                  using React, Redux, Node.js, and MongoDB.
+                </li>
+                <li>
+                  Implemented JWT auth with refresh tokens and role-based access
+                  for admin and user workflows.
+                </li>
+                <li>
+                  Optimized MongoDB queries with aggregation pipelines and
+                  indexing, cutting response time from 750ms to under 450ms.
+                </li>
+              </ul>
+              <div class="tag-row">
+                <span class="tag">React</span>
+                <span class="tag">Redux</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">MongoDB</span>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section id="projects">
-        <h2 class="reveal">Projects</h2>
-        <p class="section-sub reveal">Things I've built on my own time</p>
-        <div class="project-grid">
-          <div class="project-card reveal">
-            <div class="project-head">
-              <h3>Warden<span class="ext">.py</span></h3>
-              <a
-                class="project-link"
-                href="https://github.com/harishs2000"
-                target="_blank"
-                rel="noopener"
-                >GitHub →</a
-              >
+      <section class="band" id="projects">
+        <div class="wrap">
+          <h2 class="reveal">Projects</h2>
+          <p class="section-sub reveal">Things I've built on my own time</p>
+          <div class="project-grid">
+            <div class="project-card reveal">
+              <div class="project-head">
+                <h3>Warden<span class="ext">.py</span></h3>
+                <a
+                  class="project-link"
+                  href="https://github.com/harishs2000"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub →</a
+                >
+              </div>
+              <p>
+                A GitHub issue-triage agent with a hand-written multi-step tool
+                loop — labeling, duplicate detection, comments, and proposed
+                assignees. Policy is enforced at the tool-call layer, not the
+                prompt: comment deletion is denied outright, and issue closure or
+                assignment requires human approval. Blocked 11 of 12 unsafe or
+                injected actions in testing.
+              </p>
+              <div class="tag-row">
+                <span class="tag">Python</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">GitHub API</span>
+                <span class="tag">OpenTelemetry</span>
+                <span class="tag">Docker</span>
+              </div>
             </div>
-            <p>
-              A GitHub issue-triage agent with a hand-written multi-step tool
-              loop — labeling, duplicate detection, comments, and proposed
-              assignees. Policy is enforced at the tool-call layer, not the
-              prompt: comment deletion is denied outright, and issue closure or
-              assignment requires human approval. Blocked 11 of 12 unsafe or
-              injected actions in testing.
-            </p>
-            <div class="tag-row">
-              <span class="tag">Python</span>
-              <span class="tag">FastAPI</span>
-              <span class="tag">GitHub API</span>
-              <span class="tag">OpenTelemetry</span>
-              <span class="tag">Docker</span>
-            </div>
-          </div>
 
-          <div class="project-card reveal" style="--d: 80ms">
-            <div class="project-head">
-              <h3>SnapSend<span class="ext">.java</span></h3>
-              <a
-                class="project-link"
-                href="https://github.com/harishs2000"
-                target="_blank"
-                rel="noopener"
-                >GitHub →</a
-              >
-            </div>
-            <p>
-              A file-sharing service with time-bound, expiring links — Redis TTL
-              handles instant expiry checks without a background sweep, and AWS
-              S3 handles storage behind a Spring Boot API.
-            </p>
-            <div class="tag-row">
-              <span class="tag">Java</span>
-              <span class="tag">Spring Boot</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">Redis</span>
-              <span class="tag">AWS S3</span>
+            <div class="project-card reveal" style="--d: 80ms">
+              <div class="project-head">
+                <h3>SnapSend<span class="ext">.java</span></h3>
+                <a
+                  class="project-link"
+                  href="https://github.com/harishs2000"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub →</a
+                >
+              </div>
+              <p>
+                A file-sharing service with time-bound, expiring links — Redis TTL
+                handles instant expiry checks without a background sweep, and AWS
+                S3 handles storage behind a Spring Boot API.
+              </p>
+              <div class="tag-row">
+                <span class="tag">Java</span>
+                <span class="tag">Spring Boot</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Redis</span>
+                <span class="tag">AWS S3</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section id="education">
-        <h2 class="reveal">Education</h2>
-        <div class="edu-item reveal">
-          <div class="edu-when">2024 — 2026</div>
-          <div>
-            <div class="edu-title">MS, Computer Science</div>
-            <div class="edu-org">
-              Indiana University Bloomington &nbsp;·&nbsp; GPA 3.93 / 4.0
+        <div class="wrap">
+          <h2 class="reveal">Education</h2>
+          <div class="edu-item reveal">
+            <div class="edu-when">2024 — 2026</div>
+            <div>
+              <div class="edu-title">MS, Computer Science</div>
+              <div class="edu-org">
+                Indiana University Bloomington &nbsp;·&nbsp; GPA 3.93 / 4.0
+              </div>
             </div>
           </div>
-        </div>
-        <div class="edu-item reveal" style="--d: 60ms">
-          <div class="edu-when">2018 — 2022</div>
-          <div>
-            <div class="edu-title">BE, Computer Science</div>
-            <div class="edu-org">Anna University, Chennai</div>
+          <div class="edu-item reveal" style="--d: 60ms">
+            <div class="edu-when">2018 — 2022</div>
+            <div>
+              <div class="edu-title">BE, Computer Science</div>
+              <div class="edu-org">Anna University, Chennai</div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="contact">
-        <h2 class="reveal">Contact</h2>
-        <p class="section-sub reveal">
-          Open to SDE roles — happiest working close to backend systems, with
-          enough full-stack range to own a feature end to end.
-        </p>
-        <div class="terminal reveal">
-          <div class="terminal-cmd">
-            <span class="prompt">$</span>mail --to harish
+      <section class="band" id="contact">
+        <div class="wrap">
+          <h2 class="reveal">Contact</h2>
+          <p class="section-sub reveal">
+            Open to SDE roles — happiest working close to backend systems, with
+            enough full-stack range to own a feature end to end.
+          </p>
+          <div class="terminal reveal">
+            <div class="terminal-cmd">
+              <span class="prompt">$</span>mail --to harish
+            </div>
+            <div class="terminal-addr">harishsuresh.contact@gmail.com</div>
+            <a
+              class="btn btn-primary"
+              href="mailto:harishsuresh.contact@gmail.com"
+              >Open in mail app</a
+            >
           </div>
-          <div class="terminal-addr">harishsuresh.contact@gmail.com</div>
-          <a
-            class="btn btn-primary"
-            href="mailto:harishsuresh.contact@gmail.com"
-            >Open in mail app</a
-          >
-        </div>
-        <div class="contact-row reveal" style="--d: 60ms">
-          <a
-            class="btn btn-secondary"
-            href="https://github.com/harishs2000"
-            target="_blank"
-            rel="noopener"
-            >GitHub</a
-          >
-          <a
-            class="btn btn-secondary"
-            href="https://linkedin.com/in/harishs163"
-            target="_blank"
-            rel="noopener"
-            >LinkedIn</a
-          >
-          <a class="btn btn-secondary" href="resume.pdf" download
-            >Download resume</a
-          >
+          <div class="contact-row reveal" style="--d: 60ms">
+            <a
+              class="btn btn-secondary"
+              href="https://github.com/harishs2000"
+              target="_blank"
+              rel="noopener"
+              >GitHub</a
+            >
+            <a
+              class="btn btn-secondary"
+              href="https://linkedin.com/in/harishs163"
+              target="_blank"
+              rel="noopener"
+              >LinkedIn</a
+            >
+            <a class="btn btn-secondary" href="resume.pdf" download
+              >Download resume</a
+            >
+          </div>
         </div>
       </section>
     </main>
@@ -1480,16 +1515,47 @@
 
         /* ---- Rotating stack highlight ---- */
         var stackItems = document.querySelectorAll("#stack-list .stack-item");
-        if (stackItems.length) {
-          stackItems[0].classList.add("is-active");
-          if (!reduced) {
-            var si = 0;
-            setInterval(function () {
-              stackItems[si].classList.remove("is-active");
-              si = (si + 1) % stackItems.length;
-              stackItems[si].classList.add("is-active");
-            }, 1500);
+        var underline = document.getElementById("stack-underline");
+        if (stackItems.length && underline) {
+          var si = 0;
+          var placed = false;
+
+          function place() {
+            var el = stackItems[si];
+            underline.style.width = el.offsetWidth + "px";
+            underline.style.transform =
+              "translate(" +
+              el.offsetLeft +
+              "px," +
+              (el.offsetTop + el.offsetHeight) +
+              "px)";
           }
+          function activate(next) {
+            stackItems[si].classList.remove("is-active");
+            si = next;
+            stackItems[si].classList.add("is-active");
+            place();
+          }
+          function start() {
+            if (placed) return;
+            placed = true;
+            stackItems[0].classList.add("is-active");
+            place();
+            if (!reduced) {
+              setInterval(function () {
+                activate((si + 1) % stackItems.length);
+              }, 1700);
+            }
+          }
+
+          /* Widths are only correct once the mono face has loaded. */
+          if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(start);
+          }
+          window.addEventListener("load", start);
+          window.addEventListener("resize", function () {
+            if (placed) place();
+          });
         }
 
         /* ---- Typewriter ---- */

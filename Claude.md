@@ -23,6 +23,13 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - Border radius: 4.8px on buttons, near-square everywhere else
 - Content max-width is 1120px (`--max-w`). Headings and the hero use `clamp()`
   so type scales with the viewport — change the clamp, not a fixed px size.
+- Sections are full-bleed (`<section>` spans the viewport, an inner `.wrap`
+  holds the content) so dividers reach both edges. Sections alternate
+  background via `.band` (`--band`), and cards sit on `--surface` above it —
+  keep those two tokens distinct or cards vanish into the band.
+- `html` carries `overflow-x: clip`. Do NOT add `overflow-x: hidden` to `body`:
+  together they make body the scroll container, which silently kills the
+  sticky nav. Verified — it is not a theoretical concern.
 - Stack logos come from Devicon via jsDelivr, pinned to v2.16.0. Each `<img>`
   removes itself on error, so a CDN miss degrades to a text-only chip.
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
