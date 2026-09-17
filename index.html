@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harish Suresh — Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0a08;
+        --surface: #100f0c;
+        --text: #e9e8e3;
+        --text-muted: #c9d1d9;
+        --text-dim: #8a8880;
+        --border: #282622;
+        --accent: #4dbf74;
+        --accent-border: #378d54;
+        --accent-text: #fcfcf9;
+        --font-body:
+          "Epilogue", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --font-mono:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --radius: 4.8px;
+        --max-w: 760px;
+      }
+
+      color-scheme: dark;
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--accent-text);
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      .wrap {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--text-dim);
+        letter-spacing: 0.01em;
+      }
+
+      /* ---------- Nav ---------- */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(11, 10, 8, 0.88);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid var(--border);
+      }
+      nav {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-mark {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text);
+        letter-spacing: 0.02em;
+      }
+      .nav-mark span {
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+      .nav-links a {
+        transition: color 0.15s ease;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+      .nav-cta {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        padding: 8px 14px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        color: var(--text);
+        transition:
+          border-color 0.15s ease,
+          color 0.15s ease;
+        white-space: nowrap;
+      }
+      .nav-cta:hover {
+        border-color: var(--accent-border);
+        color: var(--accent);
+      }
+
+      @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+      }
+
+      /* ---------- Hero ---------- */
+      .hero {
+        padding: 88px 0 72px;
+        position: relative;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -20%;
+        right: -10%;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(
+          circle,
+          rgba(77, 191, 116, 0.1) 0%,
+          rgba(77, 191, 116, 0) 70%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        gap: 32px;
+      }
+      .avatar {
+        flex: 0 0 auto;
+        width: 72px;
+        height: 72px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 20px;
+        color: var(--accent);
+        background:
+          linear-gradient(var(--surface), var(--surface)) padding-box,
+          repeating-linear-gradient(
+            45deg,
+            rgba(77, 191, 116, 0.06) 0 2px,
+            transparent 2px 8px
+          );
+        background-color: var(--surface);
+      }
+      .hero-content {
+        flex: 1;
+        opacity: 0;
+        animation: rise 0.6s ease forwards;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .hero-meta {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--text-dim);
+        margin-bottom: 14px;
+      }
+      .hero h1 {
+        font-size: 44px;
+        font-weight: 700;
+        line-height: 1.12;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+      .hero .role {
+        font-size: 19px;
+        font-weight: 500;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+      .hero p.summary {
+        font-size: 16px;
+        color: var(--text-muted);
+        max-width: 56ch;
+        margin-bottom: 28px;
+      }
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        padding: 11px 18px;
+        border-radius: var(--radius);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition:
+          transform 0.12s ease,
+          border-color 0.15s ease,
+          background 0.15s ease;
+        border: 1px solid transparent;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--accent-text);
+        border-color: var(--accent-border);
+      }
+      .btn-primary:hover {
+        background: #57cc80;
+      }
+      .btn-secondary {
+        background: var(--surface);
+        color: var(--text);
+        border-color: var(--border);
+      }
+      .btn-secondary:hover {
+        border-color: var(--accent-border);
+        color: var(--accent);
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          padding: 56px 0 48px;
+        }
+        .hero-inner {
+          gap: 20px;
+        }
+        .avatar {
+          width: 56px;
+          height: 56px;
+          font-size: 16px;
+        }
+        .hero h1 {
+          font-size: 32px;
+        }
+        .hero .role {
+          font-size: 16px;
+        }
+      }
+
+      /* ---------- Sections ---------- */
+      section {
+        padding: 56px 0;
+        border-top: 1px solid var(--border);
+      }
+      .section-label {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--text-dim);
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 32px;
+        letter-spacing: -0.005em;
+      }
+
+      /* ---------- What I do ---------- */
+      .stack-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .stack-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 18px;
+        background: var(--surface);
+      }
+      .stack-card h3 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--text);
+      }
+      .stack-card p {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 14px;
+        line-height: 1.55;
+      }
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .tag {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        padding: 3px 8px;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--text-dim);
+      }
+      @media (max-width: 640px) {
+        .stack-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- Experience ---------- */
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+      }
+      .job {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 20px;
+      }
+      .job-when {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--text-dim);
+        padding-top: 2px;
+      }
+      .job-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .job-org {
+        font-size: 14px;
+        color: var(--accent);
+        margin-bottom: 12px;
+      }
+      .job-org .loc {
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+        font-size: 12px;
+      }
+      .job ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .job li {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.55;
+        padding-left: 14px;
+        position: relative;
+      }
+      .job li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: var(--text-dim);
+      }
+      @media (max-width: 640px) {
+        .job {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+      }
+
+      /* ---------- Projects ---------- */
+      .project-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .project-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 22px;
+        background: var(--surface);
+        transition: border-color 0.15s ease;
+      }
+      .project-card:hover {
+        border-color: var(--accent-border);
+      }
+      .project-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+      }
+      .project-head h3 {
+        font-size: 17px;
+        font-weight: 600;
+      }
+      .project-link {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--accent);
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.15s ease;
+      }
+      .project-link:hover {
+        border-color: var(--accent);
+      }
+      .project-card p {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 14px;
+        line-height: 1.6;
+      }
+
+      /* ---------- Education ---------- */
+      .edu-item {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .edu-item:last-child {
+        margin-bottom: 0;
+      }
+      .edu-when {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--text-dim);
+        padding-top: 2px;
+      }
+      .edu-title {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .edu-org {
+        font-size: 14px;
+        color: var(--text-muted);
+      }
+      @media (max-width: 640px) {
+        .edu-item {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+      }
+
+      /* ---------- Contact / Footer ---------- */
+      .contact-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+        margin-bottom: 40px;
+      }
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 28px 0 40px;
+      }
+      .footer-links {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .footer-links a {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--text-muted);
+        transition: color 0.15s ease;
+      }
+      .footer-links a:hover {
+        color: var(--accent);
+      }
+      .footer-note {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-mark">harish<span>/</span>suresh</div>
+        <div class="nav-links">
+          <a href="#work">What I do</a>
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <a class="nav-cta" href="mailto:harishsuresh.contact@gmail.com"
+          >Get in touch</a
+        >
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero" style="border-top: none">
+        <div class="hero-inner">
+          <div class="avatar">HS</div>
+          <div class="hero-content">
+            <div class="hero-meta">
+              San Jose, CA &nbsp;·&nbsp; MS CS @ Indiana University
+              &nbsp;·&nbsp; open to SDE roles
+            </div>
+            <h1>Harish Suresh</h1>
+            <div class="role">
+              Software Engineer — backend-leaning full-stack
+            </div>
+            <p class="summary">
+              I build backend systems and the full-stack products around them —
+              from a network automation platform running across 10,000+ devices
+              to an AI-assisted campaign builder used by a live advertising
+              marketplace. I like the parts other people skip: correctness under
+              concurrency, reliable async processing, and systems that hold up
+              once real traffic hits them.
+            </p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="resume.pdf" download
+                >Download resume</a
+              >
+              <a
+                class="btn btn-secondary"
+                href="mailto:harishsuresh.contact@gmail.com"
+                >Get in touch</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="work">
+        <div class="section-label">what I do</div>
+        <h2>Frontend, backend, and beyond the stack</h2>
+        <div class="stack-grid">
+          <div class="stack-card">
+            <h3>Frontend</h3>
+            <p>
+              Clean, typed interfaces on top of real backend systems — not the
+              main focus, but I don't hand it off either.
+            </p>
+            <div class="tag-row">
+              <span class="tag">React</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Zustand</span>
+              <span class="tag">Tailwind</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>Backend</h3>
+            <p>
+              APIs and services designed to stay correct under load —
+              transactions, idempotency, and concurrency handled at the database
+              layer, not papered over in application code.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Java</span>
+              <span class="tag">Spring Boot</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Redis</span>
+            </div>
+          </div>
+          <div class="stack-card">
+            <h3>Beyond the stack</h3>
+            <p>
+              Shipping, observing, and operating what I build — CI/CD, tracing,
+              and enough infra literacy to not be helpless in production.
+            </p>
+            <div class="tag-row">
+              <span class="tag">AWS</span>
+              <span class="tag">Docker</span>
+              <span class="tag">GitHub Actions</span>
+              <span class="tag">OpenTelemetry</span>
+              <span class="tag">LangChain</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience">
+        <div class="section-label">experience</div>
+        <h2>Where I've worked</h2>
+        <div class="timeline">
+          <div class="job">
+            <div class="job-when">Jun 2026 —<br />Present</div>
+            <div>
+              <div class="job-title">Software Engineer</div>
+              <div class="job-org">
+                Heartland Community Network — Adtua engagement &nbsp;<span
+                  class="loc"
+                  >/ Remote</span
+                >
+              </div>
+              <ul>
+                <li>
+                  Shipped a React/TypeScript and FastAPI campaign builder for a
+                  digital out-of-home ad marketplace, cutting brief turnaround
+                  from 2–3 days to same-day across 200 briefs
+                </li>
+                <li>
+                  Designed idempotent FastAPI reservation APIs with Postgres
+                  exclusion constraints, correctly resolving concurrent
+                  screen-booking conflicts under 25 integration and concurrency
+                  tests
+                </li>
+                <li>
+                  Moved media transcoding and thumbnail generation off the
+                  request path into Celery/Redis/S3/FFmpeg workers, with
+                  OpenTelemetry tracing across API and worker
+                </li>
+                <li>
+                  Built a LangChain campaign planner with code-enforced
+                  eligibility and Qdrant ranking — 40 of 40 eligible briefs
+                  planned correctly in a 42-brief pilot, 2 of 2 ineligible
+                  correctly rejected
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="job">
+            <div class="job-when">Aug 2022 —<br />Jul 2024</div>
+            <div>
+              <div class="job-title">Software Developer</div>
+              <div class="job-org">
+                Sify Technologies &nbsp;<span class="loc"
+                  >/ Chennai, India</span
+                >
+              </div>
+              <ul>
+                <li>
+                  Built and maintained 6 Java/Spring Boot microservices
+                  integrating SNMP and NETCONF across 10,000+ production network
+                  devices
+                </li>
+                <li>
+                  Built a Java ETL pipeline normalizing vendor data into a Neo4j
+                  graph of 10k devices and 50k links, cutting nightly refresh
+                  from 45 to 30 minutes
+                </li>
+                <li>
+                  Secured REST APIs over JPA/Hibernate with OAuth 2.0 and Spring
+                  Security RBAC; Redis caching cut average latency from 820ms to
+                  310ms
+                </li>
+                <li>
+                  Replaced manual deploys with Jenkins pipelines to ECR/EC2
+                  across 12 services, cutting merge-to-deployment from ~28 to 20
+                  minutes
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="job">
+            <div class="job-when">May 2020 —<br />Aug 2020</div>
+            <div>
+              <div class="job-title">Jr. Software Developer</div>
+              <div class="job-org">
+                Sirius Technologies &nbsp;<span class="loc"
+                  >/ Chennai, India</span
+                >
+              </div>
+              <ul>
+                <li>
+                  Built full-stack features for a production e-commerce
+                  bookstore using React, Redux, Node.js, and MongoDB
+                </li>
+                <li>
+                  Implemented JWT auth with refresh tokens and role-based access
+                  for admin and user workflows
+                </li>
+                <li>
+                  Optimized MongoDB queries with aggregation pipelines and
+                  indexing, cutting response time from 750ms to under 450ms
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="section-label">projects</div>
+        <h2>Things I've built</h2>
+        <div class="project-grid">
+          <div class="project-card">
+            <div class="project-head">
+              <h3>Warden</h3>
+              <a
+                class="project-link"
+                href="https://github.com/harishs2000"
+                target="_blank"
+                rel="noopener"
+                >GitHub →</a
+              >
+            </div>
+            <p>
+              A GitHub issue-triage agent with a hand-written multi-step tool
+              loop — labeling, duplicate detection, comments, and proposed
+              assignees. Policy is enforced at the tool-call layer, not the
+              prompt: comment deletion is denied outright, and issue closure or
+              assignment requires human approval. Blocked 11 of 12 unsafe or
+              injected actions in testing.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Python</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">GitHub API</span>
+              <span class="tag">OpenTelemetry</span>
+              <span class="tag">Docker</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-head">
+              <h3>SnapSend</h3>
+              <a
+                class="project-link"
+                href="https://github.com/harishs2000"
+                target="_blank"
+                rel="noopener"
+                >GitHub →</a
+              >
+            </div>
+            <p>
+              A file-sharing service with time-bound, expiring links — Redis TTL
+              handles instant expiry checks without a background sweep, and AWS
+              S3 handles storage behind a Spring Boot API.
+            </p>
+            <div class="tag-row">
+              <span class="tag">Java</span>
+              <span class="tag">Spring Boot</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">Redis</span>
+              <span class="tag">AWS S3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">education</div>
+        <h2>Education</h2>
+        <div class="edu-item">
+          <div class="edu-when">2024 — 2026</div>
+          <div>
+            <div class="edu-title">MS, Computer Science</div>
+            <div class="edu-org">
+              Indiana University Bloomington &nbsp;·&nbsp; GPA 3.93 / 4.0
+            </div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-when">2018 — 2022</div>
+          <div>
+            <div class="edu-title">BE, Computer Science</div>
+            <div class="edu-org">Anna University, Chennai</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="section-label">get in touch</div>
+        <h2>Let's talk</h2>
+        <p style="color: var(--text-muted); max-width: 56ch; font-size: 15px">
+          Open to SDE roles — happiest working close to backend systems, with
+          enough full-stack range to own a feature end to end. Reach out
+          directly, or grab the resume.
+        </p>
+        <div class="contact-row">
+          <a
+            class="btn btn-primary"
+            href="mailto:harishsuresh.contact@gmail.com"
+            >Email me</a
+          >
+          <a class="btn btn-secondary" href="resume.pdf" download
+            >Download resume</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="footer-links">
+          <a href="mailto:harishsuresh.contact@gmail.com"
+            >harishsuresh.contact@gmail.com</a
+          >
+          <a
+            href="https://github.com/harishs2000"
+            target="_blank"
+            rel="noopener"
+            >github.com/harishs2000</a
+          >
+          <a
+            href="https://linkedin.com/in/harishs163"
+            target="_blank"
+            rel="noopener"
+            >linkedin.com/in/harishs163</a
+          >
+        </div>
+        <div class="footer-note">© 2026 Harish Suresh. Built by hand.</div>
+      </div>
+    </footer>
+  </body>
+</html>
