@@ -1111,6 +1111,23 @@
         align-items: flex-start;
         gap: 18px;
       }
+      /* brightness(0) flattens any source logo to solid black, then invert
+         lifts it to white for dark mode — true monochrome whatever the file. */
+      .edu-mark img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        filter: grayscale(1) brightness(0) invert(1);
+        opacity: 0.85;
+      }
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) .edu-mark img {
+          filter: grayscale(1) brightness(0);
+        }
+      }
+      :root[data-theme="light"] .edu-mark img {
+        filter: grayscale(1) brightness(0);
+      }
       .edu-mark {
         flex: 0 0 auto;
         width: 46px;
@@ -1386,10 +1403,10 @@
       <nav>
         <div class="nav-mark">harish<span class="slash">/</span>suresh</div>
         <div class="nav-links">
-          <a href="#about">About</a>
           <a href="#work">Skills</a>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
+          <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </div>
         <div class="nav-icons">
@@ -1502,38 +1519,7 @@
         </div>
       </section>
 
-      <section id="about">
-        <div class="wrap">
-          <h2 class="reveal">About</h2>
-          <p class="section-sub reveal">How I got here</p>
-          <div class="about-body">
-            <div class="reveal">
-              <p>
-                I'm from Chennai. I spent two years at Sify building Java
-                services against a network of 10,000+ production devices, which
-                is where I got comfortable with the parts of a system that only
-                misbehave under real load.
-              </p>
-              <p>
-                I moved to Bloomington in 2024 for a master's in Computer
-                Science at Indiana University, and I'm based in San Jose now.
-              </p>
-            </div>
-            <div class="reveal" style="--d: 60ms">
-              <p>
-                The work I like best sits close to the data layer —
-                transactions, idempotency, and the failure modes that only show
-                up when requests arrive at the same time. I've done enough
-                frontend to own a feature end to end, but backend is where I'm
-                most useful.
-              </p>
-              <p>I finish my MS in 2026 and I'm looking for SDE roles.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="band" id="work">
+      <section id="work">
         <div class="wrap">
           <h2 class="reveal">What I can do</h2>
           <div class="typer reveal" style="--d: 60ms">
@@ -1641,7 +1627,7 @@
         </div>
       </section>
 
-      <section id="experience">
+      <section class="band" id="experience">
         <div class="wrap">
           <h2 class="reveal">Experience</h2>
           <p class="section-sub reveal">Where I've worked, and what I owned</p>
@@ -1762,7 +1748,7 @@
         </div>
       </section>
 
-      <section class="band" id="projects">
+      <section id="projects">
         <div class="wrap">
           <h2 class="reveal">Projects</h2>
           <p class="section-sub reveal">Things I've built on my own time</p>
@@ -1853,7 +1839,7 @@
         </div>
       </section>
 
-      <section id="education">
+      <section class="band" id="education">
         <div class="wrap">
           <h2 class="reveal">Education</h2>
           <div class="edu-item reveal">
@@ -1878,6 +1864,37 @@
                   Anna University, Chennai &nbsp;·&nbsp; CGPA 8.63 / 10
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="wrap">
+          <h2 class="reveal">About</h2>
+          <p class="section-sub reveal">How I got here</p>
+          <div class="about-body">
+            <div class="reveal">
+              <p>
+                I'm from Chennai. I spent two years at Sify building Java
+                services against a network of 10,000+ production devices, which
+                is where I got comfortable with the parts of a system that only
+                misbehave under real load.
+              </p>
+              <p>
+                I moved to Bloomington in 2024 for the master's, and I'm in San
+                Jose now.
+              </p>
+            </div>
+            <div class="reveal" style="--d: 60ms">
+              <p>
+                The work I like best sits close to the data layer —
+                transactions, idempotency, and the failure modes that only show
+                up when requests arrive at the same time. I've done enough
+                frontend to own a feature end to end, but backend is where I'm
+                most useful.
+              </p>
+              <p>I finish my MS in 2026 and I'm looking for SDE roles.</p>
             </div>
           </div>
         </div>
@@ -2165,11 +2182,11 @@
             if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
           }
           var commands = [
-            { label: "Go to About", hint: "section", run: function () { go("#about"); } },
             { label: "Go to Skills", hint: "section", run: function () { go("#work"); } },
             { label: "Go to Experience", hint: "section", run: function () { go("#experience"); } },
             { label: "Go to Projects", hint: "section", run: function () { go("#projects"); } },
             { label: "Go to Education", hint: "section", run: function () { go("#education"); } },
+            { label: "Go to About", hint: "section", run: function () { go("#about"); } },
             { label: "Go to Contact", hint: "section", run: function () { go("#contact"); } },
             { label: "Download resume", hint: "file", run: function () { window.location.href = "resume.pdf"; } },
             { label: "Copy email address", hint: "clipboard", run: function () {

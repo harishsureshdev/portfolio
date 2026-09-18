@@ -32,8 +32,13 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   holds the content) so dividers reach both edges. Sections alternate
   background via `.band` (`--band`), and cards sit on `--surface` above it —
   keep those two tokens distinct or cards vanish into the band.
-- The alternation STARTS banded: hero, what-I-do, projects and contact carry
-  `.band`. Adding or removing a section means re-striping all of them.
+- The alternation STARTS banded: hero, experience, education and contact carry
+  `.band`. Adding, removing or reordering a section means re-striping all of
+  them, or two same-coloured sections end up adjacent.
+- Education marks are `IU` / `AU` monogram tiles. Dropping an `<img>` inside
+  `.edu-mark` swaps in a real logo: `brightness(0)` flattens it to solid black
+  and `invert(1)` lifts it to white for dark mode, so any source file renders
+  true monochrome. Needs a transparent background to work.
   The nav is tinted from `--bg`, so a banded hero is what makes the nav read as
   a distinct bar on first load. Don't flip the order back.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
@@ -62,8 +67,12 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - Every claim must be true and traceable to my actual resume/projects — do not
   invent metrics, testimonials, or experience I don't have.
 - Tone: confident, plain, technical. No marketing language, no "passionate about."
-- Sections stay in this order: hero → about → what I do → experience →
-  projects → education → contact.
+- Sections stay in this order: hero → what I do → experience → projects →
+  education → about → contact. About sits late deliberately: the hero already
+  covers who and where, and a narrative block between the hero and the
+  experience section delays the strongest evidence. Late, it reads as the
+  bridge into Contact — "do I want to talk to this person" rather than "can
+  they do the job".
 - The About prose is a DRAFT written from facts already on the site (Chennai →
   Sify → Bloomington → San Jose). It is in Harish's voice but not his words —
   he should rewrite it. Don't add motivation, hobbies or backstory that isn't
