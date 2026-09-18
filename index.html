@@ -495,7 +495,7 @@
       }
       .portrait:hover {
         transform: rotate(0deg);
-        border-color: var(--accent-border);
+        border-color: var(--border-strong);
       }
       .portrait img {
         display: block;
@@ -580,6 +580,18 @@
         line-height: 1.06;
         letter-spacing: -0.035em;
         margin-bottom: 18px;
+      }
+      .hero-meta {
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+        color: var(--text-dim);
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+      }
+      .hero-meta .dot {
+        opacity: 0.5;
       }
       .hero p.summary {
         font-size: 17px;
@@ -753,9 +765,9 @@
 
       /* ---------- Skill chips ---------- */
       .skill-groups {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 56px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        gap: 34px 48px;
         margin-bottom: 64px;
       }
       .chip-row {
@@ -1413,6 +1425,10 @@
                 // software engineer · open to SDE roles
               </div>
               <h1>Harish Suresh</h1>
+              <div class="hero-meta">
+                <span>San Jose, CA</span><span class="dot">·</span>
+                <span>MS Computer Science, Indiana University Bloomington</span>
+              </div>
               <p class="summary">
                 I build backend systems and the full-stack products around them —
                 from a network automation platform running across 10,000+ devices
@@ -1458,70 +1474,62 @@
 
           <div class="skill-groups">
             <div class="reveal">
-              <div class="group-label">// Frontend</div>
+              <div class="group-label">// Languages</div>
               <div class="chip-row">
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />React</span
-                >
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />TypeScript</span
-                >
-                <span class="chip">Zustand</span>
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />Tailwind</span
-                >
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg" alt="" onerror="this.remove()" />Java</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="" onerror="this.remove()" />Python</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" onerror="this.remove()" />TypeScript</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="" onerror="this.remove()" />JavaScript</span>
+                <span class="chip">SQL</span>
               </div>
             </div>
-            <div class="reveal" style="--d: 90ms">
-              <div class="group-label">// Backend</div>
+            <div class="reveal" style="--d: 60ms">
+              <div class="group-label">// Backend &amp; APIs</div>
               <div class="chip-row">
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />Java</span
-                >
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />Spring Boot</span
-                >
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />FastAPI</span
-                >
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />PostgreSQL</span
-                >
-                <span class="chip"
-                  ><img
-                    src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redis/redis-original.svg"
-                    alt=""
-                    onerror="this.remove()"
-                  />Redis</span
-                >
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg" alt="" onerror="this.remove()" />Spring Boot</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg" alt="" onerror="this.remove()" />FastAPI</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nodejs/nodejs-original.svg" alt="" onerror="this.remove()" />Node.js</span>
+                <span class="chip">REST</span>
+                <span class="chip">OAuth 2.0</span>
+                <span class="chip">JPA/Hibernate</span>
+              </div>
+            </div>
+            <div class="reveal">
+              <div class="group-label">// Data</div>
+              <div class="chip-row">
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" onerror="this.remove()" />PostgreSQL</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redis/redis-original.svg" alt="" onerror="this.remove()" />Redis</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mongodb/mongodb-original.svg" alt="" onerror="this.remove()" />MongoDB</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/neo4j/neo4j-original.svg" alt="" onerror="this.remove()" />Neo4j</span>
+                <span class="chip">Qdrant</span>
+              </div>
+            </div>
+            <div class="reveal" style="--d: 60ms">
+              <div class="group-label">// Cloud &amp; DevOps</div>
+              <div class="chip-row">
+                <span class="chip">AWS</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" onerror="this.remove()" />Docker</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/jenkins/jenkins-original.svg" alt="" onerror="this.remove()" />Jenkins</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg" alt="" onerror="this.remove()" />GitHub Actions</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/opentelemetry/opentelemetry-original.svg" alt="" onerror="this.remove()" />OpenTelemetry</span>
+              </div>
+            </div>
+            <div class="reveal">
+              <div class="group-label">// Frontend</div>
+              <div class="chip-row">
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" onerror="this.remove()" />React</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redux/redux-original.svg" alt="" onerror="this.remove()" />Redux</span>
+                <span class="chip">Zustand</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg" alt="" onerror="this.remove()" />Tailwind</span>
+              </div>
+            </div>
+            <div class="reveal" style="--d: 60ms">
+              <div class="group-label">// AI &amp; LLM</div>
+              <div class="chip-row">
+                <span class="chip">LangChain</span>
+                <span class="chip">RAG</span>
+                <span class="chip">Vector search</span>
+                <span class="chip">Celery</span>
               </div>
             </div>
           </div>
@@ -1792,7 +1800,9 @@
             <div class="edu-when">2018 — 2022</div>
             <div>
               <div class="edu-title">BE, Computer Science</div>
-              <div class="edu-org">Anna University, Chennai</div>
+              <div class="edu-org">
+                Anna University, Chennai &nbsp;·&nbsp; CGPA 8.63 / 10
+              </div>
             </div>
           </div>
         </div>
