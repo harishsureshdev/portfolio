@@ -8,6 +8,75 @@
       name="description"
       content="Harish Suresh — backend-leaning full-stack software engineer. Network automation across 10,000+ devices, idempotent APIs, async processing, and AI-assisted tooling."
     />
+    <link rel="canonical" href="https://harishsuresh.dev/" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0b0a08" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://harishsuresh.dev/" />
+    <meta property="og:title" content="Harish Suresh — Software Engineer" />
+    <meta
+      property="og:description"
+      content="Backend-leaning full-stack engineer. Network automation across 10,000+ devices, idempotent APIs under concurrency, and async processing that holds up in production."
+    />
+    <meta property="og:image" content="https://harishsuresh.dev/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Harish Suresh — Software Engineer, backend-leaning full-stack. Java, Spring Boot, FastAPI, PostgreSQL."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Harish Suresh — Software Engineer" />
+    <meta
+      name="twitter:description"
+      content="Backend-leaning full-stack engineer. Network automation across 10,000+ devices, idempotent APIs under concurrency, and async processing that holds up in production."
+    />
+    <meta
+      name="twitter:image"
+      content="https://harishsuresh.dev/assets/og.png"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Harish Suresh",
+        "url": "https://harishsuresh.dev/",
+        "image": "https://harishsuresh.dev/assets/og.png",
+        "jobTitle": "Software Engineer",
+        "email": "mailto:harishsuresh.contact@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "addressCountry": "US"
+        },
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Indiana University Bloomington"
+          },
+          { "@type": "CollegeOrUniversity", "name": "Anna University" }
+        ],
+        "knowsAbout": [
+          "Java",
+          "Spring Boot",
+          "FastAPI",
+          "PostgreSQL",
+          "Redis",
+          "React",
+          "TypeScript",
+          "AWS"
+        ],
+        "sameAs": [
+          "https://github.com/harishs2000",
+          "https://linkedin.com/in/harishs163"
+        ]
+      }
+    </script>
+
     <script>
       (function () {
         try {
@@ -223,10 +292,12 @@
         transform-origin: left;
         transition: transform 0.25s ease;
       }
-      .nav-links a:hover {
+      .nav-links a:hover,
+      .nav-links a.is-current {
         color: var(--accent);
       }
-      .nav-links a:hover::after {
+      .nav-links a:hover::after,
+      .nav-links a.is-current::after {
         transform: scaleX(1);
       }
       .nav-icons {
@@ -917,7 +988,34 @@
         font-size: 17px;
         color: var(--text);
         margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .terminal-addr > span {
         word-break: break-all;
+      }
+      .copy-btn {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        padding: 4px 10px;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: none;
+        color: var(--text-dim);
+        cursor: pointer;
+        transition:
+          color 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .copy-btn:hover {
+        color: var(--accent);
+        border-color: var(--accent-border);
+      }
+      .copy-btn.is-copied {
+        color: var(--accent);
+        border-color: var(--accent);
       }
       .contact-row {
         display: flex;
@@ -1411,7 +1509,18 @@
             <div class="terminal-cmd">
               <span class="prompt">$</span>mail --to harish
             </div>
-            <div class="terminal-addr">harishsuresh.contact@gmail.com</div>
+            <div class="terminal-addr">
+              <span>harishsuresh.contact@gmail.com</span>
+              <button
+                type="button"
+                id="copy-email"
+                class="copy-btn"
+                data-email="harishsuresh.contact@gmail.com"
+                title="Copy email address"
+              >
+                <span class="copy-label" aria-live="polite">copy</span>
+              </button>
+            </div>
             <a
               class="btn btn-primary"
               href="mailto:harishsuresh.contact@gmail.com"
@@ -1521,6 +1630,81 @@
           revealEls.forEach(function (el) {
             io.observe(el);
           });
+        }
+
+        /* ---- Scroll spy ---- */
+        var navLinks = Array.prototype.slice.call(
+          document.querySelectorAll(".nav-links a[href^='#']")
+        );
+        if (navLinks.length) {
+          var linkFor = {};
+          var spied = [];
+          navLinks.forEach(function (link) {
+            var section = document.querySelector(link.getAttribute("href"));
+            if (section) {
+              linkFor[section.id] = link;
+              spied.push(section);
+            }
+          });
+          /* Last section whose top has crossed the line just below the nav.
+             Position-based rather than intersection-based: hero and education
+             have no nav link, and an observer would leave gaps over them. */
+          var ticking = false;
+          function updateSpy() {
+            ticking = false;
+            var line = window.scrollY + 140;
+            var current = null;
+            spied.forEach(function (section) {
+              var top = section.getBoundingClientRect().top + window.scrollY;
+              if (top <= line) current = section;
+            });
+            /* The last section sits too close to the bottom for its top to
+               ever cross the line, so bottoming out selects it outright. */
+            if (
+              window.innerHeight + window.scrollY >=
+              document.documentElement.scrollHeight - 2
+            ) {
+              current = spied[spied.length - 1];
+            }
+            navLinks.forEach(function (link) {
+              link.classList.remove("is-current");
+            });
+            if (current) linkFor[current.id].classList.add("is-current");
+          }
+          function onScroll() {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(updateSpy);
+            }
+          }
+          window.addEventListener("scroll", onScroll, { passive: true });
+          window.addEventListener("resize", onScroll);
+          updateSpy();
+        }
+
+        /* ---- Copy email ---- */
+        var copyBtn = document.getElementById("copy-email");
+        if (copyBtn && navigator.clipboard) {
+          var copyLabel = copyBtn.querySelector(".copy-label");
+          var copyResetTimer;
+          copyBtn.addEventListener("click", function () {
+            navigator.clipboard
+              .writeText(copyBtn.getAttribute("data-email"))
+              .then(function () {
+                copyBtn.classList.add("is-copied");
+                copyLabel.textContent = "copied";
+                clearTimeout(copyResetTimer);
+                copyResetTimer = setTimeout(function () {
+                  copyBtn.classList.remove("is-copied");
+                  copyLabel.textContent = "copy";
+                }, 2000);
+              })
+              .catch(function () {
+                copyLabel.textContent = "press ⌘C";
+              });
+          });
+        } else if (copyBtn) {
+          copyBtn.hidden = true;
         }
 
         /* ---- Rotating stack highlight ---- */

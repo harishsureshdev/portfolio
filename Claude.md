@@ -65,7 +65,12 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - No testimonials section — deliberately dropped, don't add placeholder quotes.
 - Only 2 projects (Warden, SnapSend) — a 3rd is planned, layout should tolerate
   3+ cards without redesign.
-- No favicon and no Open Graph / social preview tags yet.
+- Analytics is NOT wired up. Cloudflare Web Analytics / Umami both need a site
+  token from Harish's own account, so it can't be added unattended. If the site
+  lands on Cloudflare Pages it's a dashboard toggle and needs no code at all.
+- `assets/og.png` is a GENERATED file, not hand-made — it is a 1200x630 render
+  of a card built from the same fonts and tokens as the site. If the name, role
+  or stack line changes, regenerate it rather than editing the PNG.
 - Hero background is placeholder — a single radial glow. A replacement is
   planned from a 21st.dev prompt; don't invest in the current one.
 - Zustand is the one stack chip with no logo (Devicon has no Zustand icon).
