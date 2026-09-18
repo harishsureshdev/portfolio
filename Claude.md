@@ -32,9 +32,9 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   holds the content) so dividers reach both edges. Sections alternate
   background via `.band` (`--band`), and cards sit on `--surface` above it —
   keep those two tokens distinct or cards vanish into the band.
-- The alternation STARTS banded: hero, experience, education and contact carry
-  `.band`. Adding, removing or reordering a section means re-striping all of
-  them, or two same-coloured sections end up adjacent.
+- The alternation STARTS banded: hero, experience and education carry `.band`.
+  Adding, removing or reordering a section means re-striping all of them, or
+  two same-coloured sections end up adjacent.
 - Education marks are `IU` / `AU` monogram tiles. Dropping an `<img>` inside
   `.edu-mark` swaps in a real logo: `brightness(0)` flattens it to solid black
   and `invert(1)` lifts it to white for dark mode, so any source file renders
@@ -68,11 +68,15 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   invent metrics, testimonials, or experience I don't have.
 - Tone: confident, plain, technical. No marketing language, no "passionate about."
 - Sections stay in this order: hero → what I do → experience → projects →
-  education → about → contact. About sits late deliberately: the hero already
-  covers who and where, and a narrative block between the hero and the
-  experience section delays the strongest evidence. Late, it reads as the
-  bridge into Contact — "do I want to talk to this person" rather than "can
-  they do the job".
+  education → contact.
+- There is deliberately NO About section. One was built and removed on
+  2026-09-18 after auditing it: of six statements, five already appeared
+  verbatim or near-verbatim in the hero, experience or contact sections, and
+  the only new fact ("from Chennai") doesn't differentiate him among
+  international MS students applying for the same roles. The hero already
+  carries name, photo, location, university, what he does, stack, resume and
+  contact. Don't re-add a bio section unless there is genuinely new
+  information to put in it.
 - The About prose is a DRAFT written from facts already on the site (Chennai →
   Sify → Bloomington → San Jose). It is in Harish's voice but not his words —
   he should rewrite it. Don't add motivation, hobbies or backstory that isn't
