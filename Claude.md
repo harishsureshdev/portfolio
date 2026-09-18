@@ -71,8 +71,12 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - `assets/og.png` is a GENERATED file, not hand-made — it is a 1200x630 render
   of a card built from the same fonts and tokens as the site. If the name, role
   or stack line changes, regenerate it rather than editing the PNG.
-- Hero background is placeholder — a single radial glow. A replacement is
-  planned from a 21st.dev prompt; don't invest in the current one.
+- Hero background is a 21st.dev pattern ported from React/Tailwind to plain
+  CSS (`.hero-bg`): corner lift, five skewed accent streaks, a dot grid and
+  inline SVG grain. Recoloured from the original cyan to the accent green, and
+  the grain is generated inline rather than fetched from `cdn.21st.dev`.
+  It is deliberately faint — at full strength it washes the hero green.
+  `.hero` keeps `overflow: hidden` to clip the skewed streaks.
 - Zustand is the one stack chip with no logo (Devicon has no Zustand icon).
   Chips degrade to text-only on their own, so this is fine, not a bug.
 
