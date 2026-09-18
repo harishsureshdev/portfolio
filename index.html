@@ -29,7 +29,7 @@
         --surface: #1a1813;
         --surface-2: #211f18;
         --text: #e9e8e3;
-        --text-muted: #c9d1d9;
+        --text-muted: #b4b1a8;
         --text-dim: #8a8880;
         --border: #282622;
         --border-strong: #3a3732;
@@ -166,10 +166,10 @@
       nav {
         max-width: var(--max-w);
         margin: 0 auto;
-        padding: 16px 32px;
+        padding: 20px 32px;
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 30px;
       }
       .nav-mark {
         font-family: var(--font-mono);
@@ -200,9 +200,9 @@
       }
       .nav-links {
         display: flex;
-        gap: 24px;
-        font-size: 14px;
-        color: var(--text-muted);
+        gap: 34px;
+        font-size: 14.5px;
+        color: var(--text-dim);
       }
       .nav-links a {
         position: relative;
@@ -229,17 +229,17 @@
       .nav-icons {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 10px;
       }
       .icon-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 34px;
-        height: 34px;
+        width: 36px;
+        height: 36px;
         border: 1px solid transparent;
         border-radius: var(--radius);
-        color: var(--text-muted);
+        color: var(--text);
         background: none;
         cursor: pointer;
         transition:
@@ -260,6 +260,13 @@
       #theme-toggle {
         border-color: var(--border);
         background: var(--surface);
+      }
+      #theme-toggle.is-dark {
+        border-color: var(--accent);
+      }
+      #theme-toggle.is-dark:hover {
+        background: var(--accent-soft);
+        color: var(--text);
       }
       #theme-toggle .icon-sun {
         display: none;
@@ -1474,6 +1481,7 @@
         function syncToggle() {
           var r = resolvedTheme();
           btn.classList.toggle("is-light", r === "light");
+          btn.classList.toggle("is-dark", r === "dark");
           btn.setAttribute(
             "aria-label",
             r === "light" ? "Switch to dark theme" : "Switch to light theme"

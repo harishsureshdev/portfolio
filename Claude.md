@@ -13,6 +13,11 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   accent #217A45 (darker green — #4DBF74 fails contrast on a light ground)
 - Every color goes through a CSS custom property defined in both palettes.
   Never hardcode a hex in a rule; add a token instead.
+- Every grey is WARM — they sit on a warm near-black. Never introduce a cool
+  or blue-tinted grey; it reads as a mismatch immediately next to the borders
+  and off-white text.
+- Nav links are `--text-dim` (deliberately quieter than body copy) while the
+  nav icons are full `--text`. That contrast is intentional, not an oversight.
 - Accent used sparingly — primary CTAs, key emphasis, `+` bullets, current-role
   rail. Text on an accent fill is `--accent-text` (near-black on dark green),
   not white: white-on-#4DBF74 only reaches ~2.2:1.
