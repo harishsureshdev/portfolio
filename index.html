@@ -233,6 +233,20 @@
         transform: none;
       }
 
+      /* ---------- Scroll progress ---------- */
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 60;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+        pointer-events: none;
+      }
+
       /* ---------- Nav ---------- */
       header {
         position: sticky;
@@ -1010,6 +1024,51 @@
         margin-bottom: 18px;
         line-height: 1.6;
       }
+      .project-toggle {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0;
+        margin-bottom: 16px;
+        border: 0;
+        background: none;
+        color: var(--accent);
+        cursor: pointer;
+      }
+      .project-toggle .chev {
+        display: inline-block;
+        transition: transform 0.25s ease;
+      }
+      .project-toggle[aria-expanded="true"] .chev {
+        transform: rotate(90deg);
+      }
+      /* 0fr -> 1fr animates to the content's natural height without JS
+         measuring it. */
+      .project-detail {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.3s ease;
+      }
+      .project-card.is-open .project-detail {
+        grid-template-rows: 1fr;
+      }
+      .project-detail > div {
+        overflow: hidden;
+      }
+      .detail-label {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+      .project-detail p {
+        margin-bottom: 18px;
+      }
+      .project-detail p:last-child {
+        margin-bottom: 18px;
+      }
 
       /* ---------- Education ---------- */
       .edu-item {
@@ -1102,6 +1161,119 @@
         flex-wrap: wrap;
       }
 
+      /* ---------- Command palette ---------- */
+      .palette {
+        width: min(560px, calc(100vw - 32px));
+        padding: 0;
+        border: 1px solid var(--border-strong);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--text);
+        margin: 12vh auto auto;
+      }
+      .palette::backdrop {
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(3px);
+      }
+      .palette-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .palette-head .prompt {
+        font-family: var(--font-mono);
+        color: var(--accent);
+        font-size: 14px;
+      }
+      #palette-input {
+        flex: 1;
+        border: 0;
+        outline: 0;
+        background: none;
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 15px;
+      }
+      #palette-input::placeholder {
+        color: var(--text-dim);
+      }
+      .palette-list {
+        list-style: none;
+        max-height: 320px;
+        overflow-y: auto;
+        padding: 8px;
+      }
+      .palette-list li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-size: 14.5px;
+      }
+      .palette-list li[aria-selected="true"] {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+      .palette-list .hint {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--text-dim);
+      }
+      .palette-empty {
+        padding: 18px 20px;
+        color: var(--text-dim);
+        font-size: 14px;
+      }
+      .palette-foot {
+        display: flex;
+        gap: 16px;
+        padding: 10px 16px;
+        border-top: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--text-dim);
+      }
+      /* Also the only way to reach sections on mobile, where .nav-links is
+         hidden — so it stays visible at every width. */
+      .kbd-hint {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        padding: 6px 9px;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        color: var(--text-dim);
+        background: var(--surface);
+        cursor: pointer;
+        transition:
+          color 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .kbd-hint:hover {
+        color: var(--accent);
+        border-color: var(--accent-border);
+      }
+      .kbd-hint svg {
+        width: 14px;
+        height: 14px;
+        display: block;
+      }
+      .kbd-hint .combo {
+        display: none;
+      }
+      @media (min-width: 681px) {
+        .kbd-hint .combo {
+          display: inline;
+        }
+      }
+
       /* ---------- Footer ---------- */
       footer {
         border-top: 1px solid var(--border);
@@ -1160,6 +1332,7 @@
     </style>
   </head>
   <body>
+    <div class="progress" id="progress" aria-hidden="true"></div>
     <header>
       <nav>
         <div class="nav-mark">harish<span class="slash">/</span>suresh</div>
@@ -1170,6 +1343,18 @@
           <a href="#contact">Contact</a>
         </div>
         <div class="nav-icons">
+          <button
+            type="button"
+            class="kbd-hint"
+            id="palette-open"
+            aria-label="Open command palette"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20l-3.5-3.5" />
+            </svg>
+            <span class="combo">⌘K</span>
+          </button>
           <a
             class="icon-btn"
             href="https://github.com/harishs2000"
@@ -1519,11 +1704,27 @@
               <p>
                 A GitHub issue-triage agent with a hand-written multi-step tool
                 loop — labeling, duplicate detection, comments, and proposed
-                assignees. Policy is enforced at the tool-call layer, not the
-                prompt: comment deletion is denied outright, and issue closure or
-                assignment requires human approval. Blocked 11 of 12 unsafe or
-                injected actions in testing.
+                assignees.
               </p>
+              <button
+                type="button"
+                class="project-toggle"
+                aria-expanded="false"
+                aria-controls="detail-warden"
+              >
+                <span class="chev">›</span><span class="toggle-label">details</span>
+              </button>
+              <div class="project-detail" id="detail-warden">
+                <div>
+                  <div class="detail-label">// how it's guarded</div>
+                  <p>
+                    Policy is enforced at the tool-call layer, not the prompt:
+                    comment deletion is denied outright, and issue closure or
+                    assignment requires human approval. Blocked 11 of 12 unsafe
+                    or injected actions in testing.
+                  </p>
+                </div>
+              </div>
               <div class="tag-row">
                 <span class="tag">Python</span>
                 <span class="tag">FastAPI</span>
@@ -1544,11 +1745,25 @@
                   >GitHub →</a
                 >
               </div>
-              <p>
-                A file-sharing service with time-bound, expiring links — Redis TTL
-                handles instant expiry checks without a background sweep, and AWS
-                S3 handles storage behind a Spring Boot API.
-              </p>
+              <p>A file-sharing service with time-bound, expiring links.</p>
+              <button
+                type="button"
+                class="project-toggle"
+                aria-expanded="false"
+                aria-controls="detail-snapsend"
+              >
+                <span class="chev">›</span
+                ><span class="toggle-label">details</span>
+              </button>
+              <div class="project-detail" id="detail-snapsend">
+                <div>
+                  <div class="detail-label">// design note</div>
+                  <p>
+                    Redis TTL handles instant expiry checks without a background
+                    sweep, and AWS S3 handles storage behind a Spring Boot API.
+                  </p>
+                </div>
+              </div>
               <div class="tag-row">
                 <span class="tag">Java</span>
                 <span class="tag">Spring Boot</span>
@@ -1657,6 +1872,24 @@
         <div class="footer-note">© 2026 Harish Suresh. Built by hand.</div>
       </div>
     </footer>
+
+    <dialog class="palette" id="palette" aria-label="Command palette">
+      <div class="palette-head">
+        <span class="prompt">$</span>
+        <input
+          id="palette-input"
+          type="text"
+          placeholder="Type a command…"
+          autocomplete="off"
+          spellcheck="false"
+          aria-controls="palette-list"
+        />
+      </div>
+      <ul class="palette-list" id="palette-list" role="listbox"></ul>
+      <div class="palette-foot">
+        <span>↑↓ navigate</span><span>↵ run</span><span>esc close</span>
+      </div>
+    </dialog>
 
     <script>
       (function () {
@@ -1767,6 +2000,46 @@
           updateSpy();
         }
 
+        /* ---- Scroll progress ---- */
+        var progress = document.getElementById("progress");
+        if (progress) {
+          var pTicking = false;
+          function drawProgress() {
+            pTicking = false;
+            var max =
+              document.documentElement.scrollHeight - window.innerHeight;
+            var pct = max > 0 ? window.scrollY / max : 0;
+            progress.style.transform = "scaleX(" + Math.min(pct, 1) + ")";
+          }
+          window.addEventListener(
+            "scroll",
+            function () {
+              if (!pTicking) {
+                pTicking = true;
+                requestAnimationFrame(drawProgress);
+              }
+            },
+            { passive: true }
+          );
+          window.addEventListener("resize", drawProgress);
+          drawProgress();
+        }
+
+        /* ---- Expandable project cards ---- */
+        document
+          .querySelectorAll(".project-toggle")
+          .forEach(function (toggle) {
+            toggle.addEventListener("click", function () {
+              var card = toggle.closest(".project-card");
+              var open = toggle.getAttribute("aria-expanded") === "true";
+              toggle.setAttribute("aria-expanded", open ? "false" : "true");
+              card.classList.toggle("is-open", !open);
+              toggle.querySelector(".toggle-label").textContent = open
+                ? "details"
+                : "hide";
+            });
+          });
+
         /* ---- Copy email ---- */
         var copyBtn = document.getElementById("copy-email");
         if (copyBtn && navigator.clipboard) {
@@ -1790,6 +2063,132 @@
           });
         } else if (copyBtn) {
           copyBtn.hidden = true;
+        }
+
+        /* ---- Command palette ---- */
+        var palette = document.getElementById("palette");
+        if (palette && typeof palette.showModal === "function") {
+          var pInput = document.getElementById("palette-input");
+          var pList = document.getElementById("palette-list");
+          var pOpen = document.getElementById("palette-open");
+          var isMac = /Mac|iPhone|iPad/.test(navigator.platform || "");
+          var combo = pOpen && pOpen.querySelector(".combo");
+          if (combo && !isMac) combo.textContent = "Ctrl K";
+
+          function go(hash) {
+            var el = document.querySelector(hash);
+            if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+          }
+          var commands = [
+            { label: "Go to Skills", hint: "section", run: function () { go("#work"); } },
+            { label: "Go to Experience", hint: "section", run: function () { go("#experience"); } },
+            { label: "Go to Projects", hint: "section", run: function () { go("#projects"); } },
+            { label: "Go to Education", hint: "section", run: function () { go("#education"); } },
+            { label: "Go to Contact", hint: "section", run: function () { go("#contact"); } },
+            { label: "Download resume", hint: "file", run: function () { window.location.href = "resume.pdf"; } },
+            { label: "Copy email address", hint: "clipboard", run: function () {
+                if (navigator.clipboard) navigator.clipboard.writeText("harishsuresh.contact@gmail.com");
+              } },
+            { label: "Send an email", hint: "mailto", run: function () { window.location.href = "mailto:harishsuresh.contact@gmail.com"; } },
+            { label: "Toggle theme", hint: "appearance", run: function () { btn.click(); } },
+            { label: "Open GitHub", hint: "external", run: function () { window.open("https://github.com/harishs2000", "_blank", "noopener"); } },
+            { label: "Open LinkedIn", hint: "external", run: function () { window.open("https://linkedin.com/in/harishs163", "_blank", "noopener"); } }
+          ];
+
+          var matches = commands.slice();
+          var cursor = 0;
+
+          /* Subsequence match, so "gte" finds "Go to Experience". */
+          function fuzzy(query, text) {
+            if (!query) return true;
+            var q = query.toLowerCase();
+            var t = text.toLowerCase();
+            var qi = 0;
+            for (var ti = 0; ti < t.length && qi < q.length; ti++) {
+              if (t[ti] === q[qi]) qi++;
+            }
+            return qi === q.length;
+          }
+
+          function render() {
+            pList.textContent = "";
+            if (!matches.length) {
+              var empty = document.createElement("li");
+              empty.className = "palette-empty";
+              empty.textContent = "No matching command";
+              pList.appendChild(empty);
+              return;
+            }
+            matches.forEach(function (cmd, i) {
+              var li = document.createElement("li");
+              li.setAttribute("role", "option");
+              li.setAttribute("aria-selected", i === cursor ? "true" : "false");
+              var name = document.createElement("span");
+              name.textContent = cmd.label;
+              var hint = document.createElement("span");
+              hint.className = "hint";
+              hint.textContent = cmd.hint;
+              li.appendChild(name);
+              li.appendChild(hint);
+              li.addEventListener("click", function () {
+                cursor = i;
+                execute();
+              });
+              pList.appendChild(li);
+            });
+          }
+
+          function filter() {
+            var q = pInput.value.trim();
+            matches = commands.filter(function (c) {
+              return fuzzy(q, c.label);
+            });
+            cursor = 0;
+            render();
+          }
+
+          function execute() {
+            var cmd = matches[cursor];
+            palette.close();
+            if (cmd) cmd.run();
+          }
+
+          function openPalette() {
+            pInput.value = "";
+            filter();
+            palette.showModal();
+            pInput.focus();
+          }
+
+          if (pOpen) pOpen.addEventListener("click", openPalette);
+          pInput.addEventListener("input", filter);
+
+          pInput.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              cursor = Math.min(cursor + 1, matches.length - 1);
+              render();
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              cursor = Math.max(cursor - 1, 0);
+              render();
+            } else if (e.key === "Enter") {
+              e.preventDefault();
+              execute();
+            }
+          });
+
+          document.addEventListener("keydown", function (e) {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+              e.preventDefault();
+              if (palette.open) palette.close();
+              else openPalette();
+            }
+          });
+        } else if (palette) {
+          /* No <dialog> support: the trigger would open nothing. */
+          var fallbackOpen = document.getElementById("palette-open");
+          if (fallbackOpen) fallbackOpen.hidden = true;
         }
 
         /* ---- Rotating stack highlight ---- */

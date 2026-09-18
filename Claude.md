@@ -37,6 +37,14 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   a distinct bar on first load. Don't flip the order back.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
+- The command palette (⌘K / Ctrl-K, or the search button in the nav) holds its
+  actions in one `commands` array. The planned terminal easter egg should reuse
+  that array rather than defining its own copy. The nav button stays visible at
+  every width — on mobile `.nav-links` is hidden, so the palette is the only
+  way to jump between sections.
+- Project cards expand via `grid-template-rows: 0fr -> 1fr`, which animates to
+  the natural height without measuring it in JS. Don't swap this for a
+  max-height hack.
 - `html` carries `overflow-x: clip`. Do NOT add `overflow-x: hidden` to `body`:
   together they make body the scroll container, which silently kills the
   sticky nav. Verified — it is not a theoretical concern.
@@ -65,6 +73,10 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - No testimonials section — deliberately dropped, don't add placeholder quotes.
 - Only 2 projects (Warden, SnapSend) — a 3rd is planned, layout should tolerate
   3+ cards without redesign.
+- The expandable project detail panels are THIN. Their content is just the
+  second half of the original card paragraph, split out — no new material was
+  written, since inventing project detail would breach the content rule. They
+  need real writing from Harish (architecture, trade-offs) to earn the expand.
 - Analytics is NOT wired up. Cloudflare Web Analytics / Umami both need a site
   token from Harish's own account, so it can't be added unattended. If the site
   lands on Cloudflare Pages it's a dashboard toggle and needs no code at all.
