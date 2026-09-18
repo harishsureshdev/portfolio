@@ -32,6 +32,11 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   holds the content) so dividers reach both edges. Sections alternate
   background via `.band` (`--band`), and cards sit on `--surface` above it —
   keep those two tokens distinct or cards vanish into the band.
+- The alternation STARTS banded: hero, experience and education carry `.band`.
+  The nav is tinted from `--bg`, so a banded hero is what makes the nav read as
+  a distinct bar on first load. Don't flip the order back.
+- Tech tags are accent text on `--accent-soft`, everywhere they appear
+  (experience and projects both).
 - `html` carries `overflow-x: clip`. Do NOT add `overflow-x: hidden` to `body`:
   together they make body the scroll container, which silently kills the
   sticky nav. Verified — it is not a theoretical concern.
