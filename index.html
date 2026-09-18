@@ -1082,6 +1082,22 @@
         margin-bottom: 18px;
       }
 
+      /* ---------- About ---------- */
+      .about-body {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 28px 48px;
+        max-width: 92ch;
+      }
+      .about-body p {
+        font-size: 16.5px;
+        color: var(--text-soft);
+        line-height: 1.65;
+      }
+      .about-body p + p {
+        margin-top: 18px;
+      }
+
       /* ---------- Education ---------- */
       .edu-item {
         display: grid;
@@ -1089,6 +1105,27 @@
         gap: 24px;
         padding: 24px 0;
         border-top: 1px solid var(--border);
+      }
+      .edu-body {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+      }
+      .edu-mark {
+        flex: 0 0 auto;
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-muted);
+        letter-spacing: 0.02em;
       }
       .edu-when {
         font-family: var(--font-mono);
@@ -1349,6 +1386,7 @@
       <nav>
         <div class="nav-mark">harish<span class="slash">/</span>suresh</div>
         <div class="nav-links">
+          <a href="#about">About</a>
           <a href="#work">Skills</a>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
@@ -1464,7 +1502,38 @@
         </div>
       </section>
 
-      <section id="work">
+      <section id="about">
+        <div class="wrap">
+          <h2 class="reveal">About</h2>
+          <p class="section-sub reveal">How I got here</p>
+          <div class="about-body">
+            <div class="reveal">
+              <p>
+                I'm from Chennai. I spent two years at Sify building Java
+                services against a network of 10,000+ production devices, which
+                is where I got comfortable with the parts of a system that only
+                misbehave under real load.
+              </p>
+              <p>
+                I moved to Bloomington in 2024 for a master's in Computer
+                Science at Indiana University, and I'm based in San Jose now.
+              </p>
+            </div>
+            <div class="reveal" style="--d: 60ms">
+              <p>
+                The work I like best sits close to the data layer —
+                transactions, idempotency, and the failure modes that only show
+                up when requests arrive at the same time. I've done enough
+                frontend to own a feature end to end, but backend is where I'm
+                most useful.
+              </p>
+              <p>I finish my MS in 2026 and I'm looking for SDE roles.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="work">
         <div class="wrap">
           <h2 class="reveal">What I can do</h2>
           <div class="typer reveal" style="--d: 60ms">
@@ -1572,7 +1641,7 @@
         </div>
       </section>
 
-      <section class="band" id="experience">
+      <section id="experience">
         <div class="wrap">
           <h2 class="reveal">Experience</h2>
           <p class="section-sub reveal">Where I've worked, and what I owned</p>
@@ -1693,7 +1762,7 @@
         </div>
       </section>
 
-      <section id="projects">
+      <section class="band" id="projects">
         <div class="wrap">
           <h2 class="reveal">Projects</h2>
           <p class="section-sub reveal">Things I've built on my own time</p>
@@ -1784,31 +1853,37 @@
         </div>
       </section>
 
-      <section class="band" id="education">
+      <section id="education">
         <div class="wrap">
           <h2 class="reveal">Education</h2>
           <div class="edu-item reveal">
             <div class="edu-when">2024 — 2026</div>
-            <div>
-              <div class="edu-title">MS, Computer Science</div>
-              <div class="edu-org">
-                Indiana University Bloomington &nbsp;·&nbsp; GPA 3.93 / 4.0
+            <div class="edu-body">
+              <div class="edu-mark" aria-hidden="true">IU</div>
+              <div>
+                <div class="edu-title">MS, Computer Science</div>
+                <div class="edu-org">
+                  Indiana University Bloomington &nbsp;·&nbsp; GPA 3.93 / 4.0
+                </div>
               </div>
             </div>
           </div>
           <div class="edu-item reveal" style="--d: 60ms">
             <div class="edu-when">2018 — 2022</div>
-            <div>
-              <div class="edu-title">BE, Computer Science</div>
-              <div class="edu-org">
-                Anna University, Chennai &nbsp;·&nbsp; CGPA 8.63 / 10
+            <div class="edu-body">
+              <div class="edu-mark" aria-hidden="true">AU</div>
+              <div>
+                <div class="edu-title">BE, Computer Science</div>
+                <div class="edu-org">
+                  Anna University, Chennai &nbsp;·&nbsp; CGPA 8.63 / 10
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="contact">
+      <section class="band" id="contact">
         <div class="wrap">
           <h2 class="reveal">Contact</h2>
           <p class="section-sub reveal">
@@ -2090,6 +2165,7 @@
             if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
           }
           var commands = [
+            { label: "Go to About", hint: "section", run: function () { go("#about"); } },
             { label: "Go to Skills", hint: "section", run: function () { go("#work"); } },
             { label: "Go to Experience", hint: "section", run: function () { go("#experience"); } },
             { label: "Go to Projects", hint: "section", run: function () { go("#projects"); } },

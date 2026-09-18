@@ -32,7 +32,8 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   holds the content) so dividers reach both edges. Sections alternate
   background via `.band` (`--band`), and cards sit on `--surface` above it —
   keep those two tokens distinct or cards vanish into the band.
-- The alternation STARTS banded: hero, experience and education carry `.band`.
+- The alternation STARTS banded: hero, what-I-do, projects and contact carry
+  `.band`. Adding or removing a section means re-striping all of them.
   The nav is tinted from `--bg`, so a banded hero is what makes the nav read as
   a distinct bar on first load. Don't flip the order back.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
@@ -61,8 +62,12 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - Every claim must be true and traceable to my actual resume/projects — do not
   invent metrics, testimonials, or experience I don't have.
 - Tone: confident, plain, technical. No marketing language, no "passionate about."
-- Sections stay in this order: hero → what I do → experience → projects →
-  education → contact.
+- Sections stay in this order: hero → about → what I do → experience →
+  projects → education → contact.
+- The About prose is a DRAFT written from facts already on the site (Chennai →
+  Sify → Bloomington → San Jose). It is in Harish's voice but not his words —
+  he should rewrite it. Don't add motivation, hobbies or backstory that isn't
+  already evidenced elsewhere on the page.
 - Visual language is modelled on jozsefpallagi.com. Two things from that site
   were deliberately NOT copied and should stay out: a CV download counter
   (there's no real number to show) and a "N+ years" badge (doesn't match the
