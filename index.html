@@ -1139,13 +1139,20 @@
       }
 
       /* ---------- Contact ---------- */
+      /* Two matching panes, same grid as #education — a single 480px card in
+         a 1120px wrap read as fallen to one side. */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 16px;
+      }
       .terminal {
         border: 1px solid var(--border);
         border-radius: var(--radius);
         background: var(--surface);
-        padding: 22px;
-        margin-bottom: 20px;
-        max-width: 480px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
       }
       .terminal-cmd {
         font-family: var(--font-mono);
@@ -1161,7 +1168,7 @@
         font-family: var(--font-mono);
         font-size: 17px;
         color: var(--text);
-        margin-bottom: 18px;
+        margin-bottom: 24px;
         display: flex;
         align-items: center;
         flex-wrap: wrap;
@@ -1191,10 +1198,40 @@
         color: var(--accent);
         border-color: var(--accent);
       }
-      .contact-row {
+      /* Bottom-anchored so both panes share a base line. Stretching it full
+         width was tried and reads far too loud next to the quiet link pane. */
+      .terminal .btn-primary {
+        align-self: flex-start;
+        margin-top: auto;
+      }
+      .link-list {
         display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+        flex-direction: column;
+      }
+      .link-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border);
+        font-family: var(--font-mono);
+        font-size: 14.5px;
+        color: var(--text);
+        transition: color 0.15s ease;
+      }
+      .link-row:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .link-row .meta {
+        font-size: 12.5px;
+        color: var(--text-dim);
+        transition: color 0.15s ease;
+      }
+      .link-row:hover,
+      .link-row:hover .meta {
+        color: var(--accent);
       }
 
       /* ---------- Command palette ---------- */
@@ -1901,47 +1938,54 @@
             Open to SDE roles — happiest working close to backend systems, with
             enough full-stack range to own a feature end to end.
           </p>
-          <div class="terminal reveal">
-            <div class="terminal-cmd">
-              <span class="prompt">$</span>mail --to harish
-            </div>
-            <div class="terminal-addr">
-              <span>harishsuresh.contact@gmail.com</span>
-              <button
-                type="button"
-                id="copy-email"
-                class="copy-btn"
-                data-email="harishsuresh.contact@gmail.com"
-                title="Copy email address"
+          <div class="contact-grid">
+            <div class="terminal reveal">
+              <div class="terminal-cmd">
+                <span class="prompt">$</span>mail --to harish
+              </div>
+              <div class="terminal-addr">
+                <span>harishsuresh.contact@gmail.com</span>
+                <button
+                  type="button"
+                  id="copy-email"
+                  class="copy-btn"
+                  data-email="harishsuresh.contact@gmail.com"
+                  title="Copy email address"
+                >
+                  <span class="copy-label" aria-live="polite">copy</span>
+                </button>
+              </div>
+              <a
+                class="btn btn-primary"
+                href="mailto:harishsuresh.contact@gmail.com"
+                >Open in mail app</a
               >
-                <span class="copy-label" aria-live="polite">copy</span>
-              </button>
             </div>
-            <a
-              class="btn btn-primary"
-              href="mailto:harishsuresh.contact@gmail.com"
-              >Open in mail app</a
-            >
-          </div>
-          <div class="contact-row reveal" style="--d: 60ms">
-            <a
-              class="btn btn-secondary"
-              href="https://github.com/harishs2000"
-              target="_blank"
-              rel="noopener"
-              >GitHub</a
-            >
-            <a
-              class="btn btn-secondary"
-              href="https://linkedin.com/in/harishs163"
-              target="_blank"
-              rel="noopener"
-              >LinkedIn</a
-            >
-            <a class="btn btn-secondary" href="resume.pdf" download
-              >Download resume</a
-            >
-          </div>
+            <div class="terminal reveal" style="--d: 60ms">
+              <div class="terminal-cmd">
+                <span class="prompt">$</span>ls ~/links
+              </div>
+              <div class="link-list">
+                <a
+                  class="link-row"
+                  href="https://github.com/harishs2000"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub<span class="meta">github.com/harishs2000</span></a
+                >
+                <a
+                  class="link-row"
+                  href="https://linkedin.com/in/harishs163"
+                  target="_blank"
+                  rel="noopener"
+                  >LinkedIn<span class="meta">linkedin.com/in/harishs163</span></a
+                >
+                <a class="link-row" href="resume.pdf" download
+                  >Resume<span class="meta">resume.pdf</span></a
+                >
+              </div>
+            </div>
+            </div>
         </div>
       </section>
     </main>

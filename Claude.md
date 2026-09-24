@@ -48,6 +48,13 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   Needs a transparent background.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
+- `#contact` is two matching terminal panes on the same auto-fit grid as
+  `#education`: `$ mail --to harish` on the left (address, copy button,
+  bottom-anchored mail CTA) and `$ ls ~/links` on the right (GitHub, LinkedIn,
+  resume as label/handle rows). It used to be one 480px card in a 1120px wrap
+  with a button row underneath, which read as small and fallen to one side.
+  The mail CTA stays `align-self: flex-start` — stretching it full width was
+  tried on 2026-09-23 and shouts next to the quiet link pane.
 - Email, GitHub and LinkedIn appear in exactly TWO places: the nav icons
   (persistent, reachable from anywhere) and `#contact` (the destination the
   nav link points at). The footer used to repeat all three a third time,
@@ -141,6 +148,23 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   `.hero` keeps `overflow: hidden` to clip the skewed streaks.
 - Zustand is the one stack chip with no logo (Devicon has no Zustand icon).
   Chips degrade to text-only on their own, so this is fine, not a bug.
+
+## Verifying in headless Brave
+
+- Toggling `data-theme` at runtime and reading `getComputedStyle` gives FALSE
+  readings: `body` has `transition: color 0.3s`, and that transition never
+  completes under virtual time, so inherited colours stay pinned at the
+  pre-toggle value while rules with their own `color` snap immediately. It
+  looks exactly like a broken light palette. To check a theme, set
+  `localStorage.theme` in the parent page BEFORE the iframe loads and take a
+  screenshot instead.
+- Headless dispatches no scroll events and never fires post-load `rAF`
+  callbacks, `--screenshot` always captures from the document origin, and the
+  viewport clamps to 500px minimum. Window into a region with an absolutely
+  positioned iframe at a negative `top`, and use `behavior: "instant"` since
+  `scroll-behavior: smooth` swallows programmatic scrolls.
+- Pseudo-elements are invisible to `querySelectorAll('*')` overflow probes —
+  isolate one by injecting `display: none` and re-measuring `scrollWidth`.
 
 ## Workflow preferences
 
