@@ -115,6 +115,7 @@
           "Epilogue", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         --font-mono:
           "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --header-h: 77px;
         --radius: 4.8px;
         --max-w: 1120px;
         color-scheme: dark;
@@ -380,47 +381,34 @@
       }
 
       /* ---------- Hero ---------- */
+      /* The hero OWNS the first screen. Sized to the content it used to end
+         ~250px above the fold, so every load showed a slice of #work's empty
+         top padding under a divider — read as an unexplained black gap. Now
+         the divider lands at the fold, and the slack sits inside the hero,
+         split evenly above and below the content. */
       .hero {
         padding: 104px 0 76px;
         position: relative;
         border-top: none;
         overflow: hidden;
+        min-height: calc(100vh - var(--header-h));
+        min-height: calc(100svh - var(--header-h));
+        display: flex;
+        align-items: center;
       }
-      /* The hero is banded but the section under it is not, so a flat --band
-         stopped dead at #work's border and read as a black strip below a lit
-         hero. Landing on --bg before the seam makes the divider a rule rather
-         than an edge. */
-      .hero.band {
-        background: linear-gradient(
-          to bottom,
-          var(--band) 0%,
-          var(--band) 58%,
-          var(--bg) 100%
-        );
-      }
+
       /* Ported from a 21st.dev React component to plain CSS: a lifted corner
          gradient, skewed accent streaks, a dot grid and film grain. */
       .hero > .wrap {
         position: relative;
         z-index: 1;
+        width: 100%;
       }
       .hero-bg {
         position: absolute;
         inset: 0;
         z-index: 0;
         pointer-events: none;
-        -webkit-mask-image: linear-gradient(
-          to bottom,
-          #000 0%,
-          #000 55%,
-          transparent 96%
-        );
-        mask-image: linear-gradient(
-          to bottom,
-          #000 0%,
-          #000 55%,
-          transparent 96%
-        );
       }
       .hero-bg > * {
         position: absolute;

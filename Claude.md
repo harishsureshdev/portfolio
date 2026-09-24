@@ -34,13 +34,18 @@ not part of the site.
   holds the content) so dividers reach both edges. Sections alternate
   background via `.band` (`--band`), and cards sit on `--surface` above it —
   keep those two tokens distinct or cards vanish into the band.
-- The hero is the one banded section that does NOT hold `--band` flat to its
-  edge: `.hero.band` ramps to `--bg` over its bottom 42%, and `.hero-bg` is
-  masked to fade with it. Without that, the lit hero stopped dead at `#work`'s
-  `border-top` and the unbanded section below read as a black strip rather
-  than as the next section. The top of the hero stays `--band`, which is what
-  keeps the nav reading as its own bar. Keep both halves in step — fading one
-  and not the other puts the pattern back on a visible edge.
+- The hero OWNS the first screen: `min-height: calc(100svh - var(--header-h))`
+  with `align-items: center`, so its bottom divider lands exactly on the fold.
+  Sized to its content it ended ~250px short, and every load showed a slice of
+  `#work`'s empty top padding beneath a divider — which reads as an
+  unexplained black gap, not as the next section. `--header-h` is 77px and the
+  header measures 77px at every width; if that changes, change the token.
+- Fading `.hero.band` into `--bg` was tried for the same problem on
+  2026-09-23 and made it WORSE — a black hero bottom merged with the black
+  padding below into one larger void. It was reverted; the hero band stays
+  flat and the pattern stays unmasked. Don't reach for the gradient again.
+- On phones the hero exceeds one screen (~953px at 390px wide) because the
+  layout stacks. That is correct — `min-height` is a floor, not a cap.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
