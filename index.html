@@ -130,16 +130,16 @@
           --text: #15140f;
           --text-muted: #4b4942;
           --text-soft: #5c5a52;
-          --text-dim: #726e65;
-          --border: #e3dfd5;
-          --border-strong: #cec8bb;
-          --accent: #217a45;
-          --accent-border: #1a6238;
+          --text-dim: #635f56;
+          --border: #cfc8b8;
+          --border-strong: #b3aa99;
+          --accent: #1a6238;
+          --accent-border: #145030;
           --accent-text: #ffffff;
-          --accent-soft: rgba(33, 122, 69, 0.09);
-          --accent-line: rgba(33, 122, 69, 0.3);
+          --accent-soft: rgba(26, 98, 56, 0.09);
+          --accent-line: rgba(26, 98, 56, 0.3);
           --hero-lift: #ffffff;
-          --hero-streak: rgba(33, 122, 69, 0.3);
+          --hero-streak: rgba(26, 98, 56, 0.18);
           --hero-dot: rgba(0, 0, 0, 0.32);
           color-scheme: light;
         }
@@ -153,16 +153,16 @@
         --text: #15140f;
         --text-muted: #4b4942;
         --text-soft: #5c5a52;
-        --text-dim: #726e65;
-        --border: #e3dfd5;
-        --border-strong: #cec8bb;
-        --accent: #217a45;
-        --accent-border: #1a6238;
+        --text-dim: #635f56;
+        --border: #cfc8b8;
+        --border-strong: #b3aa99;
+        --accent: #1a6238;
+        --accent-border: #145030;
         --accent-text: #ffffff;
-        --accent-soft: rgba(33, 122, 69, 0.09);
-        --accent-line: rgba(33, 122, 69, 0.3);
+        --accent-soft: rgba(26, 98, 56, 0.09);
+        --accent-line: rgba(26, 98, 56, 0.3);
         --hero-lift: #ffffff;
-        --hero-streak: rgba(33, 122, 69, 0.3);
+        --hero-streak: rgba(26, 98, 56, 0.18);
         --hero-dot: rgba(0, 0, 0, 0.32);
         color-scheme: light;
       }
@@ -691,10 +691,12 @@
       .btn-primary:hover {
         filter: brightness(1.08);
       }
+      /* A control needs a visible edge. At --border the light-mode secondary
+         button read as floating text rather than a button. */
       .btn-secondary {
         background: var(--surface);
         color: var(--text);
-        border-color: var(--border);
+        border-color: var(--border-strong);
       }
       .btn-secondary:hover {
         border-color: var(--accent-border);
@@ -714,8 +716,23 @@
           flex-direction: column;
           align-items: flex-start;
         }
+        /* The CTAs used to start at y927 on an 844px screen — entirely below
+           the fold. Sending the stack line last pulls them up by its height;
+           the smaller portrait finds the rest. */
+        .hero-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .hero-content .stack-line {
+          order: 1;
+          margin-bottom: 0;
+        }
+        .hero-content .cta-row {
+          margin-bottom: 32px;
+        }
         .portrait {
-          width: 165px;
+          width: 130px;
         }
         section {
           padding: 56px 0;
@@ -758,7 +775,11 @@
         font-weight: 500;
         letter-spacing: -0.025em;
         margin-bottom: 56px;
-        min-height: 1.4em;
+        /* Two lines reserved. At 1.4em a wrapped phrase grew the box by 31px
+           and shoved ~2500px of skills grid up and down every few seconds,
+           forever. The phrases are short enough not to wrap now; this is the
+           belt to that braces. */
+        min-height: 2.8em;
       }
       .typer .lead {
         color: var(--text);
@@ -777,11 +798,18 @@
       }
 
       /* ---------- Skill chips ---------- */
+      /* Columns, not grid: auto-fit rows sized every track to the tallest
+         group, leaving ~108px voids inside the short ones and stranding the
+         last group alone in a three-up row. Multi-column flows to content. */
       .skill-groups {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-        gap: 34px 48px;
-        margin-bottom: 64px;
+        columns: 290px;
+        column-gap: 48px;
+        margin-bottom: 56px;
+      }
+      .skill-groups > div {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 34px;
       }
       .chip-row {
         display: flex;
@@ -804,11 +832,31 @@
           transform 0.2s ease,
           color 0.2s ease;
       }
+      /* Vendor SVGs ship in their brand colours, which made Java red and
+         Redis red the loudest things on a one-accent page. Grayscale only —
+         NOT the brightness(0) trick used on .edu-mark: these logos are filled
+         plates, not transparent line art, so flattening turns TypeScript and
+         JavaScript into solid black squares. */
       .chip img {
         width: 17px;
         height: 17px;
         display: block;
         flex: 0 0 auto;
+        filter: grayscale(1) brightness(1.15);
+        opacity: 0.8;
+      }
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) .chip img {
+          filter: grayscale(1) brightness(0.85);
+          opacity: 0.75;
+        }
+      }
+      :root[data-theme="light"] .chip img {
+        filter: grayscale(1) brightness(0.85);
+        opacity: 0.75;
+      }
+      .chip:hover img {
+        opacity: 1;
       }
       .chip:hover {
         border-color: var(--accent-border);
@@ -1561,6 +1609,42 @@
             ><span class="tcaret"></span>
           </div>
 
+          <div class="group-label reveal">// Beyond the stack</div>
+          <div class="beyond-grid">
+            <div class="beyond-item reveal">
+              <span class="plus">+</span>
+              <h3>Concurrency correctness</h3>
+              <p>
+                Exclusion constraints and idempotency keys, not retry-and-hope.
+              </p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus">+</span>
+              <h3>Async processing</h3>
+              <p>Move heavy work off the request path and onto workers.</p>
+            </div>
+            <div class="beyond-item reveal">
+              <span class="plus">+</span>
+              <h3>Tracing &amp; observability</h3>
+              <p>OpenTelemetry spans that cross the API and worker boundary.</p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus">+</span>
+              <h3>CI/CD pipelines</h3>
+              <p>Automate the path from merge to deployment.</p>
+            </div>
+            <div class="beyond-item reveal">
+              <span class="plus">+</span>
+              <h3>Cloud &amp; containers</h3>
+              <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus">+</span>
+              <h3>AI in the loop</h3>
+              <p>LangChain agents with policy enforced in code, not in prompts.</p>
+            </div>
+          </div>
+
           <div class="skill-groups">
             <div class="reveal">
               <div class="group-label">// Languages</div>
@@ -1637,42 +1721,6 @@
               </div>
             </div>
 </div>
-
-          <div class="group-label reveal">// Beyond the stack</div>
-          <div class="beyond-grid">
-            <div class="beyond-item reveal">
-              <span class="plus">+</span>
-              <h3>Concurrency correctness</h3>
-              <p>
-                Exclusion constraints and idempotency keys, not retry-and-hope.
-              </p>
-            </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus">+</span>
-              <h3>Async processing</h3>
-              <p>Move heavy work off the request path and onto workers.</p>
-            </div>
-            <div class="beyond-item reveal">
-              <span class="plus">+</span>
-              <h3>Tracing &amp; observability</h3>
-              <p>OpenTelemetry spans that cross the API and worker boundary.</p>
-            </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus">+</span>
-              <h3>CI/CD pipelines</h3>
-              <p>Automate the path from merge to deployment.</p>
-            </div>
-            <div class="beyond-item reveal">
-              <span class="plus">+</span>
-              <h3>Cloud &amp; containers</h3>
-              <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
-            </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus">+</span>
-              <h3>AI in the loop</h3>
-              <p>LangChain agents with policy enforced in code, not in prompts.</p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -2362,11 +2410,11 @@
 
         /* ---- Typewriter ---- */
         var phrases = [
-          "build the UI and the service behind it",
+          "build the UI and the API",
           "design idempotent APIs",
-          "keep work off the request path",
+          "keep work off the hot path",
           "enforce agent policy in code",
-          "trace what happens in production",
+          "trace what happens in prod",
         ];
         var target = document.getElementById("typed");
         if (reduced) {

@@ -9,10 +9,22 @@ not part of the site.
 
 ## Design system (do not deviate without asking)
 
-- Dark (default): bg #0B0A08, surface #100F0C, text #E9E8E3, border #282622,
+- Dark (default): bg #0B0A08, surface #1A1813, text #E9E8E3, border #282622,
   accent #4DBF74
-- Light: bg #FAF9F6, surface #FFFFFF, text #15140F, border #E3DFD5,
-  accent #217A45 (darker green — #4DBF74 fails contrast on a light ground)
+- Light: bg #FAF9F6, surface #FFFFFF, text #15140F, border #CFC8B8,
+  border-strong #B3AA99, text-dim #635F56, accent #1A6238
+- The light palette was retuned on 2026-09-24 after a critique measured 32
+  failing text instances. The old values (#217A45 accent, #726E65 text-dim,
+  #E3DFD5 border) put tags, the `current` badge and both `.hl` bold leads at
+  4.12:1 and the hero meta at 4.38:1, against a 4.5 requirement — and the
+  detector could not see the worst of it, because that background only exists
+  after compositing `--accent-soft` over `--band`. They now measure 5.58 and
+  5.49. Do not lighten these back.
+- `.btn-secondary` borders on `--border-strong`, not `--border`: a control
+  needs a visible edge and at --border the light secondary CTA read as
+  floating text. Even at --border-strong it is 2.19:1, short of WCAG 1.4.11's
+  3:1 — reaching that needs roughly #8F8878, dark enough to make the flat
+  thin-border aesthetic look boxy. That trade is unresolved, not overlooked.
 - Every color goes through a CSS custom property defined in both palettes.
   Never hardcode a hex in a rule; add a token instead.
 - Every grey is WARM — they sit on a warm near-black. Never introduce a cool
@@ -44,8 +56,18 @@ not part of the site.
   2026-09-23 and made it WORSE — a black hero bottom merged with the black
   padding below into one larger void. It was reverted; the hero band stays
   flat and the pattern stays unmasked. Don't reach for the gradient again.
-- On phones the hero exceeds one screen (~953px at 390px wide) because the
-  layout stacks. That is correct — `min-height` is a floor, not a cap.
+- On phones the hero exceeds one screen because the layout stacks. That is
+  correct — `min-height` is a floor, not a cap. But the CTAs must stay above
+  the fold: at <=680px `.hero-content` is a flex column with `.stack-line`
+  given `order: 1` so it falls last, and the portrait drops to 130px. That
+  moved `.cta-row` from y927 to y742 on an 844px screen. Before this, a phone
+  visitor had nothing to act on without scrolling.
+- `.typer` reserves `min-height: 2.8em` (two lines). At 1.4em a wrapped phrase
+  grew the box by 31px and shoved ~2500px of skills grid up and down every few
+  seconds, forever — a permanent layout-shift generator directly under the
+  mobile fold. The typewriter phrases are also kept short enough not to wrap;
+  the reserve is the belt to that braces. If you add a phrase, measure the
+  rendered `.typer` height across all of them at 390px and assert it constant.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
@@ -102,7 +124,22 @@ not part of the site.
   together they make body the scroll container, which silently kills the
   sticky nav. Verified — it is not a theoretical concern.
 - Stack logos come from Devicon via jsDelivr, pinned to v2.16.0. Each `<img>`
-  removes itself on error, so a CDN miss degrades to a text-only chip.
+  removes itself on error, so a CDN miss degrades to a text-only chip. THREE
+  chips are text-only, not one: Zustand has no Devicon icon, and
+  `celery-original.svg` and `jwt-original.svg` both 404 at this tag (verified
+  2026-09-24). Check a URL resolves before adding a chip icon.
+- `.chip img` is `grayscale(1)` ONLY — never the `brightness(0)` trick used on
+  `.edu-mark img`. The university marks are transparent line art, so
+  flattening them works; Devicon logos are filled plates, so `brightness(0)`
+  turns TypeScript and JavaScript into solid black squares. Tried and reverted
+  on 2026-09-24. The point of the filter is to stop Java red and Redis red
+  being the only saturated colour on a one-accent page.
+- `.skill-groups` uses CSS multi-column (`columns: 290px`), not grid.
+  `auto-fit` sized every track to the tallest group, leaving ~108px voids
+  inside the short ones and stranding the last group alone in a three-up row.
+- `// Beyond the stack` comes BEFORE the chip grid. Those six one-line
+  opinions are the differentiating content; the tool list is the footnote.
+  Putting the chips first spent the page's biggest block on its weakest claim.
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
 - Motion: sections fade-slide-up on scroll via IntersectionObserver (`.reveal`,
   staggered with `--d`). Hero has its own staggered entrance, the nav mark and
@@ -204,6 +241,15 @@ not part of the site.
   looks exactly like a broken light palette. To check a theme, set
   `localStorage.theme` in the parent page BEFORE the iframe loads and take a
   screenshot instead.
+- Do NOT screenshot through a tall iframe. Wrapping the page in an iframe of
+  e.g. 9000px to window into a lower region makes `100svh` resolve against
+  THAT height, so `.hero`'s `min-height` balloons and its centred content
+  lands thousands of pixels down — the capture comes back looking blank and
+  broken. Set the iframe to the real viewport height and scroll inside it with
+  `contentWindow.scrollTo` instead.
+- Entrance animations can capture mid-flight and screenshot as empty. Inject
+  `*{animation:none!important;transition:none!important}` plus
+  `.reveal{opacity:1!important}` into the frame before capturing.
 - `range.getClientRects()` on a FLEX container returns one rect per child,
   not per line, so "widest rect" silently measures the widest single span.
   `.hero-meta` read as 413px that way when the line was really 712px. Measure
