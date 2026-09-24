@@ -103,6 +103,7 @@
         --text-dim: #8a8880;
         --border: #282622;
         --border-strong: #3a3732;
+        --rail: #66625a;
         --accent: #4dbf74;
         --accent-border: #378d54;
         --accent-text: #0b0a08;
@@ -133,6 +134,7 @@
           --text-dim: #635f56;
           --border: #cfc8b8;
           --border-strong: #b3aa99;
+          --rail: #8f8676;
           --accent: #1a6238;
           --accent-border: #145030;
           --accent-text: #ffffff;
@@ -156,6 +158,7 @@
         --text-dim: #635f56;
         --border: #cfc8b8;
         --border-strong: #b3aa99;
+        --rail: #8f8676;
         --accent: #1a6238;
         --accent-border: #145030;
         --accent-text: #ffffff;
@@ -874,18 +877,73 @@
       }
 
       /* ---------- Experience ---------- */
+      /* A continuous rail with a node per job. The jobs used to be separate
+         blocks with a --border-strong edge at 1.6:1, so past roles sat
+         indented for no visible reason. Spacing is padding, not flex gap, so
+         each job's rail runs into the next and the line reads as one line;
+         --rail is ~3:1 on the band in both themes. */
       .timeline {
         display: flex;
         flex-direction: column;
-        gap: 56px;
       }
       .job {
-        border-left: 2px solid var(--border-strong);
-        padding-left: 30px;
+        position: relative;
+        border-left: 2px solid var(--rail);
+        padding: 0 0 56px 30px;
         transition: border-color 0.3s ease;
+      }
+      .job:last-child {
+        padding-bottom: 0;
       }
       .job.is-current {
         border-left-color: var(--accent);
+      }
+      .job::before {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: calc(clamp(19px, 2vw, 26px) * 0.8 - 7px);
+        width: 14px;
+        height: 14px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid var(--rail);
+        background: var(--band);
+      }
+      .job.is-current::before {
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+      /* Wide screens: bullets hold their 74ch measure on the left and the
+         tags take the column that measure used to leave empty. */
+      @media (min-width: 1000px) {
+        .job {
+          display: grid;
+          grid-template-columns: minmax(0, 680px) minmax(0, 1fr);
+          column-gap: 56px;
+          align-items: start;
+        }
+        .job > .job-id,
+        .job > .job-when {
+          grid-column: 1 / -1;
+        }
+        .job > .job-list {
+          grid-column: 1;
+          margin-bottom: 0;
+        }
+        .job > .tag-row {
+          grid-column: 2;
+          grid-row: 3;
+          padding-top: 3px;
+        }
+        .job > .tag-row::before {
+          content: "// stack";
+          flex-basis: 100%;
+          font-family: var(--font-mono);
+          font-size: 12px;
+          color: var(--text-dim);
+          margin-bottom: 4px;
+        }
       }
       .job-id {
         font-family: var(--font-mono);
@@ -1009,7 +1067,10 @@
           gap: 8px;
         }
         .job {
-          padding-left: 16px;
+          padding-left: 20px;
+        }
+        .job::before {
+          top: 7px;
         }
       }
 
@@ -1538,14 +1599,12 @@
               </div>
               <p class="hero-line">
                 <span class="sr-only"
-                  >I build systems that don’t double-book, survive retries,
-                  trace end to end, refuse unsafe actions, and map 10,000
-                  devices.</span
+                  >Building systems that scale, ship, hold up, and last.</span
                 >
                 <span aria-hidden="true">
-                  <span class="hl-static">I build systems that</span>
+                  <span class="hl-static">Building systems that</span>
                   <span class="hl-cycle"
-                    ><span id="typed">don’t double-book.</span
+                    ><span id="typed">scale.</span
                     ><span class="tcaret"></span
                   ></span>
                 </span>
@@ -2333,17 +2392,10 @@
         }
 
         /* ---- Hero cycler ----
-           Each phrase points at evidence lower on the page: reservation
-           conflicts, idempotency keys, OpenTelemetry, Warden, the Sify graph.
-           The first phrase ships in the HTML, so no-JS and reduced motion both
-           show a complete sentence; the loop starts by deleting it. */
-        var phrases = [
-          "don’t double-book.",
-          "survive retries.",
-          "trace end to end.",
-          "refuse unsafe actions.",
-          "map 10,000 devices.",
-        ];
+           Harish's own wording. The first phrase ships in the HTML, so no-JS
+           and reduced motion both show a complete sentence; the loop starts by
+           deleting it. Keep the .sr-only sentence in step with this list. */
+        var phrases = ["scale.", "ship.", "hold up.", "last."];
         var target = document.getElementById("typed");
         if (target && !reduced) {
           var pi = 0;

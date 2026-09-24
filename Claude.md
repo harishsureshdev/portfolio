@@ -66,13 +66,11 @@ not part of the site.
   and the hero's rotating stack-line underline were both REMOVED on
   2026-09-24 so it isn't competing — three moving things in two screens.
   Don't add a second animated element to either screen.
-- Every cycler phrase must point at evidence lower on the page: "don't
-  double-book" = the reservation APIs (exclusion constraints, HTTP 409),
-  "survive retries" = idempotency keys, "trace end to end" = OpenTelemetry,
-  "refuse unsafe actions" = Warden, "map 10,000 devices" = the Sify graph.
-  Harish proposed "scale / ship / hold up / last"; those were set aside as
-  category-generic and unprovable, and "ship" doesn't work in the sentence.
-  A new phrase needs a named piece of evidence, not a vibe.
+- The cycler reads "Building systems that / scale. ship. hold up. last." —
+  Harish's own wording, chosen on 2026-09-24 over evidence-mapped
+  alternatives ("don't double-book", "are safe to retry", "ask before they
+  act"…) after the trade-off was put to him twice. It is his call. Don't
+  re-pitch it; if the list changes, keep the `.sr-only` sentence in step.
 - The cycling line is `white-space: nowrap` with `min-height: 1.3em`, so no
   phrase can change the box's size. Its predecessor reserved too little and
   shifted ~2500px of page by 31px every few seconds, forever. The first
@@ -98,6 +96,17 @@ not part of the site.
   Needs a transparent background.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
+- Experience is a continuous timeline. `.job` carries a 2px `--rail` left
+  border (accent on the current role) and a 14px node in `::before`, hollow
+  for past roles and filled for the current one. Jobs are spaced with
+  padding-bottom, not flex gap, so each job's rail runs into the next. The
+  old rail was `--border-strong` at 1.6:1 — invisible — which left past roles
+  indented for no visible reason. `--rail` is #66625A dark / #8F8676 light,
+  ~3:1 on the band.
+- At >=1000px each `.job` is a grid: bullets hold their 74ch column on the
+  left and the tag row takes the right column under a CSS-generated
+  `// stack` label, filling the space the measure cap used to leave empty.
+  Below that, tags fall back under the bullets.
 - The hero meta says "Indiana University" where `#education` and the
   JSON-LD carry "Indiana University Bloomington" in full — shortened so the
   smallest type in the hero doesn't make its longest line.
