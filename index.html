@@ -1315,20 +1315,34 @@
         border-top: 1px solid var(--border);
         padding: 28px 0 40px;
       }
-      .footer-links {
+      /* Email, GitHub and LinkedIn all live in #contact directly above, and
+         the icons live in the nav, so the footer repeats neither. */
+      footer .wrap {
         display: flex;
-        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
         flex-wrap: wrap;
-        margin-bottom: 14px;
       }
-      .footer-links a {
+      .footer-mark {
         font-family: var(--font-mono);
-        font-size: 13px;
-        color: var(--text-muted);
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-dim);
+        letter-spacing: 0.01em;
+        display: inline-flex;
+        align-items: center;
         transition: color 0.15s ease;
       }
-      .footer-links a:hover {
+      .footer-mark:hover {
+        color: var(--text);
+      }
+      .footer-mark .slash {
         color: var(--accent);
+        font-size: 1.45em;
+        font-weight: 700;
+        margin: 0 2px;
+        transform: translateY(-0.5px);
       }
       .footer-note {
         font-family: var(--font-mono);
@@ -1934,23 +1948,9 @@
 
     <footer>
       <div class="wrap">
-        <div class="footer-links">
-          <a href="mailto:harishsuresh.contact@gmail.com"
-            >harishsuresh.contact@gmail.com</a
-          >
-          <a
-            href="https://github.com/harishs2000"
-            target="_blank"
-            rel="noopener"
-            >github.com/harishs2000</a
-          >
-          <a
-            href="https://linkedin.com/in/harishs163"
-            target="_blank"
-            rel="noopener"
-            >linkedin.com/in/harishs163</a
-          >
-        </div>
+        <a class="footer-mark" href="#top" aria-label="Back to top"
+          >harish<span class="slash">/</span>suresh</a
+        >
         <div class="footer-note">© 2026 Harish Suresh. Built by hand.</div>
       </div>
     </footer>

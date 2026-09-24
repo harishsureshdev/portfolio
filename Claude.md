@@ -48,6 +48,12 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   Needs a transparent background.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
+- Email, GitHub and LinkedIn appear in exactly TWO places: the nav icons
+  (persistent, reachable from anywhere) and `#contact` (the destination the
+  nav link points at). The footer used to repeat all three a third time,
+  directly below the contact section — removed 2026-09-23. The footer is now
+  just the `harish/suresh` mark, which doubles as back-to-top, and the
+  copyright line. Don't put contact links back into it.
 - The command palette (⌘K / Ctrl-K, or the search button in the nav) holds its
   actions in one `commands` array. The planned terminal easter egg should reuse
   that array rather than defining its own copy. The nav button stays visible at
