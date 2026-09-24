@@ -127,7 +127,16 @@ not part of the site.
   2. Home Credit Default Risk is on the site but NOT in the committed
      `resume.pdf` — that file is STALE relative to the newer resume he has.
      Replacing `resume.pdf` is still outstanding.
-- Tone: confident, plain, technical. No marketing language, no "passionate about."
+- Tone: confident, plain, technical. No marketing language, no "passionate
+  about." This rule gets broken by DEGREES, not in one obvious step — the hero
+  summary was rewritten on 2026-09-23 and came back reading as a brochure.
+  What counted as marketing there, all of it cut: "build products end to end",
+  "the React and TypeScript people actually touch", "put LLMs on live paths",
+  "I like the parts people skip", "systems that hold up once real traffic hits
+  them". The through-line is claims about ATTITUDE and RESILIENCE that nothing
+  on the page can verify. State the stack and name the systems; let
+  #experience carry the evidence. The summary is ~47 words and should stay in
+  that range.
 - Sections stay in this order: hero → what I do → experience → projects →
   education → contact.
 - There is deliberately NO About section. One was built and removed on
