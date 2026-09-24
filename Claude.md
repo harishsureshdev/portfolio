@@ -166,12 +166,16 @@ not part of the site.
 - `.skill-groups` uses CSS multi-column (`columns: 290px`), not grid.
   `auto-fit` sized every track to the tallest group, leaving ~108px voids
   inside the short ones and stranding the last group alone in a three-up row.
-- `// How I build` comes BEFORE the chip grid. Those six one-line opinions
-  are the differentiating content; the tool list is the footnote. (It was
-  called "Beyond the stack" until it moved in front of the stack, where the
-  name stopped making sense.) The grid closes with its own bottom rule and a
-  64px margin — its items carry top rules only, so without that the list
-  never ends and the chips crowd straight up against it.
+- The skills section is headed "How I build": tool chips first, then the six
+  principles under `// Beyond the stack`. Harish chose this order on
+  2026-09-24. Principles-first was tried the same day and read as a weak
+  opener — six short lines with hairlines are the quietest block on the page.
+  He was also shown a rewritten set of principles (stance + proof, e.g. "Let
+  the database say no", "Retries should be boring") and declined them; the
+  ORIGINAL six stay. Don't re-pitch either.
+- `.beyond-item` is a grid (hanging `+` gutter) with `align-content: start`.
+  Row neighbours stretch to equal height, and without it the shorter item
+  spread the slack between its heading and its text.
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
 - Motion: sections fade-slide-up on scroll via IntersectionObserver (`.reveal`,
   staggered with `--d`). Hero has its own staggered entrance, the nav mark and
@@ -218,7 +222,7 @@ not part of the site.
   on the page can verify. State the stack and name the systems; let
   #experience carry the evidence. The summary is ~47 words and should stay in
   that range.
-- Sections stay in this order: hero → what I do → experience → projects →
+- Sections stay in this order: hero → how I build → experience → projects →
   education → contact.
 - There is deliberately NO About section. One was built and removed on
   2026-09-18 after auditing it: of six statements, five already appeared

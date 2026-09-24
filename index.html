@@ -826,15 +826,16 @@
         transform: translateY(-2px);
       }
 
-      /* ---------- How I build ---------- */
-      /* Items carry top rules only, so the grid closes itself with a bottom
-         rule; the margin separates the approaches from the tool list. */
+      /* ---------- Beyond the stack ---------- */
+      /* Follows the tool chips and closes the section. The label carries the
+         separation from the chips above; the section's own divider closes it. */
+      .beyond-label {
+        margin-top: 30px;
+      }
       .beyond-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0 72px;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 64px;
       }
       /* The + hangs in a gutter beside the heading instead of sitting alone
          on its own line above it, where it read as stray punctuation. */
@@ -843,6 +844,9 @@
         border-top: 1px solid var(--border);
         display: grid;
         grid-template-columns: 20px 1fr;
+        /* Row neighbours stretch to equal height; without this the shorter
+           item spreads the slack between its heading and text. */
+        align-content: start;
       }
       .beyond-item > * {
         grid-column: 2;
@@ -1630,43 +1634,7 @@
 
       <section id="work">
         <div class="wrap">
-          <h2 class="reveal work-title">What I can do</h2>
-          <div class="group-label reveal">// How I build</div>
-          <div class="beyond-grid">
-            <div class="beyond-item reveal">
-              <span class="plus" aria-hidden="true">+</span>
-              <h3>Concurrency correctness</h3>
-              <p>
-                Exclusion constraints and idempotency keys, not retry-and-hope.
-              </p>
-            </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus" aria-hidden="true">+</span>
-              <h3>Async processing</h3>
-              <p>Move heavy work off the request path and onto workers.</p>
-            </div>
-            <div class="beyond-item reveal">
-              <span class="plus" aria-hidden="true">+</span>
-              <h3>Tracing &amp; observability</h3>
-              <p>OpenTelemetry spans that cross the API and worker boundary.</p>
-            </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus" aria-hidden="true">+</span>
-              <h3>CI/CD pipelines</h3>
-              <p>Automate the path from merge to deployment.</p>
-            </div>
-            <div class="beyond-item reveal">
-              <span class="plus" aria-hidden="true">+</span>
-              <h3>Cloud &amp; containers</h3>
-              <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
-            </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus" aria-hidden="true">+</span>
-              <h3>AI in the loop</h3>
-              <p>LangChain agents with policy enforced in code, not in prompts.</p>
-            </div>
-          </div>
-
+          <h2 class="reveal work-title">How I build</h2>
           <div class="skill-groups">
             <div class="reveal">
               <div class="group-label">// Languages</div>
@@ -1743,6 +1711,42 @@
               </div>
             </div>
 </div>
+
+          <div class="group-label reveal beyond-label">// Beyond the stack</div>
+          <div class="beyond-grid">
+            <div class="beyond-item reveal">
+              <span class="plus" aria-hidden="true">+</span>
+              <h3>Concurrency correctness</h3>
+              <p>
+                Exclusion constraints and idempotency keys, not retry-and-hope.
+              </p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus" aria-hidden="true">+</span>
+              <h3>Async processing</h3>
+              <p>Move heavy work off the request path and onto workers.</p>
+            </div>
+            <div class="beyond-item reveal">
+              <span class="plus" aria-hidden="true">+</span>
+              <h3>Tracing &amp; observability</h3>
+              <p>OpenTelemetry spans that cross the API and worker boundary.</p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus" aria-hidden="true">+</span>
+              <h3>CI/CD pipelines</h3>
+              <p>Automate the path from merge to deployment.</p>
+            </div>
+            <div class="beyond-item reveal">
+              <span class="plus" aria-hidden="true">+</span>
+              <h3>Cloud &amp; containers</h3>
+              <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
+            </div>
+            <div class="beyond-item reveal" style="--d: 60ms">
+              <span class="plus" aria-hidden="true">+</span>
+              <h3>AI in the loop</h3>
+              <p>LangChain agents with policy enforced in code, not in prompts.</p>
+            </div>
+          </div>
         </div>
       </section>
 
