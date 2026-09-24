@@ -606,57 +606,50 @@
       .hero p.summary {
         font-size: 17px;
         color: var(--text-soft);
-        /* Sized to land on roughly the same right edge as .hero-meta above it;
-           56ch left the paragraph 170px short of the meta line, so the
-           smallest type on the block made its longest line. */
         max-width: 64ch;
         margin-bottom: 28px;
       }
-      .stack-line {
-        margin-bottom: 32px;
-      }
-      .stack-line .stack-label {
+      /* One authored moment: this is the only thing in the first two screens
+         that moves. The section typewriter and the hero stack underline were
+         removed so it isn't competing. The cycling line is nowrap with a
+         fixed min-height, so no phrase can ever change the box's size. */
+      .hero-line {
         font-family: var(--font-mono);
-        font-size: 13px;
-        color: var(--text-dim);
-        display: block;
-        margin-bottom: 8px;
-      }
-      .stack-list {
-        position: relative;
-        font-family: var(--font-mono);
-        font-size: 19px;
-        color: var(--text-muted);
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 12px;
-        padding-bottom: 8px;
-      }
-      .stack-item {
+        font-size: clamp(20px, 2.4vw, 32px);
         font-weight: 500;
-        transition: color 0.45s ease;
+        letter-spacing: -0.025em;
+        line-height: 1.3;
+        color: var(--text);
+        margin-bottom: 18px;
       }
-      .stack-item.is-active {
+      .hero-line .hl-static,
+      .hero-line .hl-cycle {
+        display: block;
+      }
+      .hero-line .hl-cycle {
         color: var(--accent);
+        white-space: nowrap;
+        min-height: 1.3em;
       }
-      /* Width lags behind the slide so the bar stretches as it travels,
-         rather than teleporting between items. */
-      .stack-underline {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 0;
-        height: 2px;
+      .tcaret {
+        display: inline-block;
+        width: 2px;
+        height: 0.95em;
+        vertical-align: text-bottom;
         background: var(--accent);
-        pointer-events: none;
-        transition:
-          transform 0.5s cubic-bezier(0.66, 0, 0.34, 1),
-          width 0.62s cubic-bezier(0.66, 0, 0.34, 1);
+        margin-left: 3px;
+        animation: blink 1.1s steps(1) infinite;
       }
-      .stack-list .sep {
-        color: var(--text-dim);
-        opacity: 0.6;
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
       }
       .cta-row {
         display: flex;
@@ -710,27 +703,13 @@
           padding-right: 20px;
         }
         .hero {
-          padding: 56px 0 56px;
+          padding: 40px 0 48px;
         }
         .hero-inner {
           flex-direction: column;
           align-items: flex-start;
         }
-        /* The CTAs used to start at y927 on an 844px screen — entirely below
-           the fold. Sending the stack line last pulls them up by its height;
-           the smaller portrait finds the rest. */
-        .hero-content {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .hero-content .stack-line {
-          order: 1;
-          margin-bottom: 0;
-        }
-        .hero-content .cta-row {
-          margin-bottom: 32px;
-        }
+        /* Smaller portrait keeps the CTAs above the fold on a phone. */
         .portrait {
           width: 130px;
         }
@@ -768,38 +747,8 @@
         margin-bottom: 14px;
       }
 
-      /* ---------- Typewriter ---------- */
-      .typer {
-        font-family: var(--font-mono);
-        font-size: clamp(20px, 2.6vw, 32px);
-        font-weight: 500;
-        letter-spacing: -0.025em;
-        margin-bottom: 56px;
-        /* One line on desktop, where no phrase wraps. Phones reserve two
-           (below): at 1.4em a wrapped phrase grew the box by 31px and shoved
-           the whole skills grid up and down every few seconds. Reserving two
-           lines everywhere left an empty line above the section on desktop. */
-        min-height: 1.4em;
-      }
-      @media (max-width: 680px) {
-        .typer {
-          min-height: 2.8em;
-        }
-      }
-      .typer .lead {
-        color: var(--text);
-      }
-      .typer .typed {
-        color: var(--accent);
-      }
-      .typer .tcaret {
-        display: inline-block;
-        width: 2px;
-        height: 0.95em;
-        vertical-align: text-bottom;
-        background: var(--accent);
-        margin-left: 3px;
-        animation: blink 1.1s steps(1) infinite;
+      .work-title {
+        margin-bottom: 40px;
       }
 
       /* ---------- Skill chips ---------- */
@@ -878,16 +827,24 @@
         border-bottom: 1px solid var(--border);
         margin-bottom: 64px;
       }
+      /* The + hangs in a gutter beside the heading instead of sitting alone
+         on its own line above it, where it read as stray punctuation. */
       .beyond-item {
         padding: 26px 0;
         border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 20px 1fr;
+      }
+      .beyond-item > * {
+        grid-column: 2;
       }
       .beyond-item .plus {
+        grid-column: 1;
+        grid-row: 1;
         font-family: var(--font-mono);
         color: var(--accent);
-        font-size: 13px;
-        display: block;
-        margin-bottom: 8px;
+        font-size: 18px;
+        line-height: 1.35;
       }
       .beyond-item h3 {
         font-family: var(--font-mono);
@@ -907,9 +864,6 @@
         }
         .skill-groups {
           gap: 26px;
-        }
-        .typer {
-          font-size: 19px;
         }
       }
 
@@ -997,6 +951,8 @@
         line-height: 1.6;
         padding-left: 22px;
         position: relative;
+        /* Uncapped, the bullets ran ~119 characters per line. */
+        max-width: 74ch;
       }
       .job-list li::before {
         content: "+";
@@ -1574,26 +1530,24 @@
                 <span>open to relocation</span><span class="dot">·</span>
                 <span>MS Computer Science, Indiana University</span>
               </div>
-              <p class="summary">
-                I work across the stack, with most of my depth in the backend —
-                React and TypeScript in front, Java and Python services behind
-                them, Postgres and Redis underneath. Most recently: network
-                automation across 10,000+ devices, and a LangChain campaign
-                planner running in a live ad marketplace.
+              <p class="hero-line">
+                <span class="sr-only"
+                  >I build systems that don’t double-book, survive retries,
+                  trace end to end, refuse unsafe actions, and map 10,000
+                  devices.</span
+                >
+                <span aria-hidden="true">
+                  <span class="hl-static">I build systems that</span>
+                  <span class="hl-cycle"
+                    ><span id="typed">don’t double-book.</span
+                    ><span class="tcaret"></span
+                  ></span>
+                </span>
               </p>
-              <div class="stack-line">
-                <span class="stack-label">stack &rsaquo;</span>
-                <div class="stack-list" id="stack-list">
-                  <span class="stack-item">Java</span><span class="sep">/</span>
-                  <span class="stack-item">Spring Boot</span
-                  ><span class="sep">/</span>
-                  <span class="stack-item">FastAPI</span
-                  ><span class="sep">/</span>
-                  <span class="stack-item">React</span><span class="sep">/</span>
-                  <span class="stack-item">PostgreSQL</span>
-                  <span class="stack-underline" id="stack-underline"></span>
-                </div>
-              </div>
+              <p class="summary">
+                Full-stack, deepest in the backend. React and TypeScript in
+                front; Java, Python and Postgres behind.
+              </p>
               <div class="cta-row">
                 <a class="btn btn-primary" href="resume.pdf" download
                   >Download resume</a
@@ -1611,43 +1565,38 @@
 
       <section id="work">
         <div class="wrap">
-          <h2 class="reveal">What I can do</h2>
-          <div class="typer reveal" style="--d: 60ms">
-            <span class="lead">I </span><span class="typed" id="typed"></span
-            ><span class="tcaret"></span>
-          </div>
-
+          <h2 class="reveal work-title">What I can do</h2>
           <div class="group-label reveal">// How I build</div>
           <div class="beyond-grid">
             <div class="beyond-item reveal">
-              <span class="plus">+</span>
+              <span class="plus" aria-hidden="true">+</span>
               <h3>Concurrency correctness</h3>
               <p>
                 Exclusion constraints and idempotency keys, not retry-and-hope.
               </p>
             </div>
             <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus">+</span>
+              <span class="plus" aria-hidden="true">+</span>
               <h3>Async processing</h3>
               <p>Move heavy work off the request path and onto workers.</p>
             </div>
             <div class="beyond-item reveal">
-              <span class="plus">+</span>
+              <span class="plus" aria-hidden="true">+</span>
               <h3>Tracing &amp; observability</h3>
               <p>OpenTelemetry spans that cross the API and worker boundary.</p>
             </div>
             <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus">+</span>
+              <span class="plus" aria-hidden="true">+</span>
               <h3>CI/CD pipelines</h3>
               <p>Automate the path from merge to deployment.</p>
             </div>
             <div class="beyond-item reveal">
-              <span class="plus">+</span>
+              <span class="plus" aria-hidden="true">+</span>
               <h3>Cloud &amp; containers</h3>
               <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
             </div>
             <div class="beyond-item reveal" style="--d: 60ms">
-              <span class="plus">+</span>
+              <span class="plus" aria-hidden="true">+</span>
               <h3>AI in the loop</h3>
               <p>LangChain agents with policy enforced in code, not in prompts.</p>
             </div>
@@ -1739,9 +1688,11 @@
           <div class="timeline">
             <article class="job is-current reveal">
               <h3 class="job-id">
-                <span class="org">heartland</span
-                ><span class="role">/software-engineer</span>
-                <span class="ext">.py</span>
+                <span class="job-path"
+                  ><span class="org">heartland</span
+                  ><span class="role">/software-engineer</span
+                  ><span class="ext">.py</span></span
+                >
                 <span class="badge-current"><span class="dot"></span>current</span>
               </h3>
               <div class="job-when">Jun 2026 — present · Remote · Adtua engagement</div>
@@ -1786,9 +1737,11 @@
 
             <article class="job reveal">
               <h3 class="job-id">
-                <span class="org">sify</span
-                ><span class="role">/software-developer</span>
-                <span class="ext">.java</span>
+                <span class="job-path"
+                  ><span class="org">sify</span
+                  ><span class="role">/software-developer</span
+                  ><span class="ext">.java</span></span
+                >
               </h3>
               <div class="job-when">Aug 2022 — Jul 2024 · Chennai, India</div>
               <ul class="job-list">
@@ -1832,9 +1785,11 @@
 
             <article class="job reveal">
               <h3 class="job-id">
-                <span class="org">sirius</span
-                ><span class="role">/jr-software-developer</span>
-                <span class="ext">.js</span>
+                <span class="job-path"
+                  ><span class="org">sirius</span
+                  ><span class="role">/jr-software-developer</span
+                  ><span class="ext">.js</span></span
+                >
               </h3>
               <div class="job-when">May 2020 — Aug 2020 · Chennai, India</div>
               <ul class="job-list">
@@ -2371,66 +2326,23 @@
           if (fallbackOpen) fallbackOpen.hidden = true;
         }
 
-        /* ---- Rotating stack highlight ---- */
-        var stackItems = document.querySelectorAll("#stack-list .stack-item");
-        var underline = document.getElementById("stack-underline");
-        if (stackItems.length && underline) {
-          var si = 0;
-          var placed = false;
-
-          function place() {
-            var el = stackItems[si];
-            underline.style.width = el.offsetWidth + "px";
-            underline.style.transform =
-              "translate(" +
-              el.offsetLeft +
-              "px," +
-              (el.offsetTop + el.offsetHeight) +
-              "px)";
-          }
-          function activate(next) {
-            stackItems[si].classList.remove("is-active");
-            si = next;
-            stackItems[si].classList.add("is-active");
-            place();
-          }
-          function start() {
-            if (placed) return;
-            placed = true;
-            stackItems[0].classList.add("is-active");
-            place();
-            if (!reduced) {
-              setInterval(function () {
-                activate((si + 1) % stackItems.length);
-              }, 1700);
-            }
-          }
-
-          /* Widths are only correct once the mono face has loaded. */
-          if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(start);
-          }
-          window.addEventListener("load", start);
-          window.addEventListener("resize", function () {
-            if (placed) place();
-          });
-        }
-
-        /* ---- Typewriter ---- */
+        /* ---- Hero cycler ----
+           Each phrase points at evidence lower on the page: reservation
+           conflicts, idempotency keys, OpenTelemetry, Warden, the Sify graph.
+           The first phrase ships in the HTML, so no-JS and reduced motion both
+           show a complete sentence; the loop starts by deleting it. */
         var phrases = [
-          "build the UI and the API",
-          "design idempotent APIs",
-          "keep work off the hot path",
-          "enforce agent policy in code",
-          "trace what happens in prod",
+          "don’t double-book.",
+          "survive retries.",
+          "trace end to end.",
+          "refuse unsafe actions.",
+          "map 10,000 devices.",
         ];
         var target = document.getElementById("typed");
-        if (reduced) {
-          target.textContent = phrases[0];
-        } else {
+        if (target && !reduced) {
           var pi = 0;
-          var ci = 0;
-          var deleting = false;
+          var ci = phrases[0].length;
+          var deleting = true;
           function tick() {
             var phrase = phrases[pi];
             if (!deleting) {
@@ -2451,7 +2363,7 @@
             }
             return setTimeout(tick, 28);
           }
-          setTimeout(tick, 700);
+          setTimeout(tick, 2600);
         }
       })();
     </script>

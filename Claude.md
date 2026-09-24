@@ -58,18 +58,30 @@ not part of the site.
   flat and the pattern stays unmasked. Don't reach for the gradient again.
 - On phones the hero exceeds one screen because the layout stacks. That is
   correct — `min-height` is a floor, not a cap. But the CTAs must stay above
-  the fold: at <=680px `.hero-content` is a flex column with `.stack-line`
-  given `order: 1` so it falls last, and the portrait drops to 130px. That
-  moved `.cta-row` from y927 to y742 on an 844px screen. Before this, a phone
-  visitor had nothing to act on without scrolling.
-- `.typer` reserves `min-height: 2.8em` (two lines) ON PHONES ONLY; desktop
-  is 1.4em. Reserving two lines everywhere left an empty line's worth of gap
-  above the next block on desktop, where no phrase wraps. At 1.4em a wrapped phrase
-  grew the box by 31px and shoved ~2500px of skills grid up and down every few
-  seconds, forever — a permanent layout-shift generator directly under the
-  mobile fold. The typewriter phrases are also kept short enough not to wrap;
-  the reserve is the belt to that braces. If you add a phrase, measure the
-  rendered `.typer` height across all of them at 390px and assert it constant.
+  the fold, including on a 360x740 Android: the portrait drops to 130px and
+  mobile hero padding is 40/48px. Measure `.cta-row`'s BOTTOM edge against
+  the viewport height at 390x844 and 360x740 after any hero change.
+- The hero has ONE moving thing: the cycling line "I build systems that /
+  <phrase>". The section typewriter that used to sit under "What I can do"
+  and the hero's rotating stack-line underline were both REMOVED on
+  2026-09-24 so it isn't competing — three moving things in two screens.
+  Don't add a second animated element to either screen.
+- Every cycler phrase must point at evidence lower on the page: "don't
+  double-book" = the reservation APIs (exclusion constraints, HTTP 409),
+  "survive retries" = idempotency keys, "trace end to end" = OpenTelemetry,
+  "refuse unsafe actions" = Warden, "map 10,000 devices" = the Sify graph.
+  Harish proposed "scale / ship / hold up / last"; those were set aside as
+  category-generic and unprovable, and "ship" doesn't work in the sentence.
+  A new phrase needs a named piece of evidence, not a vibe.
+- The cycling line is `white-space: nowrap` with `min-height: 1.3em`, so no
+  phrase can change the box's size. Its predecessor reserved too little and
+  shifted ~2500px of page by 31px every few seconds, forever. The first
+  phrase ships in the HTML and the loop starts by deleting it, so no-JS and
+  reduced motion both show a complete sentence. Screen readers get the full
+  list once from an `.sr-only` span; the animated copy is `aria-hidden`.
+- The hero summary is ONE short line that carries the tech keywords
+  (React, TypeScript, Java, Python, Postgres), because the stack line that
+  used to hold them is gone and recruiters scan the first screen for them.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
@@ -86,13 +98,19 @@ not part of the site.
   Needs a transparent background.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
-- In the hero, `.hero-meta` and `.summary` are tuned to end on roughly the
-  same right edge (615px and 619px in a 751px column). Before 2026-09-23 the
-  meta ran 712px against a 541px paragraph, so the SMALLEST type on the block
-  made its LONGEST line and the three right edges staggered. Two things hold
-  it: the paragraph is `64ch`, not `56ch`, and the meta says "Indiana
-  University" where `#education` and the JSON-LD carry "Indiana University
-  Bloomington" in full. Lengthening either one re-opens the gap.
+- The hero meta says "Indiana University" where `#education` and the
+  JSON-LD carry "Indiana University Bloomington" in full — shortened so the
+  smallest type in the hero doesn't make its longest line.
+- `.job-id` wraps org + role + ext in one inline `.job-path` span so the
+  filename reads as a single token. `.job-id` is a flex row with a 10px gap,
+  and when the three spans were direct flex children it rendered as
+  "heartland /software-engineer .py". Keep the gap between the path and the
+  `current` badge only.
+- `.job-list li` is capped at 74ch; uncapped, bullets ran ~119 characters
+  per line.
+- The `+` in `// How I build` items hangs in a 20px grid gutter level with
+  the heading, and is `aria-hidden`. On its own line above the heading it
+  read as stray punctuation and screen readers announced "plus" each time.
 - `#contact` is two matching terminal panes on the same auto-fit grid as
   `#education`: `$ mail --to harish` on the left (address, copy button,
   bottom-anchored mail CTA) and `$ ls ~/links` on the right (GitHub, LinkedIn,
@@ -148,7 +166,7 @@ not part of the site.
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
 - Motion: sections fade-slide-up on scroll via IntersectionObserver (`.reveal`,
   staggered with `--d`). Hero has its own staggered entrance, the nav mark and
-  typewriter share a blinking caret, and the current-role dot pulses. Every one
+  hero cycler share a blinking caret, and the current-role dot pulses. Every one
   of these is disabled under `prefers-reduced-motion` — keep it that way.
 
 ## Content rules
@@ -160,8 +178,8 @@ not part of the site.
   ship React, and LangChain/Qdrant/RAG work had no billing anywhere. Do not
   quietly narrow it back to backend.
 - That positioning is stated in EIGHT places and they must agree. Changing one
-  means changing all: the hero `.summary`, the `#contact` section-sub, the
-  typewriter `phrases` array, the hero stack line, `meta[name=description]`,
+  means changing all: the hero `.summary`, the hero cycler `phrases` array
+  (plus its `.sr-only` twin), the `#contact` section-sub, `meta[name=description]`,
   `og:description`, `twitter:description`, `og:image:alt` — and the role line
   rendered INSIDE `assets/og.png`, which is an image and will silently keep
   saying the old thing.
