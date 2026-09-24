@@ -381,15 +381,25 @@
 
       /* ---------- Hero ---------- */
       .hero {
-        padding: 104px 0 96px;
+        padding: 104px 0 76px;
         position: relative;
         border-top: none;
+        overflow: hidden;
+      }
+      /* The hero is banded but the section under it is not, so a flat --band
+         stopped dead at #work's border and read as a black strip below a lit
+         hero. Landing on --bg before the seam makes the divider a rule rather
+         than an edge. */
+      .hero.band {
+        background: linear-gradient(
+          to bottom,
+          var(--band) 0%,
+          var(--band) 58%,
+          var(--bg) 100%
+        );
       }
       /* Ported from a 21st.dev React component to plain CSS: a lifted corner
          gradient, skewed accent streaks, a dot grid and film grain. */
-      .hero {
-        overflow: hidden;
-      }
       .hero > .wrap {
         position: relative;
         z-index: 1;
@@ -399,6 +409,18 @@
         inset: 0;
         z-index: 0;
         pointer-events: none;
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          #000 0%,
+          #000 55%,
+          transparent 96%
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          #000 0%,
+          #000 55%,
+          transparent 96%
+        );
       }
       .hero-bg > * {
         position: absolute;

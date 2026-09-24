@@ -34,6 +34,13 @@ not part of the site.
   holds the content) so dividers reach both edges. Sections alternate
   background via `.band` (`--band`), and cards sit on `--surface` above it —
   keep those two tokens distinct or cards vanish into the band.
+- The hero is the one banded section that does NOT hold `--band` flat to its
+  edge: `.hero.band` ramps to `--bg` over its bottom 42%, and `.hero-bg` is
+  masked to fade with it. Without that, the lit hero stopped dead at `#work`'s
+  `border-top` and the unbanded section below read as a black strip rather
+  than as the next section. The top of the hero stays `--band`, which is what
+  keeps the nav reading as its own bar. Keep both halves in step — fading one
+  and not the other puts the pattern back on a visible edge.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
