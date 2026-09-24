@@ -35,10 +35,16 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent.
-- Education marks are `IU` / `AU` monogram tiles. Dropping an `<img>` inside
-  `.edu-mark` swaps in a real logo: `brightness(0)` flattens it to solid black
-  and `invert(1)` lifts it to white for dark mode, so any source file renders
-  true monochrome. Needs a transparent background to work.
+- Education marks: Indiana uses the real trident (`assets/iu.png`), Anna keeps
+  an `AU` monogram. Both sit in identical bordered tiles, so mixing a logo with
+  a monogram doesn't read as inconsistent. `.edu-mark img` renders any source
+  file true monochrome — `brightness(0)` flattens it to solid black, `invert(1)`
+  lifts it to white for dark mode. Needs a transparent background.
+- `assets/au.png` (the Anna University crest) is kept but DELIBERATELY UNUSED.
+  It was tried and reverted: the crest packs a gear ring, circular text, a
+  factory, a hatched book and a banner, all of which collapse into an
+  illegible blob at 28px. Don't wire it back in — detailed crests need ~64px+
+  to read, which would break the education row rhythm.
   The nav is tinted from `--bg`, so a banded hero is what makes the nav read as
   a distinct bar on first load. Don't flip the order back.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
