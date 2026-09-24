@@ -62,7 +62,9 @@ not part of the site.
   given `order: 1` so it falls last, and the portrait drops to 130px. That
   moved `.cta-row` from y927 to y742 on an 844px screen. Before this, a phone
   visitor had nothing to act on without scrolling.
-- `.typer` reserves `min-height: 2.8em` (two lines). At 1.4em a wrapped phrase
+- `.typer` reserves `min-height: 2.8em` (two lines) ON PHONES ONLY; desktop
+  is 1.4em. Reserving two lines everywhere left an empty line's worth of gap
+  above the next block on desktop, where no phrase wraps. At 1.4em a wrapped phrase
   grew the box by 31px and shoved ~2500px of skills grid up and down every few
   seconds, forever — a permanent layout-shift generator directly under the
   mobile fold. The typewriter phrases are also kept short enough not to wrap;
@@ -137,9 +139,12 @@ not part of the site.
 - `.skill-groups` uses CSS multi-column (`columns: 290px`), not grid.
   `auto-fit` sized every track to the tallest group, leaving ~108px voids
   inside the short ones and stranding the last group alone in a three-up row.
-- `// Beyond the stack` comes BEFORE the chip grid. Those six one-line
-  opinions are the differentiating content; the tool list is the footnote.
-  Putting the chips first spent the page's biggest block on its weakest claim.
+- `// How I build` comes BEFORE the chip grid. Those six one-line opinions
+  are the differentiating content; the tool list is the footnote. (It was
+  called "Beyond the stack" until it moved in front of the stack, where the
+  name stopped making sense.) The grid closes with its own bottom rule and a
+  64px margin — its items carry top rules only, so without that the list
+  never ends and the chips crowd straight up against it.
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
 - Motion: sections fade-slide-up on scroll via IntersectionObserver (`.reveal`,
   staggered with `--d`). Hero has its own staggered entrance, the nav mark and

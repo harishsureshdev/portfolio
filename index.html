@@ -775,11 +775,16 @@
         font-weight: 500;
         letter-spacing: -0.025em;
         margin-bottom: 56px;
-        /* Two lines reserved. At 1.4em a wrapped phrase grew the box by 31px
-           and shoved ~2500px of skills grid up and down every few seconds,
-           forever. The phrases are short enough not to wrap now; this is the
-           belt to that braces. */
-        min-height: 2.8em;
+        /* One line on desktop, where no phrase wraps. Phones reserve two
+           (below): at 1.4em a wrapped phrase grew the box by 31px and shoved
+           the whole skills grid up and down every few seconds. Reserving two
+           lines everywhere left an empty line above the section on desktop. */
+        min-height: 1.4em;
+      }
+      @media (max-width: 680px) {
+        .typer {
+          min-height: 2.8em;
+        }
       }
       .typer .lead {
         color: var(--text);
@@ -804,7 +809,6 @@
       .skill-groups {
         columns: 290px;
         column-gap: 48px;
-        margin-bottom: 56px;
       }
       .skill-groups > div {
         break-inside: avoid;
@@ -864,11 +868,15 @@
         transform: translateY(-2px);
       }
 
-      /* ---------- Beyond the stack grid ---------- */
+      /* ---------- How I build ---------- */
+      /* Items carry top rules only, so the grid closes itself with a bottom
+         rule; the margin separates the approaches from the tool list. */
       .beyond-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 0 72px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 64px;
       }
       .beyond-item {
         padding: 26px 0;
@@ -1609,7 +1617,7 @@
             ><span class="tcaret"></span>
           </div>
 
-          <div class="group-label reveal">// Beyond the stack</div>
+          <div class="group-label reveal">// How I build</div>
           <div class="beyond-grid">
             <div class="beyond-item reveal">
               <span class="plus">+</span>
