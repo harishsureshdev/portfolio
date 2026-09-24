@@ -35,16 +35,15 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent.
-- Education marks: Indiana uses the real trident (`assets/iu.png`), Anna keeps
-  an `AU` monogram. Both sit in identical bordered tiles, so mixing a logo with
-  a monogram doesn't read as inconsistent. `.edu-mark img` renders any source
-  file true monochrome — `brightness(0)` flattens it to solid black, `invert(1)`
-  lifts it to white for dark mode. Needs a transparent background.
-- `assets/au.png` (the Anna University crest) is kept but DELIBERATELY UNUSED.
-  It was tried and reverted: the crest packs a gear ring, circular text, a
-  factory, a hatched book and a banner, all of which collapse into an
-  illegible blob at 28px. Don't wire it back in — detailed crests need ~64px+
-  to read, which would break the education row rhythm.
+- Education is a two-card grid, not a list — the row layout read as too thin.
+  Each card holds a logo tile, a date pill, degree, school and stat chips.
+- Both universities use real logos at 44px inside 62px tiles. The Anna crest
+  needs that size: at 28px it collapsed into a blob. The bar is a RECOGNISABLE
+  silhouette, not readable text — nobody needs to read "progress through
+  knowledge", they need the gear shape. Don't shrink these tiles.
+- `.edu-mark img` renders any source file true monochrome — `brightness(0)`
+  flattens it to solid black, `invert(1)` lifts it to white for dark mode.
+  Needs a transparent background.
   The nav is tinted from `--bg`, so a banded hero is what makes the nav read as
   a distinct bar on first load. Don't flip the order back.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
@@ -57,6 +56,10 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - Project cards expand via `grid-template-rows: 0fr -> 1fr`, which animates to
   the natural height without measuring it in JS. Don't swap this for a
   max-height hack.
+- The WHOLE card toggles, not just the details button. The click handler bails
+  on clicks that land on an `<a>` (so the GitHub link works) and when text is
+  selected (so the card doesn't collapse mid-selection). The button stays for
+  keyboard and screen-reader users — don't remove it in favour of a bare div.
 - `html` carries `overflow-x: clip`. Do NOT add `overflow-x: hidden` to `body`:
   together they make body the scroll container, which silently kills the
   sticky nav. Verified — it is not a theoretical concern.
@@ -95,8 +98,8 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 ## Current known gaps (don't silently "fix" these — ask first)
 
 - No testimonials section — deliberately dropped, don't add placeholder quotes.
-- Only 2 projects (Warden, SnapSend) — a 3rd is planned, layout should tolerate
-  3+ cards without redesign.
+- 3 projects (Warden, Home Credit Default Risk, SnapSend). Layout tolerates
+  more without redesign.
 - The expandable project detail panels are THIN. Their content is just the
   second half of the original card paragraph, split out — no new material was
   written, since inventing project detail would breach the content rule. They

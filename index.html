@@ -993,9 +993,14 @@
         border-radius: var(--radius);
         padding: 30px;
         background: var(--surface);
+        cursor: pointer;
         transition:
           border-color 0.25s ease,
           transform 0.25s ease;
+      }
+      .project-card a,
+      .project-card .project-toggle {
+        cursor: pointer;
       }
       .project-card:hover {
         border-color: var(--accent-border);
@@ -1083,26 +1088,36 @@
       }
 
       /* ---------- Education ---------- */
-      .edu-item {
+      .edu-grid {
         display: grid;
-        grid-template-columns: 160px 1fr;
-        gap: 24px;
-        padding: 24px 0;
-        border-top: 1px solid var(--border);
+        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        gap: 16px;
       }
-      .edu-body {
+      .edu-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        padding: 26px;
+        transition: border-color 0.25s ease;
+      }
+      .edu-card:hover {
+        border-color: var(--border-strong);
+      }
+      .edu-card-head {
         display: flex;
-        align-items: flex-start;
-        gap: 18px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
       }
       /* brightness(0) flattens any source logo to solid black, then invert
          lifts it to white for dark mode — true monochrome whatever the file. */
       .edu-mark img {
-        width: 28px;
-        height: 28px;
+        width: 44px;
+        height: 44px;
         object-fit: contain;
         filter: grayscale(1) brightness(0) invert(1);
-        opacity: 0.85;
+        opacity: 0.88;
       }
       @media (prefers-color-scheme: light) {
         :root:not([data-theme="dark"]) .edu-mark img {
@@ -1114,42 +1129,57 @@
       }
       .edu-mark {
         flex: 0 0 auto;
-        width: 46px;
-        height: 46px;
+        width: 62px;
+        height: 62px;
         display: flex;
         align-items: center;
         justify-content: center;
         border: 1px solid var(--border);
         border-radius: var(--radius);
-        background: var(--surface);
+        background: var(--surface-2);
         font-family: var(--font-mono);
-        font-size: 14px;
+        font-size: 17px;
         font-weight: 600;
         color: var(--text-muted);
         letter-spacing: 0.02em;
       }
       .edu-when {
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: 12.5px;
         color: var(--text-dim);
-        padding-top: 3px;
+        padding: 4px 10px;
+        border: 1px solid var(--border);
+        border-radius: 3px;
       }
       .edu-title {
         font-family: var(--font-mono);
-        font-size: 18px;
-        font-weight: 500;
-        letter-spacing: -0.015em;
-        margin-bottom: 4px;
+        font-size: 19px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 6px;
       }
       .edu-org {
         font-size: 15px;
         color: var(--text-muted);
+        margin-bottom: 14px;
       }
-      @media (max-width: 680px) {
-        .edu-item {
-          grid-template-columns: 1fr;
-          gap: 4px;
-        }
+      .edu-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .edu-stat {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 3px;
+        color: var(--accent);
+        background: var(--accent-soft);
+      }
+      .edu-stat.plain {
+        color: var(--text-dim);
+        background: none;
+        border: 1px solid var(--border);
       }
 
       /* ---------- Contact ---------- */
@@ -1781,6 +1811,49 @@
               </div>
             </div>
 
+            <div class="project-card reveal" style="--d: 160ms">
+              <div class="project-head">
+                <h3>Home Credit Default Risk<span class="ext">.py</span></h3>
+                <a
+                  class="project-link"
+                  href="https://github.com/harishs2000"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub →</a
+                >
+              </div>
+              <p>
+                Models predicting loan default on a 2.7 GB multi-table Kaggle
+                dataset.
+              </p>
+              <button
+                type="button"
+                class="project-toggle"
+                aria-expanded="false"
+                aria-controls="detail-homecredit"
+              >
+                <span class="chev">›</span
+                ><span class="toggle-label">details</span>
+              </button>
+              <div class="project-detail" id="detail-homecredit">
+                <div>
+                  <div class="detail-label">// approach</div>
+                  <p>
+                    Engineered features across seven relational tables, then
+                    compared logistic regression, random forest and a PyTorch
+                    deep neural network — 0.73 AUC, top 40% of the leaderboard.
+                  </p>
+                </div>
+              </div>
+              <div class="tag-row">
+                <span class="tag">Python</span>
+                <span class="tag">PyTorch</span>
+                <span class="tag">scikit-learn</span>
+                <span class="tag">pandas</span>
+                <span class="tag">NumPy</span>
+              </div>
+            </div>
+
             <div class="project-card reveal" style="--d: 80ms">
               <div class="project-head">
                 <h3>SnapSend<span class="ext">.java</span></h3>
@@ -1826,27 +1899,34 @@
       <section class="band" id="education">
         <div class="wrap">
           <h2 class="reveal">Education</h2>
-          <div class="edu-item reveal">
-            <div class="edu-when">2024 — 2026</div>
-            <div class="edu-body">
-              <div class="edu-mark" aria-hidden="true"><img src="assets/iu.png" alt="" /></div>
-              <div>
-                <div class="edu-title">MS, Computer Science</div>
-                <div class="edu-org">
-                  Indiana University Bloomington &nbsp;·&nbsp; GPA 3.93 / 4.0
+          <div class="edu-grid">
+            <div class="edu-card reveal">
+              <div class="edu-card-head">
+                <div class="edu-mark" aria-hidden="true">
+                  <img src="assets/iu.png" alt="" />
                 </div>
+                <div class="edu-when">2024 — 2026</div>
+              </div>
+              <div class="edu-title">MS, Computer Science</div>
+              <div class="edu-org">Indiana University Bloomington</div>
+              <div class="edu-stats">
+                <span class="edu-stat">GPA 3.93 / 4.0</span>
+                <span class="edu-stat plain">Bloomington, IN</span>
               </div>
             </div>
-          </div>
-          <div class="edu-item reveal" style="--d: 60ms">
-            <div class="edu-when">2018 — 2022</div>
-            <div class="edu-body">
-              <div class="edu-mark" aria-hidden="true">AU</div>
-              <div>
-                <div class="edu-title">BE, Computer Science</div>
-                <div class="edu-org">
-                  Anna University, Chennai &nbsp;·&nbsp; CGPA 8.63 / 10
+
+            <div class="edu-card reveal" style="--d: 60ms">
+              <div class="edu-card-head">
+                <div class="edu-mark" aria-hidden="true">
+                  <img src="assets/au.png" alt="" />
                 </div>
+                <div class="edu-when">2018 — 2022</div>
+              </div>
+              <div class="edu-title">BE, Computer Science</div>
+              <div class="edu-org">Anna University</div>
+              <div class="edu-stats">
+                <span class="edu-stat">CGPA 8.63 / 10</span>
+                <span class="edu-stat plain">Chennai, India</span>
               </div>
             </div>
           </div>
@@ -2081,19 +2161,24 @@
         }
 
         /* ---- Expandable project cards ---- */
-        document
-          .querySelectorAll(".project-toggle")
-          .forEach(function (toggle) {
-            toggle.addEventListener("click", function () {
-              var card = toggle.closest(".project-card");
-              var open = toggle.getAttribute("aria-expanded") === "true";
-              toggle.setAttribute("aria-expanded", open ? "false" : "true");
-              card.classList.toggle("is-open", !open);
-              toggle.querySelector(".toggle-label").textContent = open
-                ? "details"
-                : "hide";
-            });
+        document.querySelectorAll(".project-card").forEach(function (card) {
+          var toggle = card.querySelector(".project-toggle");
+          if (!toggle) return;
+          card.addEventListener("click", function (e) {
+            /* Let the GitHub link through, and don't collapse the card out
+               from under someone who was selecting its text. */
+            if (e.target.closest("a")) return;
+            var sel = window.getSelection();
+            if (sel && sel.type === "Range" && sel.toString()) return;
+
+            var open = toggle.getAttribute("aria-expanded") === "true";
+            toggle.setAttribute("aria-expanded", open ? "false" : "true");
+            card.classList.toggle("is-open", !open);
+            toggle.querySelector(".toggle-label").textContent = open
+              ? "details"
+              : "hide";
           });
+        });
 
         /* ---- Copy email ---- */
         var copyBtn = document.getElementById("copy-email");
