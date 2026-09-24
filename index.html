@@ -993,14 +993,9 @@
         border-radius: var(--radius);
         padding: 30px;
         background: var(--surface);
-        cursor: pointer;
         transition:
           border-color 0.25s ease,
           transform 0.25s ease;
-      }
-      .project-card a,
-      .project-card .project-toggle {
-        cursor: pointer;
       }
       .project-card:hover {
         border-color: var(--accent-border);
@@ -1041,50 +1036,11 @@
         margin-bottom: 18px;
         line-height: 1.6;
       }
-      .project-toggle {
-        font-family: var(--font-mono);
-        font-size: 12.5px;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        padding: 0;
-        margin-bottom: 16px;
-        border: 0;
-        background: none;
-        color: var(--accent);
-        cursor: pointer;
-      }
-      .project-toggle .chev {
-        display: inline-block;
-        transition: transform 0.25s ease;
-      }
-      .project-toggle[aria-expanded="true"] .chev {
-        transform: rotate(90deg);
-      }
-      /* 0fr -> 1fr animates to the content's natural height without JS
-         measuring it. */
-      .project-detail {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 0.3s ease;
-      }
-      .project-card.is-open .project-detail {
-        grid-template-rows: 1fr;
-      }
-      .project-detail > div {
-        overflow: hidden;
-      }
       .detail-label {
         font-family: var(--font-mono);
         font-size: 12px;
         color: var(--accent);
         margin-bottom: 8px;
-      }
-      .project-detail p {
-        margin-bottom: 18px;
-      }
-      .project-detail p:last-child {
-        margin-bottom: 18px;
       }
 
       /* ---------- Education ---------- */
@@ -1558,9 +1514,11 @@
                 <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg" alt="" onerror="this.remove()" />Spring Boot</span>
                 <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg" alt="" onerror="this.remove()" />FastAPI</span>
                 <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nodejs/nodejs-original.svg" alt="" onerror="this.remove()" />Node.js</span>
-                <span class="chip">REST</span>
-                <span class="chip">OAuth 2.0</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/celery/celery-original.svg" alt="" onerror="this.remove()" />Celery</span>
                 <span class="chip">JPA/Hibernate</span>
+                <span class="chip">SQLAlchemy</span>
+                <span class="chip">Pydantic</span>
+                <span class="chip">REST</span>
               </div>
             </div>
             <div class="reveal">
@@ -1573,7 +1531,17 @@
                 <span class="chip">Qdrant</span>
               </div>
             </div>
-            <div class="reveal" style="--d: 60ms">
+            <div class="reveal">
+              <div class="group-label">// AI &amp; LLM</div>
+              <div class="chip-row">
+                <span class="chip">LangChain</span>
+                <span class="chip">RAG</span>
+                <span class="chip">Vector search</span>
+                <span class="chip">Tool-calling agents</span>
+                <span class="chip">LLM evaluation</span>
+              </div>
+            </div>
+                      <div class="reveal" style="--d: 60ms">
               <div class="group-label">// Cloud &amp; DevOps</div>
               <div class="chip-row">
                 <span class="chip">AWS</span>
@@ -1581,6 +1549,18 @@
                 <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/jenkins/jenkins-original.svg" alt="" onerror="this.remove()" />Jenkins</span>
                 <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg" alt="" onerror="this.remove()" />GitHub Actions</span>
                 <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/opentelemetry/opentelemetry-original.svg" alt="" onerror="this.remove()" />OpenTelemetry</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg" alt="" onerror="this.remove()" />Linux</span>
+              </div>
+            </div>
+            <div class="reveal">
+              <div class="group-label">// Testing &amp; Security</div>
+              <div class="chip-row">
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/junit/junit-original.svg" alt="" onerror="this.remove()" />JUnit</span>
+                <span class="chip">Mockito</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/pytest/pytest-original.svg" alt="" onerror="this.remove()" />pytest</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vitest/vitest-original.svg" alt="" onerror="this.remove()" />Vitest</span>
+                <span class="chip">OAuth 2.0</span>
+                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/jwt/jwt-original.svg" alt="" onerror="this.remove()" />JWT</span>
               </div>
             </div>
             <div class="reveal">
@@ -1592,16 +1572,7 @@
                 <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg" alt="" onerror="this.remove()" />Tailwind</span>
               </div>
             </div>
-            <div class="reveal" style="--d: 60ms">
-              <div class="group-label">// AI &amp; LLM</div>
-              <div class="chip-row">
-                <span class="chip">LangChain</span>
-                <span class="chip">RAG</span>
-                <span class="chip">Vector search</span>
-                <span class="chip">Celery</span>
-              </div>
-            </div>
-          </div>
+</div>
 
           <div class="group-label reveal">// Beyond the stack</div>
           <div class="beyond-grid">
@@ -1656,27 +1627,31 @@
               <div class="job-when">Jun 2026 — present · Remote · Adtua engagement</div>
               <ul class="job-list">
                 <li>
-                  Shipped a React/TypeScript and FastAPI campaign builder for a
-                  digital out-of-home ad marketplace, cutting brief turnaround
-                  from 2–3 days to same-day across 200 briefs.
+                  Shipped a React/TypeScript and FastAPI campaign builder on a
+                  3–4 engineer team for a digital out-of-home ad marketplace,
+                  replacing email handoffs for 15–20 planners and cutting brief
+                  turnaround from 2–3 days to same-day across 200 briefs.
                 </li>
                 <li class="hl">
                   <strong
                     >Designed idempotent FastAPI reservation APIs with Postgres
                     exclusion constraints</strong
-                  >, correctly resolving concurrent screen-booking conflicts under
-                  25 integration and concurrency tests.
+                  >, returning the original booking on retries and HTTP 409 on
+                  conflicting screen reservations — verified by 25 integration
+                  and concurrency tests.
                 </li>
                 <li>
-                  Moved media transcoding and thumbnail generation off the request
-                  path into Celery/Redis/S3/FFmpeg workers, with OpenTelemetry
-                  tracing across API and worker.
+                  Moved media validation, H.264 transcoding and thumbnail
+                  generation off the request path into Celery/Redis/S3/FFmpeg
+                  workers, with capped backoff retries, terminal failure states
+                  and OpenTelemetry spans across API and worker.
                 </li>
                 <li>
-                  Built a LangChain campaign planner with code-enforced
-                  eligibility and Qdrant ranking — 40 of 40 eligible briefs
-                  planned correctly in a 42-brief pilot, 2 of 2 ineligible
-                  correctly rejected.
+                  Built a LangChain campaign planner with eligibility enforced
+                  in code (budget, location, availability), Qdrant ranking and an
+                  LLM drafting from the ranked set — in a 42-brief pilot all 40
+                  eligible briefs produced valid plans, and both ineligible
+                  briefs returned no match.
                 </li>
               </ul>
               <div class="tag-row">
@@ -1699,25 +1674,30 @@
               <ul class="job-list">
                 <li>
                   Built and maintained 6 Java/Spring Boot microservices
-                  integrating SNMP and NETCONF across 10,000+ production network
-                  devices.
+                  integrating SNMP and NETCONF to poll status and push
+                  configuration across 10,000+ production network devices from
+                  Cisco, Juniper and others.
                 </li>
                 <li class="hl">
                   <strong
-                    >Built a Java ETL pipeline normalizing vendor data into a Neo4j
-                    graph</strong
+                    >Built a Java ETL pipeline normalizing vendor CLI and
+                    NETCONF/YANG data into a Neo4j graph</strong
                   >
-                  of 10k devices and 50k links, cutting nightly refresh from 45 to
-                  30 minutes.
+                  of 10k devices and 50k links, replacing spreadsheet tracing with
+                  path and impact APIs for NOC engineers; SHA-256 change detection
+                  and parallel parsing cut nightly refresh from 45 to 30 minutes.
                 </li>
                 <li>
                   Secured REST APIs over JPA/Hibernate with OAuth 2.0 and Spring
-                  Security RBAC; Redis caching cut average latency from 820ms to
-                  310ms.
+                  Security RBAC; Redis caching with TTL and change-driven
+                  invalidation cut average latency from 820ms to 310ms.
                 </li>
                 <li>
-                  Replaced manual deploys with Jenkins pipelines to ECR/EC2 across
-                  12 services, cutting merge-to-deployment from ~28 to 20 minutes.
+                  Replaced manual artifact copies and restarts with Jenkins
+                  pipelines building Docker images to ECR and deploying to EC2
+                  across 12 services — the original 6 plus 6 from a cross-team
+                  standardization effort — where layer caching and parallel tests
+                  cut merge-to-deployment from 25–30 to 20 minutes.
                 </li>
               </ul>
               <div class="tag-row">
@@ -1780,38 +1760,28 @@
               </div>
               <p>
                 A GitHub issue-triage agent with a hand-written multi-step tool
-                loop — labeling, duplicate detection, comments, and proposed
-                assignees.
+                loop — labeling, duplicate detection, comments, proposed
+                assignees and escalation — with step caps and tool-failure
+                recovery.
               </p>
-              <button
-                type="button"
-                class="project-toggle"
-                aria-expanded="false"
-                aria-controls="detail-warden"
-              >
-                <span class="chev">›</span><span class="toggle-label">details</span>
-              </button>
-              <div class="project-detail" id="detail-warden">
-                <div>
-                  <div class="detail-label">// how it's guarded</div>
-                  <p>
-                    Policy is enforced at the tool-call layer, not the prompt:
-                    comment deletion is denied outright, and issue closure or
-                    assignment requires human approval. Blocked 11 of 12 unsafe
-                    or injected actions in testing.
-                  </p>
-                </div>
-              </div>
+              <div class="detail-label">// how it's guarded</div>
+              <p>
+                Policy is enforced at the tool-call layer, not the prompt:
+                comment deletion is denied outright, and issue closure or
+                assignment requires human approval. Blocked 11 of 12 unsafe
+                or injected actions in testing.
+              </p>
               <div class="tag-row">
                 <span class="tag">Python</span>
                 <span class="tag">FastAPI</span>
                 <span class="tag">GitHub API</span>
                 <span class="tag">OpenTelemetry</span>
                 <span class="tag">Docker</span>
+                <span class="tag">GitHub Actions</span>
               </div>
             </div>
 
-            <div class="project-card reveal" style="--d: 160ms">
+            <div class="project-card reveal" style="--d: 80ms">
               <div class="project-head">
                 <h3>Home Credit Default Risk<span class="ext">.py</span></h3>
                 <a
@@ -1826,25 +1796,12 @@
                 Models predicting loan default on a 2.7 GB multi-table Kaggle
                 dataset.
               </p>
-              <button
-                type="button"
-                class="project-toggle"
-                aria-expanded="false"
-                aria-controls="detail-homecredit"
-              >
-                <span class="chev">›</span
-                ><span class="toggle-label">details</span>
-              </button>
-              <div class="project-detail" id="detail-homecredit">
-                <div>
-                  <div class="detail-label">// approach</div>
-                  <p>
-                    Engineered features across seven relational tables, then
-                    compared logistic regression, random forest and a PyTorch
-                    deep neural network — 0.73 AUC, top 40% of the leaderboard.
-                  </p>
-                </div>
-              </div>
+              <div class="detail-label">// approach</div>
+              <p>
+                Engineered features across seven relational tables, then
+                compared logistic regression, random forest and a PyTorch
+                deep neural network — 0.73 AUC, top 40% of the leaderboard.
+              </p>
               <div class="tag-row">
                 <span class="tag">Python</span>
                 <span class="tag">PyTorch</span>
@@ -1854,7 +1811,7 @@
               </div>
             </div>
 
-            <div class="project-card reveal" style="--d: 80ms">
+            <div class="project-card reveal" style="--d: 160ms">
               <div class="project-head">
                 <h3>SnapSend<span class="ext">.java</span></h3>
                 <a
@@ -1866,30 +1823,20 @@
                 >
               </div>
               <p>A file-sharing service with time-bound, expiring links.</p>
-              <button
-                type="button"
-                class="project-toggle"
-                aria-expanded="false"
-                aria-controls="detail-snapsend"
-              >
-                <span class="chev">›</span
-                ><span class="toggle-label">details</span>
-              </button>
-              <div class="project-detail" id="detail-snapsend">
-                <div>
-                  <div class="detail-label">// design note</div>
-                  <p>
-                    Redis TTL handles instant expiry checks without a background
-                    sweep, and AWS S3 handles storage behind a Spring Boot API.
-                  </p>
-                </div>
-              </div>
+              <div class="detail-label">// design note</div>
+              <p>
+                Redis TTL handles instant expiry checks without a background
+                sweep, and AWS S3 handles storage behind a Spring Boot API.
+              </p>
               <div class="tag-row">
                 <span class="tag">Java</span>
                 <span class="tag">Spring Boot</span>
                 <span class="tag">PostgreSQL</span>
                 <span class="tag">Redis</span>
-                <span class="tag">AWS S3</span>
+                <span class="tag">React</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Docker</span>
+                <span class="tag">AWS</span>
               </div>
             </div>
           </div>
@@ -2159,26 +2106,6 @@
           window.addEventListener("resize", drawProgress);
           drawProgress();
         }
-
-        /* ---- Expandable project cards ---- */
-        document.querySelectorAll(".project-card").forEach(function (card) {
-          var toggle = card.querySelector(".project-toggle");
-          if (!toggle) return;
-          card.addEventListener("click", function (e) {
-            /* Let the GitHub link through, and don't collapse the card out
-               from under someone who was selecting its text. */
-            if (e.target.closest("a")) return;
-            var sel = window.getSelection();
-            if (sel && sel.type === "Range" && sel.toString()) return;
-
-            var open = toggle.getAttribute("aria-expanded") === "true";
-            toggle.setAttribute("aria-expanded", open ? "false" : "true");
-            card.classList.toggle("is-open", !open);
-            toggle.querySelector(".toggle-label").textContent = open
-              ? "details"
-              : "hide";
-          });
-        });
 
         /* ---- Copy email ---- */
         var copyBtn = document.getElementById("copy-email");

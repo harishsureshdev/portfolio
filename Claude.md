@@ -53,13 +53,17 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   that array rather than defining its own copy. The nav button stays visible at
   every width — on mobile `.nav-links` is hidden, so the palette is the only
   way to jump between sections.
-- Project cards expand via `grid-template-rows: 0fr -> 1fr`, which animates to
-  the natural height without measuring it in JS. Don't swap this for a
-  max-height hack.
-- The WHOLE card toggles, not just the details button. The click handler bails
-  on clicks that land on an `<a>` (so the GitHub link works) and when text is
-  selected (so the card doesn't collapse mid-selection). The button stays for
-  keyboard and screen-reader users — don't remove it in favour of a bare div.
+- Project cards print everything inline — lead paragraph, a `// label`, the
+  detail paragraph, then tags. They used to expand (whole-card click, a
+  `grid-template-rows: 0fr -> 1fr` panel). That was REMOVED on 2026-09-23 after
+  measuring the panels at 20-33 words each: a click that reveals two sentences
+  is friction between a recruiter and the best material on the card. Don't
+  re-add an expand/modal unless the detail grows past roughly a paragraph per
+  card — at which point the old implementation is in git history at 0963169.
+- The skills grid has 7 groups in a 3-column auto-fit, so one always orphans on
+  the last row. The order (Languages, Backend, Data, AI & LLM, Cloud, Testing,
+  Frontend) is chosen so the orphan is Frontend, the shortest group. Reordering
+  or adding a group means re-checking which one lands alone.
 - `html` carries `overflow-x: clip`. Do NOT add `overflow-x: hidden` to `body`:
   together they make body the scroll container, which silently kills the
   sticky nav. Verified — it is not a theoretical concern.
@@ -75,6 +79,17 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 
 - Every claim must be true and traceable to my actual resume/projects — do not
   invent metrics, testimonials, or experience I don't have.
+- The experience bullets and project copy were reconciled against `resume.pdf`
+  on 2026-09-23 and now carry its full detail (HTTP 409 on conflicting
+  reservations, SHA-256 change detection, capped backoff retries, step caps and
+  tool-failure recovery, and so on). If the resume changes, re-reconcile.
+- Two deliberate divergences from `resume.pdf`, both Harish's call — don't
+  "fix" either silently:
+  1. Sirius Technologies (May-Aug 2020) is on the site but NOT on the resume.
+     He wants it kept on the site.
+  2. Home Credit Default Risk is on the site but NOT in the committed
+     `resume.pdf` — that file is STALE relative to the newer resume he has.
+     Replacing `resume.pdf` is still outstanding.
 - Tone: confident, plain, technical. No marketing language, no "passionate about."
 - Sections stay in this order: hero → what I do → experience → projects →
   education → contact.
@@ -100,10 +115,12 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - No testimonials section — deliberately dropped, don't add placeholder quotes.
 - 3 projects (Warden, Home Credit Default Risk, SnapSend). Layout tolerates
   more without redesign.
-- The expandable project detail panels are THIN. Their content is just the
-  second half of the original card paragraph, split out — no new material was
-  written, since inventing project detail would breach the content rule. They
-  need real writing from Harish (architecture, trade-offs) to earn the expand.
+- Project detail is still THIN (one short paragraph per card). Everything the
+  resume has on each project is now on the page, so there is nothing left to
+  import — more depth (architecture, trade-offs) has to be written by Harish.
+  Don't invent it.
+- All three projects link to `github.com/harishs2000`, the profile, not to
+  per-project repos. Harish still owes the specific repo URLs.
 - Analytics is NOT wired up. Cloudflare Web Analytics / Umami both need a site
   token from Harish's own account, so it can't be added unattended. If the site
   lands on Cloudflare Pages it's a dashboard toggle and needs no code at all.
