@@ -77,9 +77,15 @@ not part of the site.
   phrase ships in the HTML and the loop starts by deleting it, so no-JS and
   reduced motion both show a complete sentence. Screen readers get the full
   list once from an `.sr-only` span; the animated copy is `aria-hidden`.
-- The hero summary is ONE short line that carries the tech keywords
-  (React, TypeScript, Java, Python, Postgres), because the stack line that
-  used to hold them is gone and recruiters scan the first screen for them.
+- There is NO prose summary in the hero. Under the cycler sits `.hero-stack`,
+  a static lowercase mono row: java / python / typescript / react / postgres.
+  It keeps the core tech names on the first screen for recruiters without a
+  sentence. Harish rejected the prose line ("Full-stack, deepest in the
+  backend. React and TypeScript in front…") on 2026-09-24 — don't bring a
+  sentence back. It must stay static; the cycler is the only moving thing.
+- On phones the hero's two wrapping rows (meta, keyword row) break at a
+  chosen separator marked `.wrap-here`, which becomes a full-width invisible
+  line break. Left to wrap freely they stranded a `·` or `/` at a line end.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
@@ -107,9 +113,9 @@ not part of the site.
   left and the tag row takes the right column under a CSS-generated
   `// stack` label, filling the space the measure cap used to leave empty.
   Below that, tags fall back under the bullets.
-- The hero meta says "Indiana University" where `#education` and the
-  JSON-LD carry "Indiana University Bloomington" in full — shortened so the
-  smallest type in the hero doesn't make its longest line.
+- The hero meta says "MS CS, Indiana University" where `#education` and the
+  JSON-LD carry the full degree and "Indiana University Bloomington" —
+  shortened so the smallest type in the hero doesn't make its longest line.
 - `.job-id` wraps org + role + ext in one inline `.job-path` span so the
   filename reads as a single token. `.job-id` is a flex row with a 10px gap,
   and when the three spans were direct flex children it rendered as
@@ -191,8 +197,9 @@ not part of the site.
   ship React, and LangChain/Qdrant/RAG work had no billing anywhere. Do not
   quietly narrow it back to backend.
 - That positioning is stated in EIGHT places and they must agree. Changing one
-  means changing all: the hero `.summary`, the hero cycler `phrases` array
-  (plus its `.sr-only` twin), the `#contact` section-sub, `meta[name=description]`,
+  means changing all: the hero `.hero-stack` keyword row, the hero cycler
+  `phrases` array (plus its `.sr-only` twin), the `#contact` section-sub,
+  `meta[name=description]`,
   `og:description`, `twitter:description`, `og:image:alt` — and the role line
   rendered INSIDE `assets/og.png`, which is an image and will silently keep
   saying the old thing.
