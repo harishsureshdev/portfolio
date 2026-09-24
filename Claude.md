@@ -48,6 +48,13 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   Needs a transparent background.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
+- In the hero, `.hero-meta` and `.summary` are tuned to end on roughly the
+  same right edge (615px and 619px in a 751px column). Before 2026-09-23 the
+  meta ran 712px against a 541px paragraph, so the SMALLEST type on the block
+  made its LONGEST line and the three right edges staggered. Two things hold
+  it: the paragraph is `64ch`, not `56ch`, and the meta says "Indiana
+  University" where `#education` and the JSON-LD carry "Indiana University
+  Bloomington" in full. Lengthening either one re-opens the gap.
 - `#contact` is two matching terminal panes on the same auto-fit grid as
   `#education`: `$ mail --to harish` on the left (address, copy button,
   bottom-anchored mail CTA) and `$ ls ~/links` on the right (GitHub, LinkedIn,
@@ -158,6 +165,12 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   looks exactly like a broken light palette. To check a theme, set
   `localStorage.theme` in the parent page BEFORE the iframe loads and take a
   screenshot instead.
+- `range.getClientRects()` on a FLEX container returns one rect per child,
+  not per line, so "widest rect" silently measures the widest single span.
+  `.hero-meta` read as 413px that way when the line was really 712px. Measure
+  a flex row as its last child's right edge minus the container's left.
+- Measure text only after `document.fonts.ready` — before it resolves, widths
+  come from the fallback face and are meaningless for layout tuning.
 - Headless dispatches no scroll events and never fires post-load `rAF`
   callbacks, `--screenshot` always captures from the document origin, and the
   viewport clamps to 500px minimum. Window into a region with an absolutely
