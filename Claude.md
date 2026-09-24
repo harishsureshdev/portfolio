@@ -2,8 +2,10 @@
 
 ## What this is
 
-A one-page personal portfolio for a software engineer (backend-leaning full-stack).
-Single self-contained HTML file for now (`index.html`) — no build step yet.
+A one-page personal portfolio for a software engineer — FULL-STACK WITH
+BACKEND DEPTH, and applied AI as a third leg. Single self-contained HTML file
+(`index.html`) — no build step. `tools/` holds generators for assets and is
+not part of the site.
 
 ## Design system (do not deviate without asking)
 
@@ -97,6 +99,21 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 
 ## Content rules
 
+- POSITIONING: full-stack with backend depth, plus AI features on production
+  paths. It was "backend-leaning full-stack" until 2026-09-23, when Harish
+  pushed back — correctly, since the page's own evidence contradicted it: his
+  current role leads with a React/TypeScript builder, two of three projects
+  ship React, and LangChain/Qdrant/RAG work had no billing anywhere. Do not
+  quietly narrow it back to backend.
+- That positioning is stated in EIGHT places and they must agree. Changing one
+  means changing all: the hero `.summary`, the `#contact` section-sub, the
+  typewriter `phrases` array, the hero stack line, `meta[name=description]`,
+  `og:description`, `twitter:description`, `og:image:alt` — and the role line
+  rendered INSIDE `assets/og.png`, which is an image and will silently keep
+  saying the old thing.
+- Keep the word "backend" present in the search/social copy even though it is
+  no longer the headline: recruiters search for it, and it is true as depth.
+
 - Every claim must be true and traceable to my actual resume/projects — do not
   invent metrics, testimonials, or experience I don't have.
 - The experience bullets and project copy were reconciled against `resume.pdf`
@@ -144,9 +161,10 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - Analytics is NOT wired up. Cloudflare Web Analytics / Umami both need a site
   token from Harish's own account, so it can't be added unattended. If the site
   lands on Cloudflare Pages it's a dashboard toggle and needs no code at all.
-- `assets/og.png` is a GENERATED file, not hand-made — it is a 1200x630 render
-  of a card built from the same fonts and tokens as the site. If the name, role
-  or stack line changes, regenerate it rather than editing the PNG.
+- `assets/og.png` is a GENERATED file, not hand-made — render it from
+  `tools/og.html` (that file has the command in `tools/README.md`) rather than
+  editing the PNG. Use a generous `--virtual-time-budget`: a short one silently
+  captures the fallback fonts instead of JetBrains Mono and Epilogue.
 - Hero background is a 21st.dev pattern ported from React/Tailwind to plain
   CSS (`.hero-bg`): corner lift, five skewed accent streaks, a dot grid and
   inline SVG grain. Recoloured from the original cyan to the accent green, and

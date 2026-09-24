@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>og image source</title>
+    <!-- Renders assets/og.png at 1200x630. See README in tools/.
+         Regenerate whenever the name, role line or stack line changes. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b0a08;
+        --text: #e9e8e3;
+        --text-muted: #b4b1a8;
+        --text-dim: #8a8880;
+        --accent: #4dbf74;
+        --mono: "JetBrains Mono", monospace;
+        --body: "Epilogue", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { width: 1200px; height: 630px; overflow: hidden; }
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        gap: 56px;
+        padding: 0 84px;
+        overflow: hidden;
+      }
+      .glow {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(60% 70% at 78% 28%, rgba(77, 191, 116, 0.16), transparent 70%),
+          radial-gradient(50% 60% at 18% 82%, rgba(77, 191, 116, 0.07), transparent 70%);
+      }
+      .portrait { position: relative; flex: 0 0 auto; }
+      /* the warm sliver peeking out behind the frame, as on the site */
+      .portrait::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translate(12px, -6px);
+        background: #7a6440;
+        border-radius: 10px;
+      }
+      .portrait img {
+        position: relative;
+        display: block;
+        width: 272px;
+        height: 330px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 7px solid #16150f;
+      }
+      .col { position: relative; }
+      .mark {
+        font-family: var(--mono);
+        font-size: 26px;
+        font-weight: 500;
+        color: var(--text-dim);
+        margin-bottom: 26px;
+      }
+      .mark .slash { color: var(--accent); font-size: 1.4em; font-weight: 700; margin: 0 3px; }
+      h1 {
+        font-family: var(--mono);
+        font-size: 68px;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        color: var(--text);
+        margin-bottom: 18px;
+      }
+      .role {
+        font-family: var(--body);
+        font-size: 27px;
+        color: var(--text-muted);
+        margin-bottom: 30px;
+      }
+      .stack { font-family: var(--mono); font-size: 24px; color: var(--text-dim); }
+      .stack b { color: var(--accent); font-weight: 400; }
+      .stack .sep { opacity: 0.45; margin: 0 8px; }
+      .domain {
+        position: absolute;
+        left: 84px;
+        bottom: 46px;
+        font-family: var(--mono);
+        font-size: 20px;
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="glow"></div>
+      <div class="portrait"><img src="../assets/avatar.jpg" alt="" /></div>
+      <div class="col">
+        <div class="mark">harish<span class="slash">/</span>suresh</div>
+        <h1>Harish Suresh</h1>
+        <div class="role">Software Engineer — full-stack with backend depth</div>
+        <div class="stack">
+          <b>Java</b><span class="sep">/</span>Spring Boot<span class="sep">/</span>FastAPI<span
+            class="sep"
+            >/</span
+          >React<span class="sep">/</span>PostgreSQL
+        </div>
+      </div>
+      <div class="domain">harishsuresh.dev</div>
+    </div>
+  </body>
+</html>
