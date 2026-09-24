@@ -78,14 +78,27 @@ not part of the site.
   reduced motion both show a complete sentence. Screen readers get the full
   list once from an `.sr-only` span; the animated copy is `aria-hidden`.
 - There is NO prose summary in the hero. Under the cycler sits `.hero-stack`,
-  a static lowercase mono row: java / python / typescript / react / postgres.
-  It keeps the core tech names on the first screen for recruiters without a
-  sentence. Harish rejected the prose line ("Full-stack, deepest in the
+  a static lowercase mono row: react / fastapi / langchain / neo4j /
+  opentelemetry. It keeps recognisable tech names on the first screen for
+  recruiters without a sentence. Harish rejected the first version (java /
+  python / typescript / react / postgres) on 2026-09-24 as "simple" — the row
+  should carry the heavier things he has actually shipped, and every name in
+  it must appear in an experience bullet or tag below. `tools/og.html` carries
+  the same row; keep them in step. Harish rejected the prose line ("Full-stack, deepest in the
   backend. React and TypeScript in front…") on 2026-09-24 — don't bring a
   sentence back. It must stay static; the cycler is the only moving thing.
-- On phones the hero's two wrapping rows (meta, keyword row) break at a
+- Below 800px the hero's two wrapping rows (meta, keyword row) break at a
   chosen separator marked `.wrap-here`, which becomes a full-width invisible
   line break. Left to wrap freely they stranded a `·` or `/` at a line end.
+  800 is measured, not guessed: both rows wrap up to ~760px and fit on one
+  line from 820px. If you lengthen either row, re-run that sweep.
+- The hero badge says "2+ yrs". CLAUDE.md used to ban an "N+ years" badge as
+  an invented metric; Harish asked for one on 2026-09-24 and it is now
+  allowed, but ONLY as "2+". The honest arithmetic: Sify Aug 2022-Jul 2024
+  (~23 months) + Heartland from Jun 2026 (~3+ months) = ~2.2 years of
+  professional work. "2.5+" only works by also counting the 3-month 2020
+  Sirius internship and ignoring the two-year gap in between, so don't round
+  up. "2+" stays true from now on; a bigger number needs recomputing.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
   two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
@@ -104,7 +117,11 @@ not part of the site.
   (experience and projects both).
 - Experience is a continuous timeline. `.job` carries a 2px `--rail` left
   border (accent on the current role) and a 14px node in `::before`, hollow
-  for past roles and filled for the current one. Jobs are spaced with
+  for past roles and filled for the current one. The green segment IS the
+  current role's span — that colour change is deliberate, not a stuck line.
+  The first job's rail begins at its node's centre (`--node-y` via a
+  `border-image` gradient); it used to poke ~20px above the node, so the
+  timeline looked like it started in mid-air. Jobs are spaced with
   padding-bottom, not flex gap, so each job's rail runs into the next. The
   old rail was `--border-strong` at 1.6:1 — invisible — which left past roles
   indented for no visible reason. `--rail` is #66625A dark / #8F8676 light,
@@ -113,6 +130,12 @@ not part of the site.
   left and the tag row takes the right column under a CSS-generated
   `// stack` label, filling the space the measure cap used to leave empty.
   Below that, tags fall back under the bullets.
+- The per-job tags list the HEAVIER tech each job's bullets actually name, not
+  just the headline languages: Heartland 11 (FastAPI, PostgreSQL, Celery,
+  Redis, Qdrant, LangChain, OpenTelemetry, FFmpeg, S3, React, TypeScript),
+  Sify 12 (incl. Spring Security, OAuth 2.0, JPA/Hibernate, SNMP, NETCONF,
+  Neo4j, Docker), Sirius 5. Harish called the first pass "very very basic" and
+  said it undersold the work. Every tag must be named in that job's bullets.
 - The hero meta says "MS CS, Indiana University" where `#education` and the
   JSON-LD carry the full degree and "Indiana University Bloomington" —
   shortened so the smallest type in the hero doesn't make its longest line.

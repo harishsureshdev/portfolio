@@ -625,7 +625,7 @@
       /* Phones: both hero rows wrap, and left alone they wrap wherever they
          like and strand a separator at the end of a line. .wrap-here marks
          the one separator that becomes a full-width, invisible line break. */
-      @media (max-width: 680px) {
+      @media (max-width: 800px) {
         .hero .wrap-here {
           flex-basis: 100%;
           height: 0;
@@ -912,6 +912,8 @@
         flex-direction: column;
       }
       .job {
+        --node-y: calc(clamp(19px, 2vw, 26px) * 0.8);
+        --rail-c: var(--rail);
         position: relative;
         border-left: 2px solid var(--rail);
         padding: 0 0 56px 30px;
@@ -921,7 +923,18 @@
         padding-bottom: 0;
       }
       .job.is-current {
+        --rail-c: var(--accent);
         border-left-color: var(--accent);
+      }
+      /* The first job's rail used to poke ~20px above its own node, so the
+         timeline appeared to start in mid-air. Begin it at the node's centre. */
+      .job:first-child {
+        border-image: linear-gradient(
+            to bottom,
+            transparent var(--node-y),
+            var(--rail-c) var(--node-y)
+          )
+          1;
       }
       .job::before {
         content: "";
@@ -1093,6 +1106,9 @@
         }
         .job {
           padding-left: 20px;
+        }
+        .job {
+          --node-y: 14px;
         }
         .job::before {
           top: 7px;
@@ -1614,7 +1630,7 @@
             </div>
             <div class="hero-content">
               <div class="hero-badge">
-                // software engineer · open to SDE roles
+                // software engineer · 2+ yrs · open to SDE roles
               </div>
               <h1>Harish Suresh</h1>
               <div class="hero-meta">
@@ -1635,11 +1651,12 @@
                 </span>
               </p>
               <p class="hero-stack">
-                <span>java</span><span class="sep" aria-hidden="true">/</span
-                ><span>python</span><span class="sep" aria-hidden="true">/</span
-                ><span>typescript</span><span class="sep wrap-here" aria-hidden="true">/</span
-                ><span>react</span><span class="sep" aria-hidden="true">/</span
-                ><span>postgres</span>
+                <span>react</span><span class="sep" aria-hidden="true">/</span
+                ><span>fastapi</span><span class="sep" aria-hidden="true">/</span
+                ><span>langchain</span
+                ><span class="sep wrap-here" aria-hidden="true">/</span
+                ><span>neo4j</span><span class="sep" aria-hidden="true">/</span
+                ><span>opentelemetry</span>
               </p>
               <div class="cta-row">
                 <a class="btn btn-primary" href="resume.pdf" download
@@ -1819,12 +1836,17 @@
                 </li>
               </ul>
               <div class="tag-row">
-                <span class="tag">React</span>
-                <span class="tag">TypeScript</span>
                 <span class="tag">FastAPI</span>
                 <span class="tag">PostgreSQL</span>
                 <span class="tag">Celery</span>
+                <span class="tag">Redis</span>
+                <span class="tag">Qdrant</span>
                 <span class="tag">LangChain</span>
+                <span class="tag">OpenTelemetry</span>
+                <span class="tag">FFmpeg</span>
+                <span class="tag">S3</span>
+                <span class="tag">React</span>
+                <span class="tag">TypeScript</span>
               </div>
             </article>
 
@@ -1869,9 +1891,15 @@
               <div class="tag-row">
                 <span class="tag">Java</span>
                 <span class="tag">Spring Boot</span>
+                <span class="tag">Spring Security</span>
+                <span class="tag">OAuth 2.0</span>
+                <span class="tag">JPA/Hibernate</span>
                 <span class="tag">Neo4j</span>
+                <span class="tag">SNMP</span>
+                <span class="tag">NETCONF</span>
                 <span class="tag">Redis</span>
                 <span class="tag">Jenkins</span>
+                <span class="tag">Docker</span>
                 <span class="tag">AWS</span>
               </div>
             </article>
@@ -1904,6 +1932,7 @@
                 <span class="tag">Redux</span>
                 <span class="tag">Node.js</span>
                 <span class="tag">MongoDB</span>
+                <span class="tag">JWT</span>
               </div>
             </article>
           </div>
