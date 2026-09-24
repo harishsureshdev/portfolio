@@ -34,7 +34,9 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
   keep those two tokens distinct or cards vanish into the band.
 - The alternation STARTS banded: hero, experience and education carry `.band`.
   Adding, removing or reordering a section means re-striping all of them, or
-  two same-coloured sections end up adjacent.
+  two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
+  so a banded hero is what makes the nav read as a distinct bar on first load.
+  Don't flip the order back.
 - Education is a two-card grid, not a list — the row layout read as too thin.
   Each card holds a logo tile, a date pill, degree, school and stat chips.
 - Both universities use real logos at 44px inside 62px tiles. The Anna crest
@@ -44,8 +46,6 @@ Single self-contained HTML file for now (`index.html`) — no build step yet.
 - `.edu-mark img` renders any source file true monochrome — `brightness(0)`
   flattens it to solid black, `invert(1)` lifts it to white for dark mode.
   Needs a transparent background.
-  The nav is tinted from `--bg`, so a banded hero is what makes the nav read as
-  a distinct bar on first load. Don't flip the order back.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
 - The command palette (⌘K / Ctrl-K, or the search button in the nav) holds its
