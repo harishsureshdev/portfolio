@@ -6,7 +6,7 @@
     <title>Harish Suresh — Software Engineer</title>
     <meta
       name="description"
-      content="Harish Suresh — full-stack software engineer with backend depth. React and TypeScript front ends, Java and Python services, network automation across 10,000+ devices, and LLM features running on production paths."
+      content="Harish Suresh — full-stack software engineer. React and TypeScript front ends, Java and Python services on AWS, network automation across 10,000+ devices, and LLM features running on production paths."
     />
     <link rel="canonical" href="https://harishsuresh.dev/" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -18,20 +18,20 @@
     <meta property="og:title" content="Harish Suresh — Software Engineer" />
     <meta
       property="og:description"
-      content="Full-stack engineer with backend depth. React and TypeScript over Java and Python services — network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
+      content="Full-stack software engineer. React and TypeScript over Java and Python services — network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
     />
     <meta property="og:image" content="https://harishsuresh.dev/assets/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Harish Suresh — Software Engineer, full-stack with backend depth. React, TypeScript, Java, Spring Boot, FastAPI, PostgreSQL."
+      content="Harish Suresh — Software Engineer, full-stack and applied AI. react / spring boot / fastapi / aws / langchain."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Harish Suresh — Software Engineer" />
     <meta
       name="twitter:description"
-      content="Full-stack engineer with backend depth. React and TypeScript over Java and Python services — network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
+      content="Full-stack software engineer. React and TypeScript over Java and Python services — network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
     />
     <meta
       name="twitter:image"
@@ -104,6 +104,8 @@
         --border: #282622;
         --border-strong: #3a3732;
         --rail: #66625a;
+        --selection: rgba(77, 191, 116, 0.28);
+        --hero-dot-hot: rgba(77, 191, 116, 0.95);
         --accent: #4dbf74;
         --accent-border: #378d54;
         --accent-text: #0b0a08;
@@ -135,6 +137,8 @@
           --border: #cfc8b8;
           --border-strong: #b3aa99;
           --rail: #8f8676;
+          --selection: rgba(26, 98, 56, 0.2);
+          --hero-dot-hot: rgba(26, 98, 56, 0.75);
           --accent: #1a6238;
           --accent-border: #145030;
           --accent-text: #ffffff;
@@ -159,6 +163,8 @@
         --border: #cfc8b8;
         --border-strong: #b3aa99;
         --rail: #8f8676;
+        --selection: rgba(26, 98, 56, 0.2);
+        --hero-dot-hot: rgba(26, 98, 56, 0.75);
         --accent: #1a6238;
         --accent-border: #145030;
         --accent-text: #ffffff;
@@ -270,7 +276,7 @@
       }
       .nav-mark {
         font-family: var(--font-mono);
-        font-size: 15px;
+        font-size: clamp(15px, 4.4vw, 17px);
         font-weight: 600;
         color: var(--text);
         letter-spacing: 0.01em;
@@ -622,15 +628,29 @@
         color: var(--text-dim);
         opacity: 0.7;
       }
+      .hero-stack > span {
+        white-space: nowrap;
+      }
       /* Phones: both hero rows wrap, and left alone they wrap wherever they
          like and strand a separator at the end of a line. .wrap-here marks
          the one separator that becomes a full-width, invisible line break. */
+      /* Breakpoints are measured, one per row: the meta line wraps up to
+         ~800px, the keyword row only up to ~750px. */
       @media (max-width: 800px) {
-        .hero .wrap-here {
+        .hero-meta .wrap-here,
+        .hero-stack .wrap-here {
           flex-basis: 100%;
           height: 0;
           overflow: hidden;
           font-size: 0;
+        }
+      }
+      @media (min-width: 751px) {
+        .hero-stack .wrap-here {
+          flex-basis: auto;
+          height: auto;
+          overflow: visible;
+          font-size: inherit;
         }
       }
       /* One authored moment: this is the only thing in the first two screens
@@ -1521,9 +1541,181 @@
       }
 
       /* ---------- Reduced motion ---------- */
+      /* ---------- Motion + craft pass (2026-09-24) ---------- */
+      ::selection {
+        background: var(--selection);
+        color: var(--text);
+      }
+      html {
+        scrollbar-color: var(--border-strong) var(--bg);
+      }
+      #palette-input {
+        caret-color: var(--accent);
+      }
+      .palette-head:focus-within {
+        border-bottom-color: var(--accent-border);
+      }
+
+      /* Theme toggle wipes the new palette out in a circle from the button.
+         .vt-running kills the body colour transition so the incoming view
+         isn't captured mid-fade. */
+      html.vt-running,
+      html.vt-running * {
+        transition: none !important;
+      }
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+      ::view-transition-new(root) {
+        animation: theme-reveal 0.5s cubic-bezier(0.22, 0.61, 0.24, 1);
+      }
+      @keyframes theme-reveal {
+        from {
+          clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+        }
+        to {
+          clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 0));
+        }
+      }
+
+      /* Cursor spotlight: a second, brighter dot grid aligned with .hb-dots,
+         revealed only in a soft circle around the pointer. Desktop only. */
+      .hb-hot {
+        opacity: 0;
+        background-image: radial-gradient(
+          circle at 1px 1px,
+          var(--hero-dot-hot) 1.2px,
+          transparent 0
+        );
+        background-size: 20px 20px;
+        -webkit-mask-image: radial-gradient(
+          220px circle at var(--mx, -999px) var(--my, -999px),
+          #000,
+          transparent 70%
+        );
+        mask-image: radial-gradient(
+          220px circle at var(--mx, -999px) var(--my, -999px),
+          #000,
+          transparent 70%
+        );
+        transition: opacity 0.35s ease;
+      }
+      .hero.is-spot .hb-hot {
+        opacity: 1;
+      }
+
+      /* Static scroll cue. It does not bounce: the cycler stays the only
+         perpetual motion on the first screen. */
+      .scroll-cue {
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        z-index: 1;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        color: var(--text-dim);
+        padding: 8px 10px;
+        transition: color 0.2s ease;
+      }
+      .scroll-cue:hover {
+        color: var(--accent);
+      }
+      @media (max-width: 680px), (max-height: 720px) {
+        .scroll-cue {
+          display: none;
+        }
+      }
+
+      /* Timeline draws itself: a green fill over the grey rail, grown by
+         scroll. Nodes light when the fill reaches them. Without JS the old
+         look holds (the current role's own rail is green). */
+      .timeline {
+        position: relative;
+      }
+      .timeline.has-fill .job.is-current {
+        --rail-c: var(--rail);
+        border-left-color: var(--rail);
+      }
+      .timeline-fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 0;
+        background: var(--accent);
+        pointer-events: none;
+        z-index: 1;
+      }
+      .timeline.has-fill .job::before {
+        z-index: 2;
+        transition:
+          border-color 0.35s ease,
+          background-color 0.35s ease;
+      }
+      .timeline.has-fill .job.is-reached::before {
+        border-color: var(--accent);
+      }
+      .timeline.has-fill .job.is-current.is-reached::before {
+        background: var(--accent);
+      }
+
+      /* Phones: every job collapses to its title and dates. */
+      .job-toggle {
+        display: none;
+      }
+      @media (max-width: 680px) {
+        .job-toggle {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          min-height: 44px;
+          margin: -12px 0 0;
+          padding: 0;
+          border: 0;
+          background: none;
+          font-family: var(--font-mono);
+          font-size: 12.5px;
+          color: var(--accent);
+          cursor: pointer;
+        }
+        .job-toggle::before {
+          content: "›";
+          display: inline-block;
+          font-size: 15px;
+          transition: transform 0.2s ease;
+        }
+        .job.is-open .job-toggle::before {
+          transform: rotate(90deg);
+        }
+        .job.is-open .job-toggle {
+          margin-bottom: 8px;
+        }
+        .job:not(.is-open) > .job-list,
+        .job:not(.is-open) > .tag-row {
+          display: none;
+        }
+        .job:not(.is-open):not(:last-child) {
+          padding-bottom: 32px;
+        }
+        .chip {
+          padding: 7px 11px;
+          font-size: 13px;
+        }
+        .chip img {
+          display: none;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
+        }
+        .hb-hot {
+          display: none;
         }
         .reveal {
           opacity: 1;
@@ -1555,9 +1747,11 @@
     <div class="progress" id="progress" aria-hidden="true"></div>
     <header>
       <nav>
-        <div class="nav-mark">harish<span class="slash">/</span>suresh</div>
+        <a class="nav-mark" href="#top" aria-label="Harish Suresh, back to top"
+          >harish<span class="slash">/</span>suresh</a
+        >
         <div class="nav-links">
-          <a href="#work">Skills</a>
+          <a href="#work">Stack</a>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
@@ -1620,6 +1814,7 @@
           <div class="hb-lift"></div>
           <div class="hb-streaks"><i></i><i></i><i></i><i></i><i></i></div>
           <div class="hb-dots"></div>
+          <div class="hb-hot"></div>
           <div class="hb-grain"></div>
         </div>
         <div class="wrap">
@@ -1652,11 +1847,11 @@
               </p>
               <p class="hero-stack">
                 <span>react</span><span class="sep" aria-hidden="true">/</span
-                ><span>fastapi</span><span class="sep" aria-hidden="true">/</span
-                ><span>langchain</span
+                ><span>spring boot</span><span class="sep" aria-hidden="true">/</span
+                ><span>fastapi</span
                 ><span class="sep wrap-here" aria-hidden="true">/</span
-                ><span>neo4j</span><span class="sep" aria-hidden="true">/</span
-                ><span>opentelemetry</span>
+                ><span>aws</span><span class="sep" aria-hidden="true">/</span
+                ><span>langchain</span>
               </p>
               <div class="cta-row">
                 <a class="btn btn-primary" href="resume.pdf" download
@@ -1671,11 +1866,12 @@
             </div>
           </div>
         </div>
+        <a class="scroll-cue" href="#work">↓ scroll</a>
       </section>
 
       <section id="work">
         <div class="wrap">
-          <h2 class="reveal work-title">How I build</h2>
+          <h2 class="reveal work-title">What I build with</h2>
           <div class="skill-groups">
             <div class="reveal">
               <div class="group-label">// Languages</div>
@@ -1806,7 +2002,8 @@
                 <span class="badge-current"><span class="dot"></span>current</span>
               </h3>
               <div class="job-when">Jun 2026 — present · Remote · Adtua engagement</div>
-              <ul class="job-list">
+              <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-1-list job-1-tags">show details</button>
+              <ul class="job-list" id="job-1-list">
                 <li>
                   Shipped a React/TypeScript and FastAPI campaign builder on a
                   3–4 engineer team for a digital out-of-home ad marketplace,
@@ -1835,7 +2032,7 @@
                   briefs returned no match.
                 </li>
               </ul>
-              <div class="tag-row">
+              <div class="tag-row" id="job-1-tags">
                 <span class="tag">FastAPI</span>
                 <span class="tag">PostgreSQL</span>
                 <span class="tag">Celery</span>
@@ -1859,7 +2056,8 @@
                 >
               </h3>
               <div class="job-when">Aug 2022 — Jul 2024 · Chennai, India</div>
-              <ul class="job-list">
+              <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-2-list job-2-tags">show details</button>
+              <ul class="job-list" id="job-2-list">
                 <li>
                   Built and maintained 6 Java/Spring Boot microservices
                   integrating SNMP and NETCONF to poll status and push
@@ -1888,7 +2086,7 @@
                   cut merge-to-deployment from 25–30 to 20 minutes.
                 </li>
               </ul>
-              <div class="tag-row">
+              <div class="tag-row" id="job-2-tags">
                 <span class="tag">Java</span>
                 <span class="tag">Spring Boot</span>
                 <span class="tag">Spring Security</span>
@@ -1913,7 +2111,8 @@
                 >
               </h3>
               <div class="job-when">May 2020 — Aug 2020 · Chennai, India</div>
-              <ul class="job-list">
+              <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-3-list job-3-tags">show details</button>
+              <ul class="job-list" id="job-3-list">
                 <li>
                   Built full-stack features for a production e-commerce bookstore
                   using React, Redux, Node.js, and MongoDB.
@@ -1927,7 +2126,7 @@
                   indexing, cutting response time from 750ms to under 450ms.
                 </li>
               </ul>
-              <div class="tag-row">
+              <div class="tag-row" id="job-3-tags">
                 <span class="tag">React</span>
                 <span class="tag">Redux</span>
                 <span class="tag">Node.js</span>
@@ -2081,8 +2280,8 @@
         <div class="wrap">
           <h2 class="reveal">Contact</h2>
           <p class="section-sub reveal">
-            Open to SDE roles — full-stack, with most of my depth in the
-            backend and in applied AI.
+            Open to SDE roles and to relocation. Let’s build something that
+            matters — get in touch.
           </p>
           <div class="contact-grid">
             <div class="terminal reveal">
@@ -2190,11 +2389,29 @@
         }
         btn.addEventListener("click", function () {
           var next = resolvedTheme() === "light" ? "dark" : "light";
-          root.setAttribute("data-theme", next);
-          try {
-            localStorage.setItem("theme", next);
-          } catch (e) {}
-          syncToggle();
+          function apply() {
+            root.setAttribute("data-theme", next);
+            try {
+              localStorage.setItem("theme", next);
+            } catch (e) {}
+            syncToggle();
+          }
+          /* Circular wipe from the button where supported; instant otherwise. */
+          if (reduced || !document.startViewTransition) {
+            apply();
+            return;
+          }
+          var r = btn.getBoundingClientRect();
+          root.style.setProperty("--vt-x", r.left + r.width / 2 + "px");
+          root.style.setProperty("--vt-y", r.top + r.height / 2 + "px");
+          root.classList.add("vt-running");
+          var vt = document.startViewTransition(apply);
+          var done = function () {
+            root.classList.remove("vt-running");
+          };
+          vt.finished.then(done, done);
+          /* Never leave page transitions disabled if the promise stalls. */
+          setTimeout(done, 900);
         });
         lightQuery.addEventListener("change", syncToggle);
         syncToggle();
@@ -2297,6 +2514,142 @@
           drawProgress();
         }
 
+        /* ---- Name decode (one shot, ~650ms, finishes before the cycler) ---- */
+        var heroName = document.querySelector(".hero h1");
+        if (heroName && !reduced) {
+          var realName = heroName.textContent;
+          heroName.setAttribute("aria-label", realName);
+          var nameSpan = document.createElement("span");
+          nameSpan.setAttribute("aria-hidden", "true");
+          nameSpan.textContent = realName;
+          heroName.textContent = "";
+          heroName.appendChild(nameSpan);
+          var glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/_<>";
+          var decodeStart = null;
+          function decode(ts) {
+            if (decodeStart === null) decodeStart = ts;
+            var p = Math.min(1, (ts - decodeStart) / 650);
+            var out = "";
+            for (var ci = 0; ci < realName.length; ci++) {
+              var ch = realName.charAt(ci);
+              out +=
+                ch === " " || ci / realName.length < p
+                  ? ch
+                  : glyphs.charAt((Math.random() * glyphs.length) | 0);
+            }
+            if (nameSettled) return;
+            nameSpan.textContent = p < 1 ? out : realName;
+            if (p < 1) requestAnimationFrame(decode);
+          }
+          /* If frames stall (background tab, throttling), never leave the
+             name scrambled: settle it after a second regardless. */
+          var nameSettled = false;
+          setTimeout(function () {
+            nameSettled = true;
+            nameSpan.textContent = realName;
+          }, 1000);
+          requestAnimationFrame(decode);
+        }
+
+        /* ---- Cursor spotlight on the hero (fine pointers only) ---- */
+        var heroEl = document.querySelector(".hero");
+        if (
+          heroEl &&
+          !reduced &&
+          window.matchMedia("(hover: hover) and (pointer: fine)").matches
+        ) {
+          var spotX = 0,
+            spotY = 0,
+            spotTicking = false;
+          function drawSpot() {
+            spotTicking = false;
+            heroEl.style.setProperty("--mx", spotX + "px");
+            heroEl.style.setProperty("--my", spotY + "px");
+          }
+          heroEl.addEventListener("pointermove", function (e) {
+            var r = heroEl.getBoundingClientRect();
+            spotX = e.clientX - r.left;
+            spotY = e.clientY - r.top;
+            heroEl.classList.add("is-spot");
+            if (!spotTicking) {
+              spotTicking = true;
+              requestAnimationFrame(drawSpot);
+            }
+          });
+          heroEl.addEventListener("pointerleave", function () {
+            heroEl.classList.remove("is-spot");
+          });
+        }
+
+        /* ---- Timeline draws itself on scroll ---- */
+        var drawTimeline = function () {};
+        var timelineEl = document.querySelector(".timeline");
+        if (timelineEl) {
+          var tlJobs = timelineEl.querySelectorAll(".job");
+          var tlFill = document.createElement("span");
+          tlFill.className = "timeline-fill";
+          tlFill.setAttribute("aria-hidden", "true");
+          timelineEl.appendChild(tlFill);
+          timelineEl.classList.add("has-fill");
+          function nodeY(job) {
+            return (
+              job.offsetTop +
+              parseFloat(getComputedStyle(job, "::before").top) +
+              7
+            );
+          }
+          var tlTicking = false;
+          drawTimeline = function () {
+            tlTicking = false;
+            var start = nodeY(tlJobs[0]);
+            var end = timelineEl.offsetHeight;
+            var y;
+            if (reduced) {
+              var cur =
+                timelineEl.querySelector(".job.is-current") || tlJobs[0];
+              y = cur.offsetTop + cur.offsetHeight;
+            } else {
+              y =
+                window.innerHeight * 0.6 -
+                timelineEl.getBoundingClientRect().top;
+            }
+            y = Math.max(start, Math.min(end, y));
+            tlFill.style.top = start + "px";
+            tlFill.style.height = y - start + "px";
+            tlJobs.forEach(function (job) {
+              job.classList.toggle("is-reached", nodeY(job) <= y + 0.5);
+            });
+          };
+          window.addEventListener(
+            "scroll",
+            function () {
+              if (!tlTicking) {
+                tlTicking = true;
+                requestAnimationFrame(drawTimeline);
+              }
+            },
+            { passive: true }
+          );
+          window.addEventListener("resize", drawTimeline);
+          if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(drawTimeline);
+          }
+          window.addEventListener("load", drawTimeline);
+          drawTimeline();
+        }
+
+        /* ---- Mobile: collapsible jobs ---- */
+        document.querySelectorAll(".job-toggle").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var job = b.closest(".job");
+            var open = !job.classList.contains("is-open");
+            job.classList.toggle("is-open", open);
+            b.setAttribute("aria-expanded", open ? "true" : "false");
+            b.textContent = open ? "hide details" : "show details";
+            drawTimeline();
+          });
+        });
+
         /* ---- Copy email ---- */
         var copyBtn = document.getElementById("copy-email");
         if (copyBtn && navigator.clipboard) {
@@ -2337,7 +2690,7 @@
             if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
           }
           var commands = [
-            { label: "Go to Skills", hint: "section", run: function () { go("#work"); } },
+            { label: "Go to Stack", hint: "section", run: function () { go("#work"); } },
             { label: "Go to Experience", hint: "section", run: function () { go("#experience"); } },
             { label: "Go to Projects", hint: "section", run: function () { go("#projects"); } },
             { label: "Go to Education", hint: "section", run: function () { go("#education"); } },
