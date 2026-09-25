@@ -205,23 +205,26 @@ not part of the site.
   nothing — its box includes the 28px it was pulled. Also tighter
   Beyond-the-stack and project-card padding.
 - Tap targets on phones are enlarged with invisible `::after` hit areas
-  (icons, palette button, copy) and padding/negative-margin pairs (project
+  (icons, copy) and padding/negative-margin pairs (project
   links, footer and nav marks) so every visible control reaches ~44px without
-  changing the visuals; the nav has no room for larger icons at 360px.
+  changing the visuals; the nav has no room for larger icons at 360px (its
+  icon gap drops to 8px at <=400px just to fit the four 36px buttons).
 - Email, GitHub and LinkedIn appear in exactly TWO places: the nav icons
   (persistent, reachable from anywhere) and `#contact` (the destination the
   nav link points at). The footer used to repeat all three a third time,
   directly below the contact section — removed 2026-09-23. The footer is now
   just the `harish/suresh` mark, which doubles as back-to-top, and the
   copyright line. Don't put contact links back into it.
-- The command palette (⌘K / Ctrl-K, or the search button in the nav) holds its
-  actions in one `commands` array, hoisted OUT of the palette block (with
+- The command palette has NO visible trigger: the nav search button was
+  removed on 2026-09-25 at Harish's request once the terminal existed, and
+  the `>_` terminal button took its slot. ⌘K / Ctrl-K still opens it as a
+  hidden shortcut. It holds its actions in one `commands` array, hoisted OUT of the palette block (with
   `go()` and `runCommand(label)`) so the terminals reuse it rather than
   defining their own copy.
 - TERMINAL, built 2026-09-24, two front ends over one `termCmds` engine:
   an in-page `<dialog id="term">` (opened by the backtick key, the `>_` nav
-  button, or ⌘K "Open terminal"; the button is hidden at <=680px because the
-  nav is full there), and the browser dev console, where the commands are
+  button — visible at EVERY width, it is the phone's way in — or ⌘K "Open
+  terminal"), and the browser dev console, where the commands are
   global functions (`help()`, `whoami()`, `cat("warden")`, `sudo()`…) and a
   styled banner greets anyone who opens devtools. Commands: help, whoami, ls,
   cd, cat, stack, resume, hire, github, linkedin, theme, sudo, no, clear,
@@ -238,8 +241,7 @@ not part of the site.
   original lines. The repo (github.com/hotheadhacker/no-as-a-service) is
   credited in `help`. Harish chose console-only placement for it: keep it off
   the visible page, since a "no" joke on a hiring page can read as arrogant. The nav button stays visible at
-  every width — on mobile `.nav-links` is hidden, so the palette is the only
-  way to jump between sections.
+  every width.
 - Project cards print everything inline — lead paragraph, a `// label`, the
   detail paragraph, then tags. They used to expand (whole-card click, a
   `grid-template-rows: 0fr -> 1fr` panel). That was REMOVED on 2026-09-23 after
