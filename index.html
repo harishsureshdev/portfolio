@@ -1486,6 +1486,93 @@
         }
       }
 
+      /* ---------- Terminal (in-page; the dev-console version shares its
+         commands) ---------- */
+      .term-open {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+      }
+      /* The nav has no room at phone widths; there the palette's
+         "Open terminal" command is the way in. */
+      @media (max-width: 680px) {
+        .term-open {
+          display: none;
+        }
+      }
+      .term {
+        width: min(720px, calc(100vw - 32px));
+        height: min(460px, 70vh);
+        padding: 0;
+        border: 1px solid var(--border-strong);
+        border-radius: 8px;
+        background: var(--bg);
+        color: var(--text);
+        margin: 10vh auto auto;
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+        line-height: 1.55;
+      }
+      .term[open] {
+        display: flex;
+        flex-direction: column;
+      }
+      .term::backdrop {
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(3px);
+      }
+      .term-bar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text-dim);
+        font-size: 12px;
+      }
+      .term-out {
+        flex: 1;
+        overflow-y: auto;
+        padding: 14px 16px 4px;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .term-out .t-dim {
+        color: var(--text-dim);
+      }
+      .term-out .t-acc {
+        color: var(--accent);
+      }
+      .term-out .t-err {
+        color: var(--text-muted);
+      }
+      .term-out .t-big {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+      .term-line {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px 14px;
+      }
+      .term-ps1 {
+        color: var(--accent);
+        flex: 0 0 auto;
+      }
+      #term-input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: none;
+        color: var(--text);
+        font: inherit;
+        caret-color: var(--accent);
+      }
+
       /* ---------- Footer ---------- */
       footer {
         border-top: 1px solid var(--border);
@@ -1827,6 +1914,14 @@
           <a href="#contact">Contact</a>
         </div>
         <div class="nav-icons">
+          <button
+            type="button"
+            class="icon-btn term-open"
+            id="term-open"
+            aria-label="Open terminal"
+          >
+            <span aria-hidden="true">&gt;_</span>
+          </button>
           <button
             type="button"
             class="kbd-hint"
@@ -2432,6 +2527,24 @@
       </div>
     </dialog>
 
+    <dialog class="term" id="term" aria-label="Terminal">
+      <div class="term-bar">
+        <span>harish@portfolio: ~</span><span class="term-hint">esc to close</span>
+      </div>
+      <div class="term-out" id="term-out" role="log" aria-live="polite"></div>
+      <form class="term-line" id="term-form">
+        <label class="term-ps1" for="term-input">~ $</label>
+        <input
+          id="term-input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          enterkeyhint="go"
+        />
+      </form>
+    </dialog>
+
     <script>
       (function () {
         var reduced = window.matchMedia(
@@ -2721,20 +2834,13 @@
         }
 
         /* ---- Command palette ---- */
-        var palette = document.getElementById("palette");
-        if (palette && typeof palette.showModal === "function") {
-          var pInput = document.getElementById("palette-input");
-          var pList = document.getElementById("palette-list");
-          var pOpen = document.getElementById("palette-open");
-          var isMac = /Mac|iPhone|iPad/.test(navigator.platform || "");
-          var combo = pOpen && pOpen.querySelector(".combo");
-          if (combo && !isMac) combo.textContent = "Ctrl K";
-
-          function go(hash) {
-            var el = document.querySelector(hash);
-            if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
-          }
-          var commands = [
+        /* One command list, shared by the palette and both terminals. */
+        function go(hash) {
+          var el = document.querySelector(hash);
+          if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+        }
+        var openTerminal = function () {};
+        var commands = [
             { label: "Go to Skills", hint: "section", run: function () { go("#work"); } },
             { label: "Go to Experience", hint: "section", run: function () { go("#experience"); } },
             { label: "Go to Projects", hint: "section", run: function () { go("#projects"); } },
@@ -2747,8 +2853,23 @@
             { label: "Send an email", hint: "mailto", run: function () { window.location.href = "mailto:harishsuresh.contact@gmail.com"; } },
             { label: "Toggle theme", hint: "appearance", run: function () { btn.click(); } },
             { label: "Open GitHub", hint: "external", run: function () { window.open("https://github.com/harishsureshdev", "_blank", "noopener"); } },
-            { label: "Open LinkedIn", hint: "external", run: function () { window.open("https://linkedin.com/in/harishsureshdev", "_blank", "noopener"); } }
+            { label: "Open LinkedIn", hint: "external", run: function () { window.open("https://linkedin.com/in/harishsureshdev", "_blank", "noopener"); } },
+            { label: "Open terminal", hint: "` key", run: function () { openTerminal(); } }
           ];
+        function runCommand(label) {
+          for (var i = 0; i < commands.length; i++) {
+            if (commands[i].label === label) return commands[i].run();
+          }
+        }
+
+        var palette = document.getElementById("palette");
+        if (palette && typeof palette.showModal === "function") {
+          var pInput = document.getElementById("palette-input");
+          var pList = document.getElementById("palette-list");
+          var pOpen = document.getElementById("palette-open");
+          var isMac = /Mac|iPhone|iPad/.test(navigator.platform || "");
+          var combo = pOpen && pOpen.querySelector(".combo");
+          if (combo && !isMac) combo.textContent = "Ctrl K";
 
           var matches = commands.slice();
           var cursor = 0;
@@ -2845,6 +2966,434 @@
           var fallbackOpen = document.getElementById("palette-open");
           if (fallbackOpen) fallbackOpen.hidden = true;
         }
+
+        /* ---- Terminal: shared engine ----
+           Two front ends — the in-page <dialog id="term"> and the browser's
+           dev console — run the same commands. Content is read from the page
+           itself (hero, project cards, skill groups), never duplicated here,
+           so the terminal can't drift out of step with the site. */
+        var tokens = getComputedStyle(document.documentElement);
+        function tok(name) {
+          return tokens.getPropertyValue(name).trim();
+        }
+        function clean(t) {
+          return (t || "").replace(/\s+/g, " ").trim();
+        }
+        var sections = {
+          skills: "#work",
+          stack: "#work",
+          experience: "#experience",
+          projects: "#projects",
+          education: "#education",
+          contact: "#contact"
+        };
+        function projectCards() {
+          return Array.prototype.map.call(
+            document.querySelectorAll(".project-card"),
+            function (card) {
+              var h = card.querySelector("h3");
+              var title = clean(h ? h.textContent : "");
+              return {
+                el: card,
+                key: title.toLowerCase().split(/[\s.]/)[0],
+                title: title,
+                paras: Array.prototype.map.call(
+                  card.querySelectorAll("p"),
+                  function (p) {
+                    return clean(p.textContent);
+                  }
+                ),
+                tags: Array.prototype.map.call(
+                  card.querySelectorAll(".tag"),
+                  function (t) {
+                    return clean(t.textContent);
+                  }
+                )
+              };
+            }
+          );
+        }
+
+        /* No-as-a-Service: only called when someone asks, never on load, with
+           a local fallback if the API is slow, down or rate-limited. */
+        var noFallback = [
+          "I'd love to, but I'm in the middle of a deploy.",
+          "My calendar said no before I could.",
+          "That sounds like a Monday problem, and it's not Monday.",
+          "I checked with my rubber duck. The duck says no.",
+          "Request received, reviewed, and lovingly declined.",
+          "That would require a meeting, and I'm allergic.",
+          "No, but I admire the confidence.",
+          "I'd need a ticket for that. There is no ticket."
+        ];
+        function localNo() {
+          return noFallback[(Math.random() * noFallback.length) | 0];
+        }
+        function fetchNo() {
+          return new Promise(function (resolve) {
+            var settled = false;
+            function finish(v) {
+              if (settled) return;
+              settled = true;
+              resolve(v);
+            }
+            setTimeout(function () {
+              finish(localNo());
+            }, 2000);
+            if (!window.fetch) return finish(localNo());
+            fetch("https://naas.isalman.dev/no")
+              .then(function (r) {
+                return r.ok ? r.json() : null;
+              })
+              .then(function (j) {
+                finish(j && j.reason ? j.reason : localNo());
+              })
+              .catch(function () {
+                finish(localNo());
+              });
+          });
+        }
+
+        /* A writer turns [text, style] segments into a line on either
+           front end. Styles: "", "dim", "acc", "err", "big". */
+        var termCmds = {
+          help: {
+            desc: "list commands",
+            run: function (args, w) {
+              var rows = [
+                ["whoami", "who I am"],
+                ["ls", "list sections"],
+                ["cd <section>", "jump to a section"],
+                ["cat <project>", "read a project"],
+                ["stack", "what I build with"],
+                ["resume", "download my resume"],
+                ["hire", "email me"],
+                ["github / linkedin", "open profiles"],
+                ["theme", "toggle light/dark"],
+                ["sudo <anything>", "try your luck"],
+                ["no", "a reason to say no"],
+                ["clear", "clear the screen"]
+              ];
+              rows.forEach(function (r) {
+                w([[("  " + r[0] + "                    ").slice(0, 22), "acc"], [r[1], "dim"]]);
+              });
+              w([["", ""]]);
+              w([["no / sudo powered by No-as-a-Service · github.com/hotheadhacker/no-as-a-service", "dim"]]);
+            }
+          },
+          whoami: {
+            desc: "who I am",
+            run: function (args, w) {
+              var h1 = document.querySelector(".hero h1");
+              var badge = document.querySelector(".hero-badge");
+              var meta = document.querySelector(".hero-meta");
+              var stackRow = document.querySelector(".hero-stack");
+              w([[clean(h1 && (h1.getAttribute("aria-label") || h1.textContent)), "big"]]);
+              if (badge) w([[clean(badge.textContent).replace(/^\/\/\s*/, ""), "acc"]]);
+              /* Join the row items explicitly: textContent drops the spacing
+                 the flex layout adds around the separators. */
+              function items(el, skip) {
+                return Array.prototype.filter
+                  .call(el.children, function (c) {
+                    return !c.classList.contains(skip);
+                  })
+                  .map(function (c) {
+                    return clean(c.textContent);
+                  });
+              }
+              if (meta) w([[items(meta, "dot").join(" · "), "dim"]]);
+              if (stackRow) w([[items(stackRow, "sep").join(" / "), ""]]);
+            }
+          },
+          ls: {
+            desc: "list sections",
+            run: function (args, w) {
+              w([["skills/  experience/  projects/  education/  contact/", "acc"]]);
+            }
+          },
+          cd: {
+            desc: "jump to a section",
+            args: function () {
+              return Object.keys(sections).concat([".."]);
+            },
+            run: function (args, w, closeAfter) {
+              var target = (args[0] || "").replace(/\/$/, "").toLowerCase();
+              if (!target || target === ".." || target === "~" || target === "/") {
+                window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+                return closeAfter && closeAfter();
+              }
+              if (!sections[target]) {
+                return w([["cd: no such section: " + target + ". try ls", "err"]]);
+              }
+              go(sections[target]);
+              if (closeAfter) closeAfter();
+            }
+          },
+          cat: {
+            desc: "read a project",
+            args: function () {
+              return projectCards().map(function (p) {
+                return p.key;
+              });
+            },
+            run: function (args, w) {
+              var cards = projectCards();
+              var q = (args[0] || "").toLowerCase();
+              if (!q) {
+                return w([["usage: cat <project>  ·  " + cards.map(function (p) { return p.key; }).join("  "), "dim"]]);
+              }
+              var card = cards.filter(function (p) {
+                return p.key.indexOf(q) === 0 || p.title.toLowerCase().indexOf(q) === 0;
+              })[0];
+              if (!card) return w([["cat: " + q + ": no such project", "err"]]);
+              w([[card.title, "acc"]]);
+              card.paras.forEach(function (t) {
+                w([[t, ""]]);
+              });
+              if (card.tags.length) w([["[" + card.tags.join(", ") + "]", "dim"]]);
+            }
+          },
+          stack: {
+            desc: "what I build with",
+            run: function (args, w) {
+              document.querySelectorAll(".skill-groups > div").forEach(function (g, i, all) {
+                var label = clean((g.querySelector(".group-label") || {}).textContent).replace(/^\/\/\s*/, "");
+                var chips = Array.prototype.map.call(g.querySelectorAll(".chip"), function (c) {
+                  return clean(c.textContent);
+                });
+                w([[(i === all.length - 1 ? "└─ " : "├─ ") + label + "  ", "acc"], [chips.join(", "), ""]]);
+              });
+            }
+          },
+          resume: {
+            desc: "download my resume",
+            run: function (args, w) {
+              w([["downloading resume.pdf…", "dim"]]);
+              runCommand("Download resume");
+            }
+          },
+          hire: {
+            desc: "email me",
+            run: function (args, w) {
+              w([["opening mail… good choice.", "acc"]]);
+              window.location.href =
+                "mailto:harishsuresh.contact@gmail.com?subject=" +
+                encodeURIComponent("Found you through the terminal");
+            }
+          },
+          github: {
+            desc: "open GitHub",
+            run: function (args, w) {
+              w([["opening github.com/harishsureshdev", "dim"]]);
+              runCommand("Open GitHub");
+            }
+          },
+          linkedin: {
+            desc: "open LinkedIn",
+            run: function (args, w) {
+              w([["opening linkedin.com/in/harishsureshdev", "dim"]]);
+              runCommand("Open LinkedIn");
+            }
+          },
+          theme: {
+            desc: "toggle theme",
+            run: function (args, w) {
+              runCommand("Toggle theme");
+              w([["theme switched.", "dim"]]);
+            }
+          },
+          sudo: {
+            desc: "try your luck",
+            run: function (args, w) {
+              var said = args.join(" ").toLowerCase();
+              w([["[sudo] password for recruiter: ********", "dim"]]);
+              if (/\bhire\b/.test(said)) {
+                w([["permission granted. that one I'll allow.", "acc"]]);
+                return termCmds.hire.run([], w);
+              }
+              w([["Permission denied.", "err"]]);
+              return fetchNo().then(function (reason) {
+                w([["“" + reason + "”", "dim"]]);
+              });
+            }
+          },
+          no: {
+            desc: "a reason to say no",
+            run: function (args, w) {
+              return fetchNo().then(function (reason) {
+                w([["“" + reason + "”", ""]]);
+              });
+            }
+          },
+          rm: {
+            desc: "",
+            run: function (args, w) {
+              w([["rm: nice try.", "err"]]);
+            }
+          },
+          exit: {
+            desc: "",
+            run: function (args, w, closeAfter) {
+              if (closeAfter) return closeAfter();
+              w([["there is no exit. there is only scroll.", "dim"]]);
+            }
+          }
+        };
+        function runTerm(line, w, closeAfter, clear) {
+          var parts = clean(line).split(" ");
+          var name = (parts.shift() || "").toLowerCase();
+          if (!name) return;
+          if (name === "clear") return clear ? clear() : null;
+          var cmd = termCmds[name];
+          if (!cmd) {
+            return w([["command not found: " + name + ". try help", "err"]]);
+          }
+          return cmd.run(parts, w, closeAfter);
+        }
+
+        /* ---- Terminal: in-page front end ---- */
+        var term = document.getElementById("term");
+        if (term && typeof term.showModal === "function") {
+          var tOut = document.getElementById("term-out");
+          var tForm = document.getElementById("term-form");
+          var tInput = document.getElementById("term-input");
+          var tHistory = [];
+          var tHistIdx = 0;
+          var tGreeted = false;
+          function tWrite(segments) {
+            var line = document.createElement("div");
+            segments.forEach(function (seg) {
+              var span = document.createElement("span");
+              span.textContent = seg[0];
+              if (seg[1])
+                span.className = seg[1]
+                  .split(" ")
+                  .map(function (c) {
+                    return "t-" + c;
+                  })
+                  .join(" ");
+              line.appendChild(span);
+            });
+            tOut.appendChild(line);
+            tOut.scrollTop = tOut.scrollHeight;
+          }
+          function tClose() {
+            term.close();
+          }
+          openTerminal = function () {
+            if (palette && palette.open) palette.close();
+            if (!tGreeted) {
+              tGreeted = true;
+              tWrite([["harish", "big"], ["/", "big acc"], ["suresh", "big"]]);
+              tWrite([["type help to look around. esc to close.", "dim"]]);
+              tWrite([["", ""]]);
+            }
+            term.showModal();
+            tInput.focus();
+          };
+          tForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var line = tInput.value;
+            tInput.value = "";
+            tWrite([["~ $ ", "acc"], [line, ""]]);
+            if (clean(line)) {
+              tHistory.push(line);
+              tHistIdx = tHistory.length;
+            }
+            runTerm(line, tWrite, tClose, function () {
+              tOut.textContent = "";
+            });
+          });
+          tInput.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowUp" && tHistory.length) {
+              e.preventDefault();
+              tHistIdx = Math.max(0, tHistIdx - 1);
+              tInput.value = tHistory[tHistIdx];
+            } else if (e.key === "ArrowDown" && tHistory.length) {
+              e.preventDefault();
+              tHistIdx = Math.min(tHistory.length, tHistIdx + 1);
+              tInput.value = tHistory[tHistIdx] || "";
+            } else if (e.key === "Tab") {
+              /* Complete a command name, or a cd/cat argument. */
+              e.preventDefault();
+              var v = tInput.value.replace(/^\s+/, "");
+              var sp = v.indexOf(" ");
+              var pool, stem, prefix;
+              if (sp === -1) {
+                pool = Object.keys(termCmds).concat(["clear"]);
+                stem = v;
+                prefix = "";
+              } else {
+                var c = termCmds[v.slice(0, sp).toLowerCase()];
+                if (!c || !c.args) return;
+                pool = c.args();
+                stem = v.slice(sp + 1);
+                prefix = v.slice(0, sp + 1);
+              }
+              var hits = pool.filter(function (x) {
+                return x.indexOf(stem.toLowerCase()) === 0;
+              });
+              if (hits.length === 1) tInput.value = prefix + hits[0] + (sp === -1 ? " " : "");
+              else if (hits.length > 1) tWrite([[hits.join("  "), "dim"]]);
+            }
+          });
+          var tOpenBtn = document.getElementById("term-open");
+          if (tOpenBtn) tOpenBtn.addEventListener("click", openTerminal);
+          /* Backtick opens it, unless someone is typing somewhere. */
+          document.addEventListener("keydown", function (e) {
+            if (e.key !== "`" || e.metaKey || e.ctrlKey || e.altKey) return;
+            var t = e.target;
+            if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+            e.preventDefault();
+            if (term.open) term.close();
+            else openTerminal();
+          });
+        } else {
+          var tBtn = document.getElementById("term-open");
+          if (tBtn) tBtn.hidden = true;
+          commands = commands.filter(function (c) {
+            return c.label !== "Open terminal";
+          });
+        }
+
+        /* ---- Terminal: dev-console front end ----
+           Plain global functions, so an engineer who opens devtools can type
+           help(), whoami(), cat("warden"), sudo("anything")… */
+        (function () {
+          if (!window.console || !console.log) return;
+          var acc = tok("--accent") || "green";
+          var styleFor = {
+            "": "",
+            dim: "color:" + (tok("--text-dim") || "gray"),
+            acc: "color:" + acc,
+            err: "color:" + (tok("--text-muted") || "gray"),
+            big: "font:700 20px/1.3 'JetBrains Mono',monospace",
+            "big acc": "font:700 20px/1.3 'JetBrains Mono',monospace;color:" + acc
+          };
+          function cWrite(segments) {
+            var fmt = "",
+              styles = [];
+            segments.forEach(function (seg) {
+              fmt += "%c" + seg[0].replace(/%/g, "%%");
+              styles.push(styleFor[seg[1] || ""] || "");
+            });
+            console.log.apply(console, [fmt].concat(styles));
+          }
+          Object.keys(termCmds).forEach(function (name) {
+            if (name === "exit" || name === "rm") return;
+            window[name] = function () {
+              var args = Array.prototype.slice.call(arguments).join(" ").split(" ").filter(Boolean);
+              var r = termCmds[name].run(args, cWrite);
+              return r && r.then ? r.then(function () {}) : undefined;
+            };
+          });
+          window.exit = function () {
+            cWrite([["there is no exit. there is only scroll.", "dim"]]);
+          };
+          cWrite([["harish", "big"], ["/", "big acc"], ["suresh", "big"]]);
+          cWrite([["hey, you opened devtools. i respect that.", ""]]);
+          cWrite([["type help() to look around.", "dim"]]);
+        })();
 
         /* ---- Hero cycler ----
            Harish's own wording. The first phrase ships in the HTML, so no-JS

@@ -215,8 +215,29 @@ not part of the site.
   just the `harish/suresh` mark, which doubles as back-to-top, and the
   copyright line. Don't put contact links back into it.
 - The command palette (⌘K / Ctrl-K, or the search button in the nav) holds its
-  actions in one `commands` array. The planned terminal easter egg should reuse
-  that array rather than defining its own copy. The nav button stays visible at
+  actions in one `commands` array, hoisted OUT of the palette block (with
+  `go()` and `runCommand(label)`) so the terminals reuse it rather than
+  defining their own copy.
+- TERMINAL, built 2026-09-24, two front ends over one `termCmds` engine:
+  an in-page `<dialog id="term">` (opened by the backtick key, the `>_` nav
+  button, or ⌘K "Open terminal"; the button is hidden at <=680px because the
+  nav is full there), and the browser dev console, where the commands are
+  global functions (`help()`, `whoami()`, `cat("warden")`, `sudo()`…) and a
+  styled banner greets anyone who opens devtools. Commands: help, whoami, ls,
+  cd, cat, stack, resume, hire, github, linkedin, theme, sudo, no, clear,
+  exit, rm. The in-page terminal has history (up/down arrows) and Tab
+  completion for commands and cd/cat arguments. `whoami`, `cat` and `stack`
+  READ THE PAGE (hero, project cards, skill groups) rather than holding their
+  own copy, so they can't drift. `sudo` is always "Permission denied." plus a
+  No-as-a-Service reason, EXCEPT `sudo hire …`, which is granted and opens
+  mail. Harish didn't know what the dev console was; he chose both front
+  ends after it was explained.
+- No-as-a-Service (naas.isalman.dev/no, CORS open, rate-limited) is called
+  ONLY when someone runs `sudo` or `no`, never on load, so visitor IPs don't
+  go to a third party unasked. A 2s timeout falls back to a local list of
+  original lines. The repo (github.com/hotheadhacker/no-as-a-service) is
+  credited in `help`. Harish chose console-only placement for it: keep it off
+  the visible page, since a "no" joke on a hiring page can read as arrogant. The nav button stays visible at
   every width — on mobile `.nav-links` is hidden, so the palette is the only
   way to jump between sections.
 - Project cards print everything inline — lead paragraph, a `// label`, the
