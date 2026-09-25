@@ -1687,12 +1687,97 @@
         .job:not(.is-open):not(:last-child) {
           padding-bottom: 32px;
         }
+      }
+
+      /* ---------- Phones: density + tap targets ---------- */
+      @media (max-width: 680px) {
+        /* Skills was 2,200px on a 390px phone, 30% of the page: seven groups
+           of wrapping bordered chips. On phones the chips become the same
+           slash-separated mono row as the hero stack line, so every name
+           stays visible without the boxes. */
+        /* Each separator sits BEFORE its item in a fixed 28px box, and the
+           row is pulled 28px left with overflow clipped: whichever item
+           starts a line has its slash tucked out of view, so no line ever
+           starts or ends on a stray "/". */
+        .chip-row {
+          gap: 6px 0;
+          margin-left: -28px;
+        }
+        /* The clip lives on the group, whose edge is the text column: the
+           row's own box includes the 28px it was pulled left, so clipping
+           the row itself hides nothing. */
+        .skill-groups > div {
+          overflow: hidden;
+        }
         .chip {
-          padding: 7px 11px;
-          font-size: 13px;
+          padding: 0;
+          border: 0;
+          background: none;
+          font-size: 14px;
+          color: var(--text-muted);
+          gap: 0;
+        }
+        .chip:hover {
+          transform: none;
         }
         .chip img {
           display: none;
+        }
+        .chip::before {
+          content: "/";
+          display: inline-block;
+          width: 28px;
+          text-align: center;
+          color: var(--text-dim);
+          opacity: 0.7;
+        }
+        .skill-groups > div {
+          margin-bottom: 26px;
+        }
+        .group-label {
+          margin-bottom: 8px;
+        }
+        .beyond-item {
+          padding: 18px 0;
+        }
+        .project-card {
+          padding: 22px 20px;
+        }
+
+        /* Tap targets: grow the HIT AREA to 44px without growing the visuals,
+           because the nav has no room at 360px for bigger icons. */
+        .icon-btn,
+        .kbd-hint,
+        .copy-btn {
+          position: relative;
+        }
+        .icon-btn::after,
+        .kbd-hint::after,
+        .copy-btn::after {
+          content: "";
+          position: absolute;
+        }
+        .icon-btn::after {
+          inset: -5px;
+        }
+        .kbd-hint::after {
+          inset: -9px -5px;
+        }
+        .copy-btn::after {
+          inset: -9px -4px;
+        }
+        .project-link,
+        .footer-mark {
+          padding: 12px 0;
+          margin: -12px 0;
+        }
+        .link-row {
+          padding: 14px 0;
+          gap: 10px;
+        }
+        .nav-mark {
+          padding: 10px 0;
+          margin: -10px 0;
         }
       }
 

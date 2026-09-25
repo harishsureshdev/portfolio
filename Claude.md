@@ -197,6 +197,17 @@ not part of the site.
   2026-09-24. Chips also drop their logos there. A button rather than
   `<details>` because details would break the >=1000px `.job` grid. The
   390px page went from ~10,000px to ~7,300px.
+- Phones (<=680px) get a density pass: skill chips render as slash-
+  separated mono text (no boxes, no logos) — Skills was 2,200px, 30% of the
+  390px page. Separators are a fixed 28px `::before` box on EVERY chip; the
+  row is pulled 28px left and the GROUP (`.skill-groups > div`) clips, so the
+  slash that would start each line is hidden. Clipping the row itself does
+  nothing — its box includes the 28px it was pulled. Also tighter
+  Beyond-the-stack and project-card padding.
+- Tap targets on phones are enlarged with invisible `::after` hit areas
+  (icons, palette button, copy) and padding/negative-margin pairs (project
+  links, footer and nav marks) so every visible control reaches ~44px without
+  changing the visuals; the nav has no room for larger icons at 360px.
 - Email, GitHub and LinkedIn appear in exactly TWO places: the nav icons
   (persistent, reachable from anywhere) and `#contact` (the destination the
   nav link points at). The footer used to repeat all three a third time,
