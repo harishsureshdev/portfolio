@@ -2,8 +2,8 @@
 
 ## What this is
 
-A one-page personal portfolio for a software engineer — FULL-STACK WITH
-BACKEND DEPTH, and applied AI as a third leg. Single self-contained HTML file
+A one-page personal portfolio for a FULL-STACK software engineer with applied
+AI as a second leg. Single self-contained HTML file
 (`index.html`) — no build step. `tools/` holds generators for assets and is
 not part of the site.
 
@@ -61,11 +61,12 @@ not part of the site.
   the fold, including on a 360x740 Android: the portrait drops to 130px and
   mobile hero padding is 40/48px. Measure `.cta-row`'s BOTTOM edge against
   the viewport height at 390x844 and 360x740 after any hero change.
-- The hero has ONE moving thing: the cycling line "I build systems that /
-  <phrase>". The section typewriter that used to sit under "What I can do"
-  and the hero's rotating stack-line underline were both REMOVED on
-  2026-09-24 so it isn't competing — three moving things in two screens.
-  Don't add a second animated element to either screen.
+- The hero has ONE perpetually moving thing: the cycler. The section
+  typewriter and the rotating stack-line underline were REMOVED on 2026-09-24
+  so it isn't competing. One-shot entrances that finish in under a second are
+  allowed (the name decode, ~650ms, done before the cycler starts at 2.6s), as
+  is motion that only answers the user (the cursor spotlight). Nothing else
+  may loop.
 - The cycler reads "Building systems that / scale. ship. hold up. last." —
   Harish's own wording, chosen on 2026-09-24 over evidence-mapped
   alternatives ("don't double-book", "are safe to retry", "ask before they
@@ -78,20 +79,19 @@ not part of the site.
   reduced motion both show a complete sentence. Screen readers get the full
   list once from an `.sr-only` span; the animated copy is `aria-hidden`.
 - There is NO prose summary in the hero. Under the cycler sits `.hero-stack`,
-  a static lowercase mono row: react / fastapi / langchain / neo4j /
-  opentelemetry. It keeps recognisable tech names on the first screen for
-  recruiters without a sentence. Harish rejected the first version (java /
-  python / typescript / react / postgres) on 2026-09-24 as "simple" — the row
-  should carry the heavier things he has actually shipped, and every name in
-  it must appear in an experience bullet or tag below. `tools/og.html` carries
-  the same row; keep them in step. Harish rejected the prose line ("Full-stack, deepest in the
-  backend. React and TypeScript in front…") on 2026-09-24 — don't bring a
-  sentence back. It must stay static; the cycler is the only moving thing.
-- Below 800px the hero's two wrapping rows (meta, keyword row) break at a
-  chosen separator marked `.wrap-here`, which becomes a full-width invisible
-  line break. Left to wrap freely they stranded a `·` or `/` at a line end.
-  800 is measured, not guessed: both rows wrap up to ~760px and fit on one
-  line from 820px. If you lengthen either row, re-run that sweep.
+  a static lowercase mono row: react / spring boot / fastapi / aws / langchain.
+  History, all Harish's calls on 2026-09-24: java/python/typescript/react/
+  postgres was rejected as "simple"; react/fastapi/langchain/neo4j/
+  opentelemetry came next; then he asked for Spring Boot, dropped neo4j, and
+  took AWS over Docker (AWS reads as production experience, Docker as table
+  stakes). Every name must appear in an experience bullet or tag. Spans are
+  `white-space: nowrap` so "spring boot" never splits. `tools/og.html`
+  carries the same row; keep them in step. It must stay static.
+- The hero's two wrapping rows break at a chosen separator marked
+  `.wrap-here` (a full-width invisible line break), each on its OWN measured
+  breakpoint: the meta line below 800px, the keyword row below 750px (it fits
+  on one line from ~760). Left to wrap freely they stranded a `·` or `/` at a
+  line end. If you change either row's text, re-run the width sweep.
 - The hero badge says "2+ yrs". CLAUDE.md used to ban an "N+ years" badge as
   an invented metric; Harish asked for one on 2026-09-24 and it is now
   allowed, but ONLY as "2+". The honest arithmetic: Sify Aug 2022-Jul 2024
@@ -117,11 +117,19 @@ not part of the site.
   (experience and projects both).
 - Experience is a continuous timeline. `.job` carries a 2px `--rail` left
   border (accent on the current role) and a 14px node in `::before`, hollow
-  for past roles and filled for the current one. The green segment IS the
-  current role's span — that colour change is deliberate, not a stuck line.
-  The first job's rail begins at its node's centre (`--node-y` via a
-  `border-image` gradient); it used to poke ~20px above the node, so the
-  timeline looked like it started in mid-air. Jobs are spaced with
+  for past roles and filled for the current one. The first job's rail begins
+  at its node's centre (`--node-y` via a `border-image` gradient); it used to
+  poke ~20px above the node, so the timeline looked like it started in
+  mid-air.
+- The timeline DRAWS ITSELF: JS appends `.timeline-fill` (2px, accent) and
+  adds `.has-fill`, which turns every rail grey; the fill grows to wherever
+  the viewport's 60% line sits, and each `.job` gets `.is-reached` (node ring
+  turns green) as the fill passes it. Harish asked why the rail wasn't all
+  green and whether it should move — this answers both. Without JS the old
+  look holds (current role's own rail green); under reduced motion the fill
+  is static to the bottom of the current role. Headless never fires the rAF
+  scroll handler: verify by replacing `requestAnimationFrame` with a direct
+  call and dispatching a synthetic `scroll`. Jobs are spaced with
   padding-bottom, not flex gap, so each job's rail runs into the next. The
   old rail was `--border-strong` at 1.6:1 — invisible — which left past roles
   indented for no visible reason. `--rail` is #66625A dark / #8F8676 light,
@@ -146,7 +154,7 @@ not part of the site.
   `current` badge only.
 - `.job-list li` is capped at 74ch; uncapped, bullets ran ~119 characters
   per line.
-- The `+` in `// How I build` items hangs in a 20px grid gutter level with
+- The `+` in `// Beyond the stack` items hangs in a 20px grid gutter level with
   the heading, and is `aria-hidden`. On its own line above the heading it
   read as stray punctuation and screen readers announced "plus" each time.
 - `#contact` is two matching terminal panes on the same auto-fit grid as
@@ -156,6 +164,31 @@ not part of the site.
   with a button row underneath, which read as small and fallen to one side.
   The mail CTA stays `align-self: flex-start` — stretching it full width was
   tried on 2026-09-23 and shouts next to the quiet link pane.
+- The `#contact` sub-line reads "Open to SDE roles and to relocation. Let's
+  build something that matters — get in touch." Harish's wording, 2026-09-24:
+  he rejected "if there's something worth building" as arrogant.
+- The nav mark is a link to `#top`, `clamp(15px, 4.4vw, 17px)`. A flat 17px
+  pushed the nav icons 5px off-screen at 360px.
+- A static `↓ scroll` cue sits at the bottom of the desktop hero. It never
+  bounces, and it's hidden at <=680px and at max-height 720px.
+- Theme toggle uses `document.startViewTransition` for a circular wipe from
+  the button (`--vt-x/--vt-y`). `html.vt-running` kills transitions while it
+  runs and is removed on `finished` AND by a 900ms timeout: if the promise
+  ever stalls, leaving it on would disable every hover transition on the page.
+- The name decode swaps `.hero h1` text for an `aria-hidden` span and puts the
+  real name in `aria-label`. A 1s timeout forces the real name even if
+  animation frames stall (background tab, throttling, headless).
+- Cursor spotlight: `.hb-hot` is a second dot grid in `--hero-dot-hot`,
+  masked to a 220px circle at `--mx/--my`, only under
+  `(hover: hover) and (pointer: fine)`.
+- `--selection` and `--hero-dot-hot` are tokens in both palettes; text
+  selection, scrollbar and the palette caret/focus are themed from them.
+- On phones (<=680px) EVERY job collapses to title and dates behind a
+  `.job-toggle` button (44px tall, `aria-expanded`, `aria-controls` naming the
+  list and tag row). Harish chose collapse-all over collapse-older-only on
+  2026-09-24. Chips also drop their logos there. A button rather than
+  `<details>` because details would break the >=1000px `.job` grid. The
+  390px page went from ~10,000px to ~7,300px.
 - Email, GitHub and LinkedIn appear in exactly TWO places: the nav icons
   (persistent, reachable from anywhere) and `#contact` (the destination the
   nav link points at). The footer used to repeat all three a third time,
@@ -195,13 +228,12 @@ not part of the site.
 - `.skill-groups` uses CSS multi-column (`columns: 290px`), not grid.
   `auto-fit` sized every track to the tallest group, leaving ~108px voids
   inside the short ones and stranding the last group alone in a three-up row.
-- The skills section is headed "How I build": tool chips first, then the six
-  principles under `// Beyond the stack`. Harish chose this order on
-  2026-09-24. Principles-first was tried the same day and read as a weak
-  opener — six short lines with hairlines are the quietest block on the page.
-  He was also shown a rewritten set of principles (stance + proof, e.g. "Let
-  the database say no", "Retries should be boring") and declined them; the
-  ORIGINAL six stay. Don't re-pitch either.
+- The skills section is headed "What I build with" (nav link and palette
+  command say "Stack"): tool chips first, then the six principles under
+  `// Beyond the stack`. Harish chose the order and the heading on
+  2026-09-24. "How I build" was dropped because the first thing under it is a
+  tool list. Principles-first read as a weak opener. He also declined a
+  rewritten set of principles; the ORIGINAL six stay. Don't re-pitch either.
 - `.beyond-item` is a grid (hanging `+` gutter) with `align-content: start`.
   Row neighbours stretch to equal height, and without it the shorter item
   spread the slack between its heading and its text.
@@ -213,21 +245,23 @@ not part of the site.
 
 ## Content rules
 
-- POSITIONING: full-stack with backend depth, plus AI features on production
-  paths. It was "backend-leaning full-stack" until 2026-09-23, when Harish
-  pushed back — correctly, since the page's own evidence contradicted it: his
-  current role leads with a React/TypeScript builder, two of three projects
-  ship React, and LangChain/Qdrant/RAG work had no billing anywhere. Do not
-  quietly narrow it back to backend.
-- That positioning is stated in EIGHT places and they must agree. Changing one
-  means changing all: the hero `.hero-stack` keyword row, the hero cycler
-  `phrases` array (plus its `.sr-only` twin), the `#contact` section-sub,
-  `meta[name=description]`,
-  `og:description`, `twitter:description`, `og:image:alt` — and the role line
-  rendered INSIDE `assets/og.png`, which is an image and will silently keep
-  saying the old thing.
-- Keep the word "backend" present in the search/social copy even though it is
-  no longer the headline: recruiters search for it, and it is true as depth.
+- POSITIONING: FULL-STACK, with applied AI. NEVER describe Harish as
+  backend-anything — not "backend depth", "backend-leaning", "deepest in the
+  backend", nothing — in any positioning sentence, the hero, contact line,
+  meta/OG/Twitter descriptions, image alt text, or inside `assets/og.png`.
+  He has objected THREE times (2026-09-23 "I'm not just a backend dev",
+  2026-09-24 twice, the last "i keep telling you don't emphasise the backend
+  part"). It kept coming back because this file used to carry a rule saying
+  to keep the word "backend" in search copy. That rule is reversed: search
+  relevance comes from the concrete tech names in the tags and JSON-LD
+  `knowsAbout`, not from the word. The only "backend" on the page is the
+  neutral `// Backend & APIs` chip-group label.
+- Positioning is stated in EIGHT places and they must agree (and none may
+  lean backend): the hero `.hero-stack` row, the cycler `phrases` (plus its
+  `.sr-only` twin), the `#contact` sub-line, `meta[name=description]`,
+  `og:description`, `twitter:description`, `og:image:alt`, and the role line
+  rendered INSIDE `assets/og.png` (an image: it silently keeps saying the old
+  thing unless regenerated from `tools/og.html`).
 
 - Every claim must be true and traceable to my actual resume/projects — do not
   invent metrics, testimonials, or experience I don't have.
@@ -252,7 +286,7 @@ not part of the site.
   on the page can verify. State the stack and name the systems; let
   #experience carry the evidence. The summary is ~47 words and should stay in
   that range.
-- Sections stay in this order: hero → how I build → experience → projects →
+- Sections stay in this order: hero → what I build with → experience → projects →
   education → contact.
 - There is deliberately NO About section. One was built and removed on
   2026-09-18 after auditing it: of six statements, five already appeared
