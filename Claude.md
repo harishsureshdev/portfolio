@@ -207,8 +207,7 @@ not part of the site.
 - Tap targets on phones are enlarged with invisible `::after` hit areas
   (icons, copy) and padding/negative-margin pairs (project
   links, footer and nav marks) so every visible control reaches ~44px without
-  changing the visuals; the nav has no room for larger icons at 360px (its
-  icon gap drops to 8px at <=400px just to fit the four 36px buttons).
+  changing the visuals; the nav has no room for larger icons at 360px.
 - Email, GitHub and LinkedIn appear in exactly TWO places: the nav icons
   (persistent, reachable from anywhere) and `#contact` (the destination the
   nav link points at). The footer used to repeat all three a third time,
@@ -223,8 +222,7 @@ not part of the site.
   defining their own copy.
 - TERMINAL, built 2026-09-24, two front ends over one `termCmds` engine:
   an in-page `<dialog id="term">` (opened by the backtick key, the `>_` nav
-  button — visible at EVERY width, it is the phone's way in — or ⌘K "Open
-  terminal"), and the browser dev console, where the commands are
+  button, or ⌘K "Open terminal"), and the browser dev console, where the commands are
   global functions (`help()`, `whoami()`, `cat("warden")`, `sudo()`…) and a
   styled banner greets anyone who opens devtools. Commands: help, whoami, ls,
   cd, cat, stack, resume, hire, github, linkedin, theme, sudo, no, clear,
@@ -235,6 +233,11 @@ not part of the site.
   No-as-a-Service reason, EXCEPT `sudo hire …`, which is granted and opens
   mail. Harish didn't know what the dev console was; he chose both front
   ends after it was explained.
+- The terminal is DESKTOP ONLY. The `>_` button and the palette's "Open
+  terminal" entry are hidden under `(max-width: 680px), (pointer: coarse)`
+  — narrow screens and any touch-first device, tablets included. Harish, on
+  2026-09-25: "terminal on mobile sucks". The dev-console version is
+  unaffected (phones don't have devtools anyway).
 - No-as-a-Service (naas.isalman.dev/no, CORS open, rate-limited) is called
   ONLY when someone runs `sudo` or `no`, never on load, so visitor IPs don't
   go to a third party unasked. A 2s timeout falls back to a local list of
@@ -405,6 +408,16 @@ not part of the site.
   `scroll-behavior: smooth` swallows programmatic scrolls.
 - Pseudo-elements are invisible to `querySelectorAll('*')` overflow probes —
   isolate one by injecting `display: none` and re-measuring `scrollWidth`.
+
+## Editing this file safely
+
+- When removing a CSS or JS block by cutting from its start marker to the
+  NEXT section marker, check what else sits in between. On 2026-09-25 cutting
+  the `.kbd-hint` block "up to the Footer heading" also deleted the entire
+  terminal stylesheet, which had been inserted in that gap. Functional checks
+  (dialog opens, no overflow) passed; the terminal just rendered unstyled.
+  After any block removal, grep for the neighbouring features' selectors,
+  and verify STYLING (a computed style), not only behaviour.
 
 ## Workflow preferences
 
