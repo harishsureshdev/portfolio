@@ -617,6 +617,13 @@
       .hero-stack > span {
         white-space: nowrap;
       }
+      /* Phones: the full badge wrapped to two lines ("open to / SDE roles").
+         The role is the least needed part — the name and lines below say it. */
+      @media (max-width: 680px) {
+        .badge-role {
+          display: none;
+        }
+      }
       /* Phones: both hero rows wrap, and left alone they wrap wherever they
          like and strand a separator at the end of a line. .wrap-here marks
          the one separator that becomes a full-width, invisible line break. */
@@ -629,6 +636,14 @@
           height: 0;
           overflow: hidden;
           font-size: 0;
+        }
+        /* The break is its own zero-height flex line, so it picks up a row
+           gap on BOTH sides and a wrap got double spacing. A zero-height
+           line can't take a negative margin, so drop the row gap here and
+           let line-height space the rows. */
+        .hero-meta,
+        .hero-stack {
+          row-gap: 0;
         }
       }
       @media (min-width: 751px) {
@@ -1825,7 +1840,10 @@
         }
         .nav-mark {
           padding: 10px 0;
-          margin: -10px 0;
+          /* top/bottom only: the shorthand wiped margin-right: auto, which is
+             what pushes the nav icons to the right edge */
+          margin-top: -10px;
+          margin-bottom: -10px;
         }
       }
 
@@ -1939,7 +1957,7 @@
             </div>
             <div class="hero-content">
               <div class="hero-badge">
-                // software engineer · 2+ yrs · open to SDE roles
+                // <span class="badge-role">software engineer · </span>2+ yrs · open to SDE roles
               </div>
               <h1>Harish Suresh</h1>
               <div class="hero-meta">

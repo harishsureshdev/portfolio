@@ -93,6 +93,16 @@ not part of the site.
   breakpoint: the meta line below 800px, the keyword row below 750px (it fits
   on one line from ~760). Left to wrap freely they stranded a `·` or `/` at a
   line end. If you change either row's text, re-run the width sweep.
+- On phones the badge drops its `.badge-role` ("software engineer · ") so it
+  reads "// 2+ yrs · open to SDE roles" on one line; the full badge wrapped as
+  "open to / SDE roles".
+- Under the forced line break (<=800px) `.hero-meta` and `.hero-stack` use
+  `row-gap: 0`. The `.wrap-here` element is its own zero-height flex line, so
+  it collected a row gap on both sides and every wrap got double spacing; a
+  zero-height line can't take a negative margin, so the gap has to go.
+- The phone `.nav-mark` hit-area fix uses margin-top/-bottom, NEVER the
+  `margin` shorthand: the shorthand zeroed `margin-right: auto`, which is what
+  pushes the nav icons to the right edge (they sat ~60px short on 2026-09-25).
 - The hero badge says "2+ yrs". CLAUDE.md used to ban an "N+ years" badge as
   an invented metric; Harish asked for one on 2026-09-24 and it is now
   allowed, but ONLY as "2+". The honest arithmetic: Sify Aug 2022-Jul 2024
