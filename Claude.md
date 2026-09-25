@@ -64,7 +64,8 @@ not part of the site.
 - The hero has ONE perpetually moving thing: the cycler. The section
   typewriter and the rotating stack-line underline were REMOVED on 2026-09-24
   so it isn't competing. One-shot entrances that finish in under a second are
-  allowed (the name decode, ~650ms, done before the cycler starts at 2.6s), as
+  allowed (the name decode, ~1.3s at Harish's request, done before the
+  cycler starts at 2.6s; its forced-settle timeout is 2s), as
   is motion that only answers the user (the cursor spotlight). Nothing else
   may loop.
 - The cycler reads "Building systems that / scale. ship. hold up. last." —
@@ -167,6 +168,13 @@ not part of the site.
 - The `#contact` sub-line reads "Open to SDE roles and to relocation. Let's
   build something that matters — get in touch." Harish's wording, 2026-09-24:
   he rejected "if there's something worth building" as arrogant.
+- GitHub and LinkedIn are both `harishsureshdev`
+  (github.com/harishsureshdev, linkedin.com/in/harishsureshdev) as of
+  2026-09-24. The old `github.com/harishs2000` returned 404, so every GitHub
+  link on the site had been dead. `resume.pdf` still carries the old handles.
+- There is NO top scroll-progress bar. It was removed on 2026-09-24: with
+  the timeline fill growing down while the bar grew right, two green bars
+  moved in different directions on every scroll and read as awkward.
 - The nav mark is a link to `#top`, `clamp(15px, 4.4vw, 17px)`. A flat 17px
   pushed the nav icons 5px off-screen at 360px.
 - A static `↓ scroll` cue sits at the bottom of the desktop hero. It never
@@ -229,7 +237,7 @@ not part of the site.
   `auto-fit` sized every track to the tallest group, leaving ~108px voids
   inside the short ones and stranding the last group alone in a three-up row.
 - The skills section is headed "What I build with" (nav link and palette
-  command say "Stack"): tool chips first, then the six principles under
+  command say "Skills" — Harish rejected "Stack" for the nav on 2026-09-24): tool chips first, then the six principles under
   `// Beyond the stack`. Harish chose the order and the heading on
   2026-09-24. "How I build" was dropped because the first thing under it is a
   tool list. Principles-first read as a weak opener. He also declined a
@@ -314,7 +322,7 @@ not part of the site.
   resume has on each project is now on the page, so there is nothing left to
   import — more depth (architecture, trade-offs) has to be written by Harish.
   Don't invent it.
-- All three projects link to `github.com/harishs2000`, the profile, not to
+- All three projects link to `github.com/harishsureshdev`, the profile, not to
   per-project repos. Harish still owes the specific repo URLs.
 - Analytics is NOT wired up. Cloudflare Web Analytics / Umami both need a site
   token from Harish's own account, so it can't be added unattended. If the site

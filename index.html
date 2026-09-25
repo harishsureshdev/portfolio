@@ -71,8 +71,8 @@
           "AWS"
         ],
         "sameAs": [
-          "https://github.com/harishs2000",
-          "https://linkedin.com/in/harishs163"
+          "https://github.com/harishsureshdev",
+          "https://linkedin.com/in/harishsureshdev"
         ]
       }
     </script>
@@ -241,20 +241,6 @@
       .reveal.is-visible {
         opacity: 1;
         transform: none;
-      }
-
-      /* ---------- Scroll progress ---------- */
-      .progress {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        z-index: 60;
-        background: var(--accent);
-        transform: scaleX(0);
-        transform-origin: 0 50%;
-        pointer-events: none;
       }
 
       /* ---------- Nav ---------- */
@@ -1744,14 +1730,13 @@
     </style>
   </head>
   <body>
-    <div class="progress" id="progress" aria-hidden="true"></div>
     <header>
       <nav>
         <a class="nav-mark" href="#top" aria-label="Harish Suresh, back to top"
           >harish<span class="slash">/</span>suresh</a
         >
         <div class="nav-links">
-          <a href="#work">Stack</a>
+          <a href="#work">Skills</a>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
@@ -1771,7 +1756,7 @@
           </button>
           <a
             class="icon-btn"
-            href="https://github.com/harishs2000"
+            href="https://github.com/harishsureshdev"
             target="_blank"
             rel="noopener"
             aria-label="GitHub"
@@ -1784,7 +1769,7 @@
           </a>
           <a
             class="icon-btn"
-            href="https://linkedin.com/in/harishs163"
+            href="https://linkedin.com/in/harishsureshdev"
             target="_blank"
             rel="noopener"
             aria-label="LinkedIn"
@@ -2148,7 +2133,7 @@
                 <h3>Warden<span class="ext">.py</span></h3>
                 <a
                   class="project-link"
-                  href="https://github.com/harishs2000"
+                  href="https://github.com/harishsureshdev"
                   target="_blank"
                   rel="noopener"
                   >GitHub →</a
@@ -2182,7 +2167,7 @@
                 <h3>Home Credit Default Risk<span class="ext">.py</span></h3>
                 <a
                   class="project-link"
-                  href="https://github.com/harishs2000"
+                  href="https://github.com/harishsureshdev"
                   target="_blank"
                   rel="noopener"
                   >GitHub →</a
@@ -2212,7 +2197,7 @@
                 <h3>SnapSend<span class="ext">.java</span></h3>
                 <a
                   class="project-link"
-                  href="https://github.com/harishs2000"
+                  href="https://github.com/harishsureshdev"
                   target="_blank"
                   rel="noopener"
                   >GitHub →</a
@@ -2313,17 +2298,17 @@
               <div class="link-list">
                 <a
                   class="link-row"
-                  href="https://github.com/harishs2000"
+                  href="https://github.com/harishsureshdev"
                   target="_blank"
                   rel="noopener"
-                  >GitHub<span class="meta">github.com/harishs2000</span></a
+                  >GitHub<span class="meta">github.com/harishsureshdev</span></a
                 >
                 <a
                   class="link-row"
-                  href="https://linkedin.com/in/harishs163"
+                  href="https://linkedin.com/in/harishsureshdev"
                   target="_blank"
                   rel="noopener"
-                  >LinkedIn<span class="meta">linkedin.com/in/harishs163</span></a
+                  >LinkedIn<span class="meta">linkedin.com/in/harishsureshdev</span></a
                 >
                 <a class="link-row" href="resume.pdf" download
                   >Resume<span class="meta">resume.pdf</span></a
@@ -2489,32 +2474,7 @@
           updateSpy();
         }
 
-        /* ---- Scroll progress ---- */
-        var progress = document.getElementById("progress");
-        if (progress) {
-          var pTicking = false;
-          function drawProgress() {
-            pTicking = false;
-            var max =
-              document.documentElement.scrollHeight - window.innerHeight;
-            var pct = max > 0 ? window.scrollY / max : 0;
-            progress.style.transform = "scaleX(" + Math.min(pct, 1) + ")";
-          }
-          window.addEventListener(
-            "scroll",
-            function () {
-              if (!pTicking) {
-                pTicking = true;
-                requestAnimationFrame(drawProgress);
-              }
-            },
-            { passive: true }
-          );
-          window.addEventListener("resize", drawProgress);
-          drawProgress();
-        }
-
-        /* ---- Name decode (one shot, ~650ms, finishes before the cycler) ---- */
+        /* ---- Name decode (one shot, ~1.3s, finishes before the cycler) ---- */
         var heroName = document.querySelector(".hero h1");
         if (heroName && !reduced) {
           var realName = heroName.textContent;
@@ -2528,7 +2488,7 @@
           var decodeStart = null;
           function decode(ts) {
             if (decodeStart === null) decodeStart = ts;
-            var p = Math.min(1, (ts - decodeStart) / 650);
+            var p = Math.min(1, (ts - decodeStart) / 1300);
             var out = "";
             for (var ci = 0; ci < realName.length; ci++) {
               var ch = realName.charAt(ci);
@@ -2547,7 +2507,7 @@
           setTimeout(function () {
             nameSettled = true;
             nameSpan.textContent = realName;
-          }, 1000);
+          }, 2000);
           requestAnimationFrame(decode);
         }
 
@@ -2690,7 +2650,7 @@
             if (el) el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
           }
           var commands = [
-            { label: "Go to Stack", hint: "section", run: function () { go("#work"); } },
+            { label: "Go to Skills", hint: "section", run: function () { go("#work"); } },
             { label: "Go to Experience", hint: "section", run: function () { go("#experience"); } },
             { label: "Go to Projects", hint: "section", run: function () { go("#projects"); } },
             { label: "Go to Education", hint: "section", run: function () { go("#education"); } },
@@ -2701,8 +2661,8 @@
               } },
             { label: "Send an email", hint: "mailto", run: function () { window.location.href = "mailto:harishsuresh.contact@gmail.com"; } },
             { label: "Toggle theme", hint: "appearance", run: function () { btn.click(); } },
-            { label: "Open GitHub", hint: "external", run: function () { window.open("https://github.com/harishs2000", "_blank", "noopener"); } },
-            { label: "Open LinkedIn", hint: "external", run: function () { window.open("https://linkedin.com/in/harishs163", "_blank", "noopener"); } }
+            { label: "Open GitHub", hint: "external", run: function () { window.open("https://github.com/harishsureshdev", "_blank", "noopener"); } },
+            { label: "Open LinkedIn", hint: "external", run: function () { window.open("https://linkedin.com/in/harishsureshdev", "_blank", "noopener"); } }
           ];
 
           var matches = commands.slice();
