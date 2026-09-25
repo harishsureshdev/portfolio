@@ -111,8 +111,6 @@
         --accent-text: #0b0a08;
         --accent-soft: rgba(77, 191, 116, 0.1);
         --accent-line: rgba(77, 191, 116, 0.35);
-        --hero-lift: #2a2721;
-        --hero-streak: rgba(77, 191, 116, 0.42);
         --hero-dot: rgba(255, 255, 255, 0.5);
         --font-body:
           "Epilogue", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -144,8 +142,6 @@
           --accent-text: #ffffff;
           --accent-soft: rgba(26, 98, 56, 0.09);
           --accent-line: rgba(26, 98, 56, 0.3);
-          --hero-lift: #ffffff;
-          --hero-streak: rgba(26, 98, 56, 0.18);
           --hero-dot: rgba(0, 0, 0, 0.32);
           color-scheme: light;
         }
@@ -170,8 +166,6 @@
         --accent-text: #ffffff;
         --accent-soft: rgba(26, 98, 56, 0.09);
         --accent-line: rgba(26, 98, 56, 0.3);
-        --hero-lift: #ffffff;
-        --hero-streak: rgba(26, 98, 56, 0.18);
         --hero-dot: rgba(0, 0, 0, 0.32);
         color-scheme: light;
       }
@@ -409,56 +403,17 @@
         position: absolute;
         inset: 0;
       }
-      .hb-lift {
+      /* The one allowed glow: a faint accent wash in the top-left corner.
+         The 21st.dev diagonal streaks and corner lift were removed on
+         2026-09-25 — decoration with no meaning in the editor world, a
+         visible diagonal seam at wide widths, and a mint wash in light mode.
+         What's left is graph paper (dots), grain and the cursor spotlight. */
+      .hb-glow {
         background: radial-gradient(
-          100% 100% at 0% 0%,
-          var(--hero-lift) 0%,
-          transparent 100%
+          70% 80% at 0% 0%,
+          var(--accent-soft) 0%,
+          transparent 70%
         );
-        opacity: 0.4;
-        -webkit-mask-image: radial-gradient(
-          125% 100% at 0% 0%,
-          #000 0%,
-          rgba(0, 0, 0, 0.22) 88%,
-          transparent 100%
-        );
-        mask-image: radial-gradient(
-          125% 100% at 0% 0%,
-          #000 0%,
-          rgba(0, 0, 0, 0.22) 88%,
-          transparent 100%
-        );
-      }
-      .hb-streaks i {
-        position: absolute;
-        inset: -20% -40%;
-        display: block;
-        opacity: 0.13;
-        background: linear-gradient(
-          var(--hero-streak) 0%,
-          transparent 100%
-        );
-        transform: skewX(45deg);
-      }
-      .hb-streaks i:nth-child(1) {
-        -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%, transparent 36%, #000 55%, rgba(0, 0, 0, 0.13) 67%, #000 78%, transparent 97%);
-        mask-image: linear-gradient(90deg, transparent 0%, #000 20%, transparent 36%, #000 55%, rgba(0, 0, 0, 0.13) 67%, #000 78%, transparent 97%);
-      }
-      .hb-streaks i:nth-child(2) {
-        -webkit-mask-image: linear-gradient(90deg, transparent 11%, #000 25%, rgba(0, 0, 0, 0.55) 41%, rgba(0, 0, 0, 0.13) 67%, #000 78%, transparent 97%);
-        mask-image: linear-gradient(90deg, transparent 11%, #000 25%, rgba(0, 0, 0, 0.55) 41%, rgba(0, 0, 0, 0.13) 67%, #000 78%, transparent 97%);
-      }
-      .hb-streaks i:nth-child(3) {
-        -webkit-mask-image: linear-gradient(90deg, transparent 9%, #000 20%, rgba(0, 0, 0, 0.55) 28%, rgba(0, 0, 0, 0.42) 40%, #000 48%, rgba(0, 0, 0, 0.27) 54%, rgba(0, 0, 0, 0.13) 78%, #000 88%, transparent 97%);
-        mask-image: linear-gradient(90deg, transparent 9%, #000 20%, rgba(0, 0, 0, 0.55) 28%, rgba(0, 0, 0, 0.42) 40%, #000 48%, rgba(0, 0, 0, 0.27) 54%, rgba(0, 0, 0, 0.13) 78%, #000 88%, transparent 97%);
-      }
-      .hb-streaks i:nth-child(4) {
-        -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 17%, rgba(0, 0, 0, 0.55) 26%, #000 35%, transparent 47%, rgba(0, 0, 0, 0.13) 69%, #000 79%, transparent 97%);
-        mask-image: linear-gradient(90deg, transparent 0%, #000 17%, rgba(0, 0, 0, 0.55) 26%, #000 35%, transparent 47%, rgba(0, 0, 0, 0.13) 69%, #000 79%, transparent 97%);
-      }
-      .hb-streaks i:nth-child(5) {
-        -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%, rgba(0, 0, 0, 0.55) 27%, #000 42%, transparent 48%, rgba(0, 0, 0, 0.13) 67%, #000 74%, #000 82%, rgba(0, 0, 0, 0.47) 88%, transparent 97%);
-        mask-image: linear-gradient(90deg, transparent 0%, #000 20%, rgba(0, 0, 0, 0.55) 27%, #000 42%, transparent 48%, rgba(0, 0, 0, 0.13) 67%, #000 74%, #000 82%, rgba(0, 0, 0, 0.47) 88%, transparent 97%);
       }
       .hb-dots {
         opacity: 0.18;
@@ -468,8 +423,8 @@
           transparent 0
         );
         background-size: 20px 20px;
-        -webkit-mask-image: radial-gradient(120% 100% at 0% 0%, #000 0%, transparent 85%);
-        mask-image: radial-gradient(120% 100% at 0% 0%, #000 0%, transparent 85%);
+        -webkit-mask-image: radial-gradient(140% 120% at 20% 0%, #000 10%, transparent 80%);
+        mask-image: radial-gradient(140% 120% at 20% 0%, #000 10%, transparent 80%);
       }
       /* Grain is generated inline rather than fetched from a third-party CDN. */
       .hb-grain {
@@ -838,7 +793,7 @@
       }
       /* Vendor SVGs ship in their brand colours, which made Java red and
          Redis red the loudest things on a one-accent page. Grayscale only —
-         NOT the brightness(0) trick used on .edu-mark: these logos are filled
+         NOT the brightness(0) flatten-to-monochrome trick: these logos are filled
          plates, not transparent line art, so flattening turns TypeScript and
          JavaScript into solid black squares. */
       .chip img {
@@ -1203,93 +1158,66 @@
         grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
         gap: 16px;
       }
+      /* Education reads as files, like Experience: a path title, a //
+         comment line for dates and place, then key-value lines. The crest
+         tiles were dropped on 2026-09-25 — generic card UI, and the Anna
+         crest never survived being shrunk. */
+      /* The only section without a .section-sub; match the gap one leaves. */
+      .edu-heading {
+        margin-bottom: 36px;
+      }
       .edu-card {
         border: 1px solid var(--border);
         border-radius: var(--radius);
         background: var(--surface);
-        padding: 26px;
+        padding: 26px 28px;
         transition: border-color 0.25s ease;
       }
       .edu-card:hover {
         border-color: var(--border-strong);
       }
-      .edu-card-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 20px;
-      }
-      /* brightness(0) flattens any source logo to solid black, then invert
-         lifts it to white for dark mode — true monochrome whatever the file. */
-      .edu-mark img {
-        width: 44px;
-        height: 44px;
-        object-fit: contain;
-        filter: grayscale(1) brightness(0) invert(1);
-        opacity: 0.88;
-      }
-      @media (prefers-color-scheme: light) {
-        :root:not([data-theme="dark"]) .edu-mark img {
-          filter: grayscale(1) brightness(0);
-        }
-      }
-      :root[data-theme="light"] .edu-mark img {
-        filter: grayscale(1) brightness(0);
-      }
-      .edu-mark {
-        flex: 0 0 auto;
-        width: 62px;
-        height: 62px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        background: var(--surface-2);
+      .edu-path {
         font-family: var(--font-mono);
-        font-size: 17px;
+        font-size: clamp(17px, 1.6vw, 21px);
         font-weight: 600;
-        color: var(--text-muted);
-        letter-spacing: 0.02em;
-      }
-      .edu-when {
-        font-family: var(--font-mono);
-        font-size: 12.5px;
-        color: var(--text-dim);
-        padding: 4px 10px;
-        border: 1px solid var(--border);
-        border-radius: 3px;
-      }
-      .edu-title {
-        font-family: var(--font-mono);
-        font-size: 19px;
-        font-weight: 600;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.03em;
         margin-bottom: 6px;
+        overflow-wrap: anywhere;
       }
-      .edu-org {
-        font-size: 15px;
-        color: var(--text-muted);
-        margin-bottom: 14px;
+      .edu-path .org,
+      .edu-path .role {
+        color: var(--text);
       }
-      .edu-stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .edu-stat {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        padding: 5px 10px;
-        border-radius: 3px;
-        color: var(--accent);
-        background: var(--accent-soft);
-      }
-      .edu-stat.plain {
+      .edu-path .ext {
         color: var(--text-dim);
-        background: none;
-        border: 1px solid var(--border);
+        font-weight: 400;
+      }
+      .edu-meta {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--text-dim);
+        margin-bottom: 18px;
+      }
+      .edu-kv {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        display: grid;
+        gap: 6px;
+      }
+      .edu-kv > div {
+        display: grid;
+        grid-template-columns: 7ch 1fr;
+        gap: 12px;
+      }
+      .edu-kv dt {
+        color: var(--text-dim);
+      }
+      .edu-kv dd {
+        margin: 0;
+        color: var(--text-muted);
+      }
+      .edu-kv dd.acc {
+        color: var(--accent);
       }
 
       /* ---------- Contact ---------- */
@@ -1943,8 +1871,7 @@
     <main>
       <section class="hero band">
         <div class="hero-bg" aria-hidden="true">
-          <div class="hb-lift"></div>
-          <div class="hb-streaks"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="hb-glow"></div>
           <div class="hb-dots"></div>
           <div class="hb-hot"></div>
           <div class="hb-grain"></div>
@@ -2373,37 +2300,33 @@
 
       <section class="band" id="education">
         <div class="wrap">
-          <h2 class="reveal">Education</h2>
+          <h2 class="reveal edu-heading">Education</h2>
           <div class="edu-grid">
-            <div class="edu-card reveal">
-              <div class="edu-card-head">
-                <div class="edu-mark" aria-hidden="true">
-                  <img src="assets/iu.png" alt="" />
-                </div>
-                <div class="edu-when">2024 — 2026</div>
-              </div>
-              <div class="edu-title">MS, Computer Science</div>
-              <div class="edu-org">Indiana University Bloomington</div>
-              <div class="edu-stats">
-                <span class="edu-stat">GPA 3.93 / 4.0</span>
-                <span class="edu-stat plain">Bloomington, IN</span>
-              </div>
-            </div>
+            <article class="edu-card reveal">
+              <h3 class="edu-path">
+                <span class="org">iu-bloomington</span
+                ><span class="role">/ms-cs</span><span class="ext">.md</span>
+              </h3>
+              <div class="edu-meta">// 2024 — 2026 · Bloomington, IN</div>
+              <dl class="edu-kv">
+                <div><dt>degree</dt><dd>MS, Computer Science</dd></div>
+                <div><dt>school</dt><dd>Indiana University Bloomington</dd></div>
+                <div><dt>gpa</dt><dd class="acc">3.93 / 4.0</dd></div>
+              </dl>
+            </article>
 
-            <div class="edu-card reveal" style="--d: 60ms">
-              <div class="edu-card-head">
-                <div class="edu-mark" aria-hidden="true">
-                  <img src="assets/au.png" alt="" />
-                </div>
-                <div class="edu-when">2018 — 2022</div>
-              </div>
-              <div class="edu-title">BE, Computer Science</div>
-              <div class="edu-org">Anna University</div>
-              <div class="edu-stats">
-                <span class="edu-stat">CGPA 8.63 / 10</span>
-                <span class="edu-stat plain">Chennai, India</span>
-              </div>
-            </div>
+            <article class="edu-card reveal" style="--d: 60ms">
+              <h3 class="edu-path">
+                <span class="org">anna-university</span
+                ><span class="role">/be-cs</span><span class="ext">.md</span>
+              </h3>
+              <div class="edu-meta">// 2018 — 2022 · Chennai, India</div>
+              <dl class="edu-kv">
+                <div><dt>degree</dt><dd>BE, Computer Science</dd></div>
+                <div><dt>school</dt><dd>Anna University</dd></div>
+                <div><dt>cgpa</dt><dd class="acc">8.63 / 10</dd></div>
+              </dl>
+            </article>
           </div>
         </div>
       </section>

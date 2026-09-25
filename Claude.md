@@ -115,15 +115,13 @@ not part of the site.
   two same-coloured sections end up adjacent. The nav is tinted from `--bg`,
   so a banded hero is what makes the nav read as a distinct bar on first load.
   Don't flip the order back.
-- Education is a two-card grid, not a list — the row layout read as too thin.
-  Each card holds a logo tile, a date pill, degree, school and stat chips.
-- Both universities use real logos at 44px inside 62px tiles. The Anna crest
-  needs that size: at 28px it collapsed into a blob. The bar is a RECOGNISABLE
-  silhouette, not readable text — nobody needs to read "progress through
-  knowledge", they need the gear shape. Don't shrink these tiles.
-- `.edu-mark img` renders any source file true monochrome — `brightness(0)`
-  flattens it to solid black, `invert(1)` lifts it to white for dark mode.
-  Needs a transparent background.
+- Education is a two-card grid of FILES, matching Experience (2026-09-25):
+  a path title as an `h3` (`iu-bloomington/ms-cs.md`,
+  `anna-university/be-cs.md`), a `//` comment line for dates and place, then
+  `degree` / `school` / `gpa` key-value lines. The university crest tiles
+  were dropped at Harish's choice: generic card UI outside the editor world,
+  and the Anna crest never survived being shrunk. `assets/iu.png` and
+  `assets/au.png` are still on disk, unused.
 - Tech tags are accent text on `--accent-soft`, everywhere they appear
   (experience and projects both).
 - Experience is a continuous timeline. `.job` carries a 2px `--rail` left
@@ -298,6 +296,13 @@ not part of the site.
   hero cycler share a blinking caret, and the current-role dot pulses. Every one
   of these is disabled under `prefers-reduced-motion` — keep it that way.
 
+- AESTHETIC, named: "warm terminal" — the site is a code editor used as a
+  portfolio. Filenames as titles, `//` comments as labels, `$` prompts, mono
+  for structure, warm near-black, one phosphor-green accent, flat hairlines.
+  A new section should use that vocabulary. Known exception: the skill chips
+  are still a conventional badge grid; a replacement (grep on hover and/or a
+  `stack.yml` editor view) was being chosen on 2026-09-25.
+
 ## Content rules
 
 - POSITIONING: FULL-STACK, with applied AI. NEVER describe Harish as
@@ -378,12 +383,12 @@ not part of the site.
   `tools/og.html` (that file has the command in `tools/README.md`) rather than
   editing the PNG. Use a generous `--virtual-time-budget`: a short one silently
   captures the fallback fonts instead of JetBrains Mono and Epilogue.
-- Hero background is a 21st.dev pattern ported from React/Tailwind to plain
-  CSS (`.hero-bg`): corner lift, five skewed accent streaks, a dot grid and
-  inline SVG grain. Recoloured from the original cyan to the accent green, and
-  the grain is generated inline rather than fetched from `cdn.21st.dev`.
-  It is deliberately faint — at full strength it washes the hero green.
-  `.hero` keeps `overflow: hidden` to clip the skewed streaks.
+- Hero background (2026-09-25): a dot grid (graph paper), inline SVG grain,
+  the cursor spotlight, and ONE faint `--accent-soft` glow in the top-left
+  corner (`.hb-glow`). The 21st.dev diagonal streaks and corner lift were
+  removed: pure decoration with no meaning in the editor aesthetic, a visible
+  diagonal seam at wide widths, and a mint wash over the warm cream in light
+  mode. `.hero` keeps `overflow: hidden`.
 - Zustand is the one stack chip with no logo (Devicon has no Zustand icon).
   Chips degrade to text-only on their own, so this is fine, not a bug.
 
