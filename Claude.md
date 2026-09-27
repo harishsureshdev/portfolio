@@ -206,16 +206,10 @@ not part of the site.
 - On phones (<=680px) EVERY job collapses to title and dates behind a
   `.job-toggle` button (44px tall, `aria-expanded`, `aria-controls` naming the
   list and tag row). Harish chose collapse-all over collapse-older-only on
-  2026-09-24. Chips also drop their logos there. A button rather than
+  2026-09-24. A button rather than
   `<details>` because details would break the >=1000px `.job` grid. The
   390px page went from ~10,000px to ~7,300px.
-- Phones (<=680px) get a density pass: skill chips render as slash-
-  separated mono text (no boxes, no logos) — Skills was 2,200px, 30% of the
-  390px page. Separators are a fixed 28px `::before` box on EVERY chip; the
-  row is pulled 28px left and the GROUP (`.skill-groups > div`) clips, so the
-  slash that would start each line is hidden. Clipping the row itself does
-  nothing — its box includes the 28px it was pulled. Also tighter
-  Beyond-the-stack and project-card padding.
+- Phones (<=680px) get tighter Beyond-the-stack and project-card padding.
 - Tap targets on phones are enlarged with invisible `::after` hit areas
   (icons, copy) and padding/negative-margin pairs (project
   links, footer and nav marks) so every visible control reaches ~44px without
@@ -264,29 +258,22 @@ not part of the site.
   is friction between a recruiter and the best material on the card. Don't
   re-add an expand/modal unless the detail grows past roughly a paragraph per
   card — at which point the old implementation is in git history at 0963169.
-- The skills grid has 7 groups in a 3-column auto-fit, so one always orphans on
-  the last row. The order (Languages, Backend, Data, AI & LLM, Cloud, Testing,
-  Frontend) is chosen so the orphan is Frontend, the shortest group. Reordering
-  or adding a group means re-checking which one lands alone.
 - `html` carries `overflow-x: clip`. Do NOT add `overflow-x: hidden` to `body`:
   together they make body the scroll container, which silently kills the
   sticky nav. Verified — it is not a theoretical concern.
-- Stack logos come from Devicon via jsDelivr, pinned to v2.16.0. Each `<img>`
-  removes itself on error, so a CDN miss degrades to a text-only chip. THREE
-  chips are text-only, not one: Zustand has no Devicon icon, and
-  `celery-original.svg` and `jwt-original.svg` both 404 at this tag (verified
-  2026-09-24). Check a URL resolves before adding a chip icon.
-- `.chip img` is `grayscale(1)` ONLY — never the `brightness(0)` trick used on
-  `.edu-mark img`. The university marks are transparent line art, so
-  flattening them works; Devicon logos are filled plates, so `brightness(0)`
-  turns TypeScript and JavaScript into solid black squares. Tried and reverted
-  on 2026-09-24. The point of the filter is to stop Java red and Redis red
-  being the only saturated colour on a one-accent page.
-- `.skill-groups` uses CSS multi-column (`columns: 290px`), not grid.
-  `auto-fit` sized every track to the tallest group, leaving ~108px voids
-  inside the short ones and stranding the last group alone in a three-up row.
+- SKILLS WALL (2026-09-27): all 39 skills are one `<ul class="wall">`,
+  weighted by size and brightness instead of boxes. `.t1` = the five the hero
+  leads with (keep in step with `.hero-stack`), `.t2` = named in an
+  experience or project tag, `.t3` = the rest; the order interleaves sizes so
+  no tier clusters. Each `<li>` carries `data-group` so the terminal's `stack`
+  command still prints skills by category. Word spacing is `margin-right:
+  0.5em` in each word's OWN em (a flat gap crowded the big words). Chosen by
+  Harish after rejecting, in order: chip grid, grep-on-hover (exposes skills
+  with no evidence), stack.yml (bad on phones), type-in on scroll, featured
+  proof tiles and rows ("proofs not worthy of a card"), and a system-layer
+  diagram. Devicon and every chip logo are gone — 24 fewer CDN requests.
 - The skills section is headed "What I build with" (nav link and palette
-  command say "Skills" — Harish rejected "Stack" for the nav on 2026-09-24): tool chips first, then the six principles under
+  command say "Skills" — Harish rejected "Stack" for the nav on 2026-09-24): the skills wall first, then the six principles under
   `// Beyond the stack`. Harish chose the order and the heading on
   2026-09-24. "How I build" was dropped because the first thing under it is a
   tool list. Principles-first read as a weak opener. He also declined a
@@ -303,9 +290,7 @@ not part of the site.
 - AESTHETIC, named: "warm terminal" — the site is a code editor used as a
   portfolio. Filenames as titles, `//` comments as labels, `$` prompts, mono
   for structure, warm near-black, one phosphor-green accent, flat hairlines.
-  A new section should use that vocabulary. Known exception: the skill chips
-  are still a conventional badge grid; a replacement (grep on hover and/or a
-  `stack.yml` editor view) was being chosen on 2026-09-25.
+  A new section should use that vocabulary.
 
 ## Content rules
 
@@ -400,11 +385,6 @@ not part of the site.
   removed: pure decoration with no meaning in the editor aesthetic, a visible
   diagonal seam at wide widths, and a mint wash over the warm cream in light
   mode. `.hero` keeps `overflow: hidden`.
-- Zustand is the one stack chip with no logo (Devicon has no Zustand icon).
-  Chips degrade to text-only on their own, so this is fine, not a bug.
-
-## Verifying in headless Brave
-
 - Toggling `data-theme` at runtime and reading `getComputedStyle` gives FALSE
   readings: `body` has `transition: color 0.3s`, and that transition never
   completes under virtual time, so inherited colours stay pinned at the

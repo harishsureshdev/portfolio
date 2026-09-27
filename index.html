@@ -766,75 +766,48 @@
         margin-bottom: 40px;
       }
 
-      /* ---------- Skill chips ---------- */
-      /* Columns, not grid: auto-fit rows sized every track to the tallest
-         group, leaving ~108px voids inside the short ones and stranding the
-         last group alone in a three-up row. Multi-column flows to content. */
-      .skill-groups {
-        columns: 290px;
-        column-gap: 48px;
-      }
-      .skill-groups > div {
-        break-inside: avoid;
-        page-break-inside: avoid;
-        margin-bottom: 34px;
-      }
-      .chip-row {
+      /* ---------- Skills wall ---------- */
+      /* Hierarchy by size and brightness, not boxes (chosen 2026-09-27 over
+         chip grids, stack.yml, grep-on-hover, tiles and a layer diagram). */
+      .wall {
+        list-style: none;
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
-      }
-      .chip {
+        align-items: baseline;
+        row-gap: 4px;
+        max-width: 1000px;
+        margin-bottom: 64px;
         font-family: var(--font-mono);
-        font-size: 14px;
-        padding: 10px 15px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        background: var(--surface);
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+      }
+      /* Spacing in each word's own em, so large words get proportionally
+         more room than small ones; a flat gap crowded the big words. */
+      .wall li {
+        margin-right: 0.5em;
+        transition: color 0.2s ease;
+      }
+      .wall .t1 {
+        font-size: clamp(30px, 4vw, 52px);
+        font-weight: 700;
         color: var(--text);
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        transition:
-          border-color 0.2s ease,
-          transform 0.2s ease,
-          color 0.2s ease;
       }
-      /* Vendor SVGs ship in their brand colours, which made Java red and
-         Redis red the loudest things on a one-accent page. Grayscale only —
-         NOT the brightness(0) flatten-to-monochrome trick: these logos are filled
-         plates, not transparent line art, so flattening turns TypeScript and
-         JavaScript into solid black squares. */
-      .chip img {
-        width: 17px;
-        height: 17px;
-        display: block;
-        flex: 0 0 auto;
-        filter: grayscale(1) brightness(1.15);
-        opacity: 0.8;
+      .wall .t2 {
+        font-size: clamp(19px, 2.2vw, 28px);
+        font-weight: 500;
+        color: var(--text-muted);
       }
-      @media (prefers-color-scheme: light) {
-        :root:not([data-theme="dark"]) .chip img {
-          filter: grayscale(1) brightness(0.85);
-          opacity: 0.75;
-        }
+      .wall .t3 {
+        font-size: clamp(14px, 1.4vw, 17px);
+        color: var(--text-dim);
       }
-      :root[data-theme="light"] .chip img {
-        filter: grayscale(1) brightness(0.85);
-        opacity: 0.75;
-      }
-      .chip:hover img {
-        opacity: 1;
-      }
-      .chip:hover {
-        border-color: var(--accent-border);
+      .wall li:hover {
         color: var(--accent);
-        transform: translateY(-2px);
       }
 
       /* ---------- Beyond the stack ---------- */
-      /* Follows the tool chips and closes the section. The label carries the
-         separation from the chips above; the section's own divider closes it. */
+      /* Follows the skills wall and closes the section. The label carries the
+         separation from the wall above; the section's own divider closes it. */
       .beyond-label {
         margin-top: 30px;
       }
@@ -880,9 +853,6 @@
       @media (max-width: 680px) {
         .beyond-grid {
           grid-template-columns: 1fr;
-        }
-        .skill-groups {
-          gap: 26px;
         }
       }
 
@@ -1673,52 +1643,6 @@
       /* ---------- Phones: density + tap targets ---------- */
 
       @media (max-width: 680px) {
-        /* Skills was 2,200px on a 390px phone, 30% of the page: seven groups
-           of wrapping bordered chips. On phones the chips become the same
-           slash-separated mono row as the hero stack line, so every name
-           stays visible without the boxes. */
-        /* Each separator sits BEFORE its item in a fixed 28px box, and the
-           row is pulled 28px left with overflow clipped: whichever item
-           starts a line has its slash tucked out of view, so no line ever
-           starts or ends on a stray "/". */
-        .chip-row {
-          gap: 6px 0;
-          margin-left: -28px;
-        }
-        /* The clip lives on the group, whose edge is the text column: the
-           row's own box includes the 28px it was pulled left, so clipping
-           the row itself hides nothing. */
-        .skill-groups > div {
-          overflow: hidden;
-        }
-        .chip {
-          padding: 0;
-          border: 0;
-          background: none;
-          font-size: 14px;
-          color: var(--text-muted);
-          gap: 0;
-        }
-        .chip:hover {
-          transform: none;
-        }
-        .chip img {
-          display: none;
-        }
-        .chip::before {
-          content: "/";
-          display: inline-block;
-          width: 28px;
-          text-align: center;
-          color: var(--text-dim);
-          opacity: 0.7;
-        }
-        .skill-groups > div {
-          margin-bottom: 26px;
-        }
-        .group-label {
-          margin-bottom: 8px;
-        }
         .beyond-item {
           padding: 18px 0;
         }
@@ -1784,7 +1708,6 @@
         .portrait {
           transform: rotate(-2.5deg);
         }
-        .chip:hover,
         .project-card:hover {
           transform: none;
         }
@@ -1916,82 +1839,52 @@
       <section id="work">
         <div class="wrap">
           <h2 class="reveal work-title">What I build with</h2>
-          <div class="skill-groups">
-            <div class="reveal">
-              <div class="group-label">// Languages</div>
-              <div class="chip-row">
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg" alt="" onerror="this.remove()" />Java</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="" onerror="this.remove()" />Python</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/typescript/typescript-original.svg" alt="" onerror="this.remove()" />TypeScript</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="" onerror="this.remove()" />JavaScript</span>
-                <span class="chip">SQL</span>
-              </div>
-            </div>
-            <div class="reveal" style="--d: 60ms">
-              <div class="group-label">// Backend &amp; APIs</div>
-              <div class="chip-row">
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/spring/spring-original.svg" alt="" onerror="this.remove()" />Spring Boot</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/fastapi/fastapi-original.svg" alt="" onerror="this.remove()" />FastAPI</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/nodejs/nodejs-original.svg" alt="" onerror="this.remove()" />Node.js</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/celery/celery-original.svg" alt="" onerror="this.remove()" />Celery</span>
-                <span class="chip">JPA/Hibernate</span>
-                <span class="chip">SQLAlchemy</span>
-                <span class="chip">Pydantic</span>
-                <span class="chip">REST</span>
-              </div>
-            </div>
-            <div class="reveal">
-              <div class="group-label">// Data</div>
-              <div class="chip-row">
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/postgresql/postgresql-original.svg" alt="" onerror="this.remove()" />PostgreSQL</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redis/redis-original.svg" alt="" onerror="this.remove()" />Redis</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/mongodb/mongodb-original.svg" alt="" onerror="this.remove()" />MongoDB</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/neo4j/neo4j-original.svg" alt="" onerror="this.remove()" />Neo4j</span>
-                <span class="chip">Qdrant</span>
-              </div>
-            </div>
-            <div class="reveal">
-              <div class="group-label">// AI &amp; LLM</div>
-              <div class="chip-row">
-                <span class="chip">LangChain</span>
-                <span class="chip">RAG</span>
-                <span class="chip">Vector search</span>
-                <span class="chip">Tool-calling agents</span>
-                <span class="chip">LLM evaluation</span>
-              </div>
-            </div>
-                      <div class="reveal" style="--d: 60ms">
-              <div class="group-label">// Cloud &amp; DevOps</div>
-              <div class="chip-row">
-                <span class="chip">AWS</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/docker/docker-original.svg" alt="" onerror="this.remove()" />Docker</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/jenkins/jenkins-original.svg" alt="" onerror="this.remove()" />Jenkins</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/githubactions/githubactions-original.svg" alt="" onerror="this.remove()" />GitHub Actions</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/opentelemetry/opentelemetry-original.svg" alt="" onerror="this.remove()" />OpenTelemetry</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/linux/linux-original.svg" alt="" onerror="this.remove()" />Linux</span>
-              </div>
-            </div>
-            <div class="reveal">
-              <div class="group-label">// Testing &amp; Security</div>
-              <div class="chip-row">
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/junit/junit-original.svg" alt="" onerror="this.remove()" />JUnit</span>
-                <span class="chip">Mockito</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/pytest/pytest-original.svg" alt="" onerror="this.remove()" />pytest</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/vitest/vitest-original.svg" alt="" onerror="this.remove()" />Vitest</span>
-                <span class="chip">OAuth 2.0</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/jwt/jwt-original.svg" alt="" onerror="this.remove()" />JWT</span>
-              </div>
-            </div>
-            <div class="reveal">
-              <div class="group-label">// Frontend</div>
-              <div class="chip-row">
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/react/react-original.svg" alt="" onerror="this.remove()" />React</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/redux/redux-original.svg" alt="" onerror="this.remove()" />Redux</span>
-                <span class="chip">Zustand</span>
-                <span class="chip"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/tailwindcss/tailwindcss-original.svg" alt="" onerror="this.remove()" />Tailwind</span>
-              </div>
-            </div>
-</div>
+          <!-- The wall: every skill as one flowing block, weighted by evidence.
+               t1 = the five the hero leads with (keep in step with .hero-stack),
+               t2 = named in an experience or project tag, t3 = the rest.
+               data-group keeps each skill's category for the terminal's
+               `stack` command, which prints them grouped. -->
+          <ul class="wall reveal" aria-label="Skills">
+            <li class="t1" data-group="frontend">React</li>
+            <li class="t2" data-group="languages">Java</li>
+            <li class="t3" data-group="languages">JavaScript</li>
+            <li class="t2" data-group="languages">Python</li>
+            <li class="t3" data-group="languages">SQL</li>
+            <li class="t2" data-group="languages">TypeScript</li>
+            <li class="t3" data-group="backend">SQLAlchemy</li>
+            <li class="t1" data-group="backend">Spring Boot</li>
+            <li class="t2" data-group="backend">Node.js</li>
+            <li class="t3" data-group="backend">Pydantic</li>
+            <li class="t2" data-group="backend">Celery</li>
+            <li class="t3" data-group="backend">REST</li>
+            <li class="t2" data-group="backend">JPA/Hibernate</li>
+            <li class="t3" data-group="ai">RAG</li>
+            <li class="t1" data-group="backend">FastAPI</li>
+            <li class="t2" data-group="data">PostgreSQL</li>
+            <li class="t3" data-group="ai">Vector search</li>
+            <li class="t2" data-group="data">Redis</li>
+            <li class="t3" data-group="ai">Tool-calling agents</li>
+            <li class="t2" data-group="data">MongoDB</li>
+            <li class="t3" data-group="ai">LLM evaluation</li>
+            <li class="t1" data-group="cloud">AWS</li>
+            <li class="t2" data-group="data">Neo4j</li>
+            <li class="t3" data-group="cloud">Linux</li>
+            <li class="t2" data-group="data">Qdrant</li>
+            <li class="t3" data-group="testing">JUnit</li>
+            <li class="t2" data-group="cloud">Docker</li>
+            <li class="t3" data-group="testing">Mockito</li>
+            <li class="t1" data-group="ai">LangChain</li>
+            <li class="t2" data-group="cloud">Jenkins</li>
+            <li class="t3" data-group="testing">pytest</li>
+            <li class="t2" data-group="cloud">GitHub Actions</li>
+            <li class="t3" data-group="testing">Vitest</li>
+            <li class="t2" data-group="cloud">OpenTelemetry</li>
+            <li class="t3" data-group="frontend">Zustand</li>
+            <li class="t2" data-group="testing">OAuth 2.0</li>
+            <li class="t3" data-group="frontend">Tailwind</li>
+            <li class="t2" data-group="testing">JWT</li>
+            <li class="t2" data-group="frontend">Redux</li>
+          </ul>
 
           <div class="group-label reveal beyond-label">// Beyond the stack</div>
           <div class="beyond-grid">
@@ -3030,12 +2923,20 @@
           stack: {
             desc: "what I build with",
             run: function (args, w) {
-              document.querySelectorAll(".skill-groups > div").forEach(function (g, i, all) {
-                var label = clean((g.querySelector(".group-label") || {}).textContent).replace(/^\/\/\s*/, "");
-                var chips = Array.prototype.map.call(g.querySelectorAll(".chip"), function (c) {
-                  return clean(c.textContent);
-                });
-                w([[(i === all.length - 1 ? "└─ " : "├─ ") + label + "  ", "acc"], [chips.join(", "), ""]]);
+              /* The wall shows no categories; each item carries data-group. */
+              var groups = {};
+              var names = [];
+              document.querySelectorAll(".wall li").forEach(function (li) {
+                var g = li.getAttribute("data-group") || "other";
+                if (!groups[g]) {
+                  groups[g] = [];
+                  names.push(g);
+                }
+                groups[g].push(clean(li.textContent));
+              });
+              names.sort();
+              names.forEach(function (g, i) {
+                w([[(i === names.length - 1 ? "└─ " : "├─ ") + g + "  ", "acc"], [groups[g].join(", "), ""]]);
               });
             }
           },
