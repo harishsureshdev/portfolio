@@ -117,6 +117,15 @@
         --font-mono:
           "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
         --header-h: 77px;
+        /* Type scale (2026-09-27): six fixed steps replaced 14 near-duplicate
+           sizes (11.5 / 12 / 12.5, 15 / 15.5 / 16...). Responsive display
+           sizes stay as clamp() on their own rules. */
+        --fs-1: 12px;
+        --fs-2: 13px;
+        --fs-3: 14px;
+        --fs-4: 15.5px;
+        --fs-5: 17px;
+        --fs-6: 21px;
         --radius: 4.8px;
         --max-w: 1120px;
         color-scheme: dark;
@@ -188,7 +197,7 @@
         background: var(--bg);
         color: var(--text);
         font-family: var(--font-body);
-        font-size: 16px;
+        font-size: var(--fs-4);
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
         transition:
@@ -313,7 +322,7 @@
       .nav-links {
         display: flex;
         gap: 34px;
-        font-size: 14.5px;
+        font-size: var(--fs-3);
         color: var(--text-dim);
       }
       .nav-links a {
@@ -499,7 +508,7 @@
         top: -13px;
         right: -18px;
         font-family: var(--font-mono);
-        font-size: 11.5px;
+        font-size: var(--fs-1);
         padding: 3px 9px;
         background: var(--surface-2);
         border: 1px solid var(--border);
@@ -696,13 +705,13 @@
       }
       @media (min-width: 1100px) {
         .hero .cta-row .btn {
-          font-size: 15px;
+          font-size: var(--fs-4);
           padding: 13px 22px;
         }
       }
       .btn {
         font-family: var(--font-mono);
-        font-size: 14px;
+        font-size: var(--fs-3);
         font-weight: 500;
         padding: 11px 18px;
         border-radius: var(--radius);
@@ -781,12 +790,12 @@
       }
       .section-sub {
         color: var(--text-muted);
-        font-size: 16px;
+        font-size: var(--fs-4);
         margin-bottom: 44px;
       }
       .group-label {
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: var(--fs-2);
         color: var(--accent);
         margin-bottom: 14px;
       }
@@ -864,18 +873,18 @@
         grid-row: 1;
         font-family: var(--font-mono);
         color: var(--accent);
-        font-size: 18px;
+        font-size: var(--fs-5);
         line-height: 1.35;
       }
       .beyond-item h3 {
         font-family: var(--font-mono);
-        font-size: 18px;
+        font-size: var(--fs-5);
         font-weight: 500;
         letter-spacing: -0.015em;
         margin-bottom: 6px;
       }
       .beyond-item p {
-        font-size: 15px;
+        font-size: var(--fs-4);
         color: var(--text-muted);
         line-height: 1.55;
       }
@@ -962,7 +971,7 @@
           content: "// stack";
           flex-basis: 100%;
           font-family: var(--font-mono);
-          font-size: 12px;
+          font-size: var(--fs-1);
           color: var(--text-dim);
           margin-bottom: 4px;
         }
@@ -993,7 +1002,7 @@
         align-items: center;
         gap: 6px;
         font-family: var(--font-mono);
-        font-size: 11.5px;
+        font-size: var(--fs-1);
         font-weight: 500;
         color: var(--accent);
         padding: 2px 8px;
@@ -1020,7 +1029,7 @@
       }
       .job-when {
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: var(--fs-2);
         color: var(--text-dim);
         margin-bottom: 20px;
       }
@@ -1032,7 +1041,7 @@
         margin-bottom: 20px;
       }
       .job-list li {
-        font-size: 15.5px;
+        font-size: var(--fs-4);
         color: var(--text-muted);
         line-height: 1.6;
         padding-left: 22px;
@@ -1046,7 +1055,7 @@
         left: 0;
         top: 0;
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: var(--fs-2);
         color: var(--accent);
       }
       .job-list li.hl {
@@ -1070,7 +1079,7 @@
       }
       .tag {
         font-family: var(--font-mono);
-        font-size: 11.5px;
+        font-size: var(--fs-1);
         padding: 4px 9px;
         border: 1px solid transparent;
         border-radius: 3px;
@@ -1085,7 +1094,7 @@
       }
       @media (max-width: 680px) {
         .job-id {
-          font-size: 17px;
+          font-size: var(--fs-5);
           gap: 8px;
         }
         .job {
@@ -1128,7 +1137,7 @@
       }
       .project-head h3 {
         font-family: var(--font-mono);
-        font-size: 21px;
+        font-size: var(--fs-6);
         font-weight: 600;
         letter-spacing: -0.025em;
         overflow-wrap: anywhere;
@@ -1139,7 +1148,7 @@
       }
       .project-link {
         font-family: var(--font-mono);
-        font-size: 12.5px;
+        font-size: var(--fs-1);
         color: var(--accent);
         border-bottom: 1px solid transparent;
         transition: border-color 0.15s ease;
@@ -1148,7 +1157,7 @@
         border-color: var(--accent);
       }
       .project-card p {
-        font-size: 15.5px;
+        font-size: var(--fs-4);
         color: var(--text-muted);
         max-width: 78ch;
         margin-bottom: 18px;
@@ -1156,7 +1165,7 @@
       }
       .detail-label {
         font-family: var(--font-mono);
-        font-size: 12px;
+        font-size: var(--fs-1);
         color: var(--accent);
         margin-bottom: 8px;
       }
@@ -1186,7 +1195,7 @@
           content: "// stack";
           flex-basis: 100%;
           font-family: var(--font-mono);
-          font-size: 12px;
+          font-size: var(--fs-1);
           color: var(--text-dim);
           margin-bottom: 4px;
         }
@@ -1237,13 +1246,13 @@
       }
       .edu-meta {
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: var(--fs-2);
         color: var(--text-dim);
         margin-bottom: 18px;
       }
       .edu-kv {
         font-family: var(--font-mono);
-        font-size: 14px;
+        font-size: var(--fs-3);
         display: grid;
         gap: 6px;
       }
@@ -1281,7 +1290,7 @@
       }
       .terminal-cmd {
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: var(--fs-2);
         color: var(--text-dim);
         margin-bottom: 12px;
       }
@@ -1291,7 +1300,7 @@
       }
       .terminal-addr {
         font-family: var(--font-mono);
-        font-size: 17px;
+        font-size: var(--fs-5);
         color: var(--text);
         margin-bottom: 24px;
         display: flex;
@@ -1304,7 +1313,7 @@
       }
       .copy-btn {
         font-family: var(--font-mono);
-        font-size: 12px;
+        font-size: var(--fs-1);
         padding: 4px 10px;
         border: 1px solid var(--border);
         border-radius: 3px;
@@ -1341,7 +1350,7 @@
         padding: 11px 0;
         border-bottom: 1px solid var(--border);
         font-family: var(--font-mono);
-        font-size: 14.5px;
+        font-size: var(--fs-3);
         color: var(--text);
         transition: color 0.15s ease;
       }
@@ -1350,7 +1359,7 @@
         padding-bottom: 0;
       }
       .link-row .meta {
-        font-size: 12.5px;
+        font-size: var(--fs-1);
         color: var(--text-dim);
         transition: color 0.15s ease;
       }
@@ -1383,7 +1392,7 @@
       .palette-head .prompt {
         font-family: var(--font-mono);
         color: var(--accent);
-        font-size: 14px;
+        font-size: var(--fs-3);
       }
       #palette-input {
         flex: 1;
@@ -1392,7 +1401,7 @@
         background: none;
         color: var(--text);
         font-family: var(--font-mono);
-        font-size: 15px;
+        font-size: var(--fs-4);
       }
       #palette-input::placeholder {
         color: var(--text-dim);
@@ -1411,7 +1420,7 @@
         padding: 10px 12px;
         border-radius: var(--radius);
         cursor: pointer;
-        font-size: 14.5px;
+        font-size: var(--fs-3);
       }
       .palette-list li[aria-selected="true"] {
         background: var(--accent-soft);
@@ -1419,13 +1428,13 @@
       }
       .palette-list .hint {
         font-family: var(--font-mono);
-        font-size: 11.5px;
+        font-size: var(--fs-1);
         color: var(--text-dim);
       }
       .palette-empty {
         padding: 18px 20px;
         color: var(--text-dim);
-        font-size: 14px;
+        font-size: var(--fs-3);
       }
       .palette-foot {
         display: flex;
@@ -1433,14 +1442,14 @@
         padding: 10px 16px;
         border-top: 1px solid var(--border);
         font-family: var(--font-mono);
-        font-size: 11.5px;
+        font-size: var(--fs-1);
         color: var(--text-dim);
       }
       /* ---------- Terminal (in-page; the dev-console version shares its
          commands) ---------- */
       .term-open {
         font-family: var(--font-mono);
-        font-size: 13px;
+        font-size: var(--fs-2);
         font-weight: 600;
         letter-spacing: -0.04em;
       }
@@ -1462,7 +1471,7 @@
         color: var(--text);
         margin: 10vh auto auto;
         font-family: var(--font-mono);
-        font-size: 13.5px;
+        font-size: var(--fs-2);
         line-height: 1.55;
       }
       .term[open] {
@@ -1480,7 +1489,7 @@
         border-bottom: 1px solid var(--border);
         background: var(--surface);
         color: var(--text-dim);
-        font-size: 12px;
+        font-size: var(--fs-1);
       }
       .term-out {
         flex: 1;
@@ -1499,7 +1508,7 @@
         color: var(--text-muted);
       }
       .term-out .t-big {
-        font-size: 22px;
+        font-size: var(--fs-6);
         font-weight: 700;
         letter-spacing: -0.03em;
       }
@@ -1540,7 +1549,7 @@
       }
       .footer-mark {
         font-family: var(--font-mono);
-        font-size: 13.5px;
+        font-size: var(--fs-2);
         font-weight: 600;
         color: var(--text-dim);
         letter-spacing: 0.01em;
@@ -1560,7 +1569,7 @@
       }
       .footer-note {
         font-family: var(--font-mono);
-        font-size: 12px;
+        font-size: var(--fs-1);
         color: var(--text-dim);
       }
 
@@ -1679,14 +1688,14 @@
           border: 0;
           background: none;
           font-family: var(--font-mono);
-          font-size: 12.5px;
+          font-size: var(--fs-1);
           color: var(--accent);
           cursor: pointer;
         }
         .job-toggle::before {
           content: "›";
           display: inline-block;
-          font-size: 15px;
+          font-size: var(--fs-4);
           transition: transform 0.2s ease;
         }
         .job.is-open .job-toggle::before {

@@ -39,6 +39,13 @@ not part of the site.
 - Fonts: JetBrains Mono for headings, nav, metadata, tags, dates and labels;
   Epilogue for body copy and bullet text. The mono headings are the site's
   defining trait — don't soften them back to sans.
+- TYPE SCALE (2026-09-27): fixed sizes use six tokens only, `--fs-1`..`--fs-6`
+  = 12 / 13 / 14 / 15.5 / 17 / 21px. They replaced 14 near-duplicate sizes
+  (11.5 / 12 / 12.5, 15 / 15.5 / 16, 17 / 18, 21 / 22). Responsive display
+  sizes (h1, h2, hero rows, the wall tiers, job and project titles) stay as
+  `clamp()` on their own rules. Never add a new fixed px font size; pick a
+  step. The smallest text on the page (tags, labels) is now 12px, up from
+  11.5.
 - Border radius: 4.8px on buttons, near-square everywhere else
 - Content max-width is 1120px (`--max-w`). Headings and the hero use `clamp()`
   so type scales with the viewport — change the clamp, not a fixed px size.
