@@ -14,5 +14,5 @@ the name, role line or stack line changes:
   --screenshot=../assets/og.png tools/og.html
 ```
 
-The generous virtual-time budget is there so the Google fonts resolve before
+The generous virtual-time budget is there so the self-hosted fonts resolve before
 the capture; a short budget silently renders the fallback faces.
