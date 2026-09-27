@@ -5,13 +5,18 @@
     <title>og image source</title>
     <!-- Renders assets/og.png at 1200x630. See README in tools/.
          Regenerate whenever the name, role line or stack line changes. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
     <style>
+      @font-face {
+        font-family: "Epilogue";
+        font-weight: 400 800;
+        src: url("../assets/fonts/epilogue-latin.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-weight: 400 700;
+        src: url("../assets/fonts/jetbrains-mono-latin.woff2") format("woff2");
+      }
+
       :root {
         --bg: #0b0a08;
         --text: #e9e8e3;

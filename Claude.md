@@ -36,6 +36,12 @@ not part of the site.
   rail. Text on an accent fill is `--accent-text` (near-black on dark green),
   not white: white-on-#4DBF74 only reaches ~2.2:1.
 - Borders: thin borders instead of shadows, everything stays flat
+- Fonts are SELF-HOSTED (2026-09-27) in `assets/fonts/`: the Latin and
+  Latin-extended subsets of both variable fonts (one woff2 per subset covers
+  every weight; ~111KB total), with `font-display: swap`, the two Latin files
+  preloaded, and the OFL licenses alongside. No request goes to Google.
+  `tools/og.html` uses the same files. If a new weight or character set is
+  needed, fetch it the same way; don't re-add the Google Fonts link.
 - Fonts: JetBrains Mono for headings, nav, metadata, tags, dates and labels;
   Epilogue for body copy and bullet text. The mono headings are the site's
   defining trait — don't soften them back to sans.
@@ -401,8 +407,7 @@ not part of the site.
   lands on Cloudflare Pages it's a dashboard toggle and needs no code at all.
 - `assets/og.png` is a GENERATED file, not hand-made — render it from
   `tools/og.html` (that file has the command in `tools/README.md`) rather than
-  editing the PNG. Use a generous `--virtual-time-budget`: a short one silently
-  captures the fallback fonts instead of JetBrains Mono and Epilogue.
+  editing the PNG. It loads the self-hosted fonts from `assets/fonts/`.
 - Hero background (2026-09-25): a dot grid (graph paper), inline SVG grain,
   the cursor spotlight, and ONE faint `--accent-soft` glow in the top-left
   corner (`.hb-glow`). The 21st.dev diagonal streaks and corner lift were
