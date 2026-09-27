@@ -93,7 +93,10 @@ not part of the site.
   breakpoint: the meta line below 800px, the keyword row below 750px (it fits
   on one line from ~760). Left to wrap freely they stranded a `·` or `/` at a
   line end. If you change either row's text, re-run the width sweep.
-- On phones the badge drops its `.badge-role` ("software engineer · ") so it
+- The hero meta line ALWAYS breaks after "relocation" (its `.wrap-here` rule
+  applies at every width, not just phones), so it's two lines everywhere:
+  "San Jose, CA · open to relocation" / "MS CS, Indiana University".
+- On phones the badge drops its `.badge-role` ("software engineer, ") so it
   reads "// 2+ yrs · open to SDE roles" on one line; the full badge wrapped as
   "open to / SDE roles".
 - Under the forced line break (<=800px) `.hero-meta` and `.hero-stack` use
@@ -174,7 +177,7 @@ not part of the site.
   The mail CTA stays `align-self: flex-start` — stretching it full width was
   tried on 2026-09-23 and shouts next to the quiet link pane.
 - The `#contact` sub-line reads "Open to SDE roles and to relocation. Let's
-  build something that matters — get in touch." Harish's wording, 2026-09-24:
+  build something that matters. Get in touch." Harish's wording, 2026-09-24:
   he rejected "if there's something worth building" as arrogant.
 - GitHub and LinkedIn are both `harishsureshdev`
   (github.com/harishsureshdev, linkedin.com/in/harishsureshdev) as of
@@ -185,8 +188,9 @@ not part of the site.
   moved in different directions on every scroll and read as awkward.
 - The nav mark is a link to `#top`, `clamp(15px, 4.4vw, 17px)`. A flat 17px
   pushed the nav icons 5px off-screen at 360px.
-- A static `↓ scroll` cue sits at the bottom of the desktop hero. It never
-  bounces, and it's hidden at <=680px and at max-height 720px.
+- There is NO scroll cue. A static `↓ scroll` was added on 2026-09-24 and
+  removed on 2026-09-27: the design-taste skill bans scroll cues outright
+  ("if they haven't scrolled, they're looking at the hero").
 - Theme toggle uses `document.startViewTransition` for a circular wipe from
   the button (`--vt-x/--vt-y`). `html.vt-running` kills transitions while it
   runs and is removed on `finished` AND by a 900ms timeout: if the promise
@@ -336,6 +340,13 @@ not part of the site.
   2. Home Credit Default Risk is on the site but NOT in the committed
      `resume.pdf` — that file is STALE relative to the newer resume he has.
      Replacing `resume.pdf` is still outstanding.
+- ZERO em-dashes (and no en-dashes as separators) in anything a person reads:
+  page copy, the `<title>`, meta/OG/Twitter text, `og:image:alt`, the share
+  image and terminal output. Date and number ranges use a hyphen
+  ("Aug 2022 - Jul 2024", "15-20"); sentences use a comma, colon, full stop
+  or parentheses. Middle dots: at most ONE per line. Harish adopted both
+  rules from the design-taste skill on 2026-09-27; 18 dashes were rewritten
+  without changing any fact.
 - Tone: confident, plain, technical. No marketing language, no "passionate
   about." This rule gets broken by DEGREES, not in one obvious step — the hero
   summary was rewritten on 2026-09-23 and came back reading as a brochure.

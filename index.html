@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Harish Suresh — Software Engineer</title>
+    <title>Harish Suresh, Software Engineer</title>
     <meta
       name="description"
-      content="Harish Suresh — full-stack software engineer. React and TypeScript front ends, Java and Python services on AWS, network automation across 10,000+ devices, and LLM features running on production paths."
+      content="Harish Suresh, full-stack software engineer. React and TypeScript front ends, Java and Python services on AWS, network automation across 10,000+ devices, and LLM features running on production paths."
     />
     <link rel="canonical" href="https://harishsuresh.dev/" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -15,23 +15,23 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://harishsuresh.dev/" />
-    <meta property="og:title" content="Harish Suresh — Software Engineer" />
+    <meta property="og:title" content="Harish Suresh, Software Engineer" />
     <meta
       property="og:description"
-      content="Full-stack software engineer. React and TypeScript over Java and Python services — network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
+      content="Full-stack software engineer. React and TypeScript over Java and Python services. Network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
     />
     <meta property="og:image" content="https://harishsuresh.dev/assets/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Harish Suresh — Software Engineer, full-stack and applied AI. react / spring boot / fastapi / aws / langchain."
+      content="Harish Suresh, Software Engineer: full-stack and applied AI. react / spring boot / fastapi / aws / langchain."
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Harish Suresh — Software Engineer" />
+    <meta name="twitter:title" content="Harish Suresh, Software Engineer" />
     <meta
       name="twitter:description"
-      content="Full-stack software engineer. React and TypeScript over Java and Python services — network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
+      content="Full-stack software engineer. React and TypeScript over Java and Python services. Network automation across 10,000+ devices, idempotent APIs under concurrency, and LLM features on production paths."
     />
     <meta
       name="twitter:image"
@@ -584,8 +584,18 @@
          the one separator that becomes a full-width, invisible line break. */
       /* Breakpoints are measured, one per row: the meta line wraps up to
          ~800px, the keyword row only up to ~750px. */
+      /* The meta line ALWAYS breaks after "relocation", so it carries one
+         middle dot, not two (one separator per line). */
+      .hero-meta .wrap-here {
+        flex-basis: 100%;
+        height: 0;
+        overflow: hidden;
+        font-size: 0;
+      }
+      .hero-meta {
+        row-gap: 0;
+      }
       @media (max-width: 800px) {
-        .hero-meta .wrap-here,
         .hero-stack .wrap-here {
           flex-basis: 100%;
           height: 0;
@@ -596,7 +606,6 @@
            gap on BOTH sides and a wrap got double spacing. A zero-height
            line can't take a negative margin, so drop the row gap here and
            let line-height space the rows. */
-        .hero-meta,
         .hero-stack {
           row-gap: 0;
         }
@@ -1587,29 +1596,6 @@
         opacity: 1;
       }
 
-      /* Static scroll cue. It does not bounce: the cycler stays the only
-         perpetual motion on the first screen. */
-      .scroll-cue {
-        position: absolute;
-        left: 50%;
-        bottom: 22px;
-        transform: translateX(-50%);
-        z-index: 1;
-        font-family: var(--font-mono);
-        font-size: 12px;
-        letter-spacing: 0.06em;
-        color: var(--text-dim);
-        padding: 8px 10px;
-        transition: color 0.2s ease;
-      }
-      .scroll-cue:hover {
-        color: var(--accent);
-      }
-      @media (max-width: 680px), (max-height: 720px) {
-        .scroll-cue {
-          display: none;
-        }
-      }
 
       /* Timeline draws itself: a green fill over the grey rail, grown by
          scroll. Nodes light when the fill reaches them. Without JS the old
@@ -1884,7 +1870,7 @@
             </div>
             <div class="hero-content">
               <div class="hero-badge">
-                // <span class="badge-role">software engineer · </span>2+ yrs · open to SDE roles
+                // <span class="badge-role">software engineer, </span>2+ yrs · open to SDE roles
               </div>
               <h1>Harish Suresh</h1>
               <div class="hero-meta">
@@ -1925,7 +1911,6 @@
             </div>
           </div>
         </div>
-        <a class="scroll-cue" href="#work">↓ scroll</a>
       </section>
 
       <section id="work">
@@ -2035,7 +2020,7 @@
             <div class="beyond-item reveal">
               <span class="plus" aria-hidden="true">+</span>
               <h3>Cloud &amp; containers</h3>
-              <p>AWS and Docker — enough to debug prod, not just deploy to it.</p>
+              <p>AWS and Docker: enough to debug prod, not just deploy to it.</p>
             </div>
             <div class="beyond-item reveal" style="--d: 60ms">
               <span class="plus" aria-hidden="true">+</span>
@@ -2060,21 +2045,21 @@
                 >
                 <span class="badge-current"><span class="dot"></span>current</span>
               </h3>
-              <div class="job-when">Jun 2026 — present · Remote · Adtua engagement</div>
+              <div class="job-when">Jun 2026 - present · Remote, Adtua engagement</div>
               <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-1-list job-1-tags">show details</button>
               <ul class="job-list" id="job-1-list">
                 <li>
                   Shipped a React/TypeScript and FastAPI campaign builder on a
-                  3–4 engineer team for a digital out-of-home ad marketplace,
-                  replacing email handoffs for 15–20 planners and cutting brief
-                  turnaround from 2–3 days to same-day across 200 briefs.
+                  3-4 engineer team for a digital out-of-home ad marketplace,
+                  replacing email handoffs for 15-20 planners and cutting brief
+                  turnaround from 2-3 days to same-day across 200 briefs.
                 </li>
                 <li class="hl">
                   <strong
                     >Designed idempotent FastAPI reservation APIs with Postgres
                     exclusion constraints</strong
                   >, returning the original booking on retries and HTTP 409 on
-                  conflicting screen reservations — verified by 25 integration
+                  conflicting screen reservations, verified by 25 integration
                   and concurrency tests.
                 </li>
                 <li>
@@ -2086,8 +2071,8 @@
                 <li>
                   Built a LangChain campaign planner with eligibility enforced
                   in code (budget, location, availability), Qdrant ranking and an
-                  LLM drafting from the ranked set — in a 42-brief pilot all 40
-                  eligible briefs produced valid plans, and both ineligible
+                  LLM drafting from the ranked set. In a 42-brief pilot, all 40
+                  eligible briefs produced valid plans and both ineligible
                   briefs returned no match.
                 </li>
               </ul>
@@ -2114,7 +2099,7 @@
                   ><span class="ext">.java</span></span
                 >
               </h3>
-              <div class="job-when">Aug 2022 — Jul 2024 · Chennai, India</div>
+              <div class="job-when">Aug 2022 - Jul 2024 · Chennai, India</div>
               <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-2-list job-2-tags">show details</button>
               <ul class="job-list" id="job-2-list">
                 <li>
@@ -2140,9 +2125,9 @@
                 <li>
                   Replaced manual artifact copies and restarts with Jenkins
                   pipelines building Docker images to ECR and deploying to EC2
-                  across 12 services — the original 6 plus 6 from a cross-team
-                  standardization effort — where layer caching and parallel tests
-                  cut merge-to-deployment from 25–30 to 20 minutes.
+                  across 12 services (the original 6 plus 6 from a cross-team
+                  standardization effort); layer caching and parallel tests cut
+                  merge-to-deployment from 25-30 to 20 minutes.
                 </li>
               </ul>
               <div class="tag-row" id="job-2-tags">
@@ -2169,7 +2154,7 @@
                   ><span class="ext">.js</span></span
                 >
               </h3>
-              <div class="job-when">May 2020 — Aug 2020 · Chennai, India</div>
+              <div class="job-when">May 2020 - Aug 2020 · Chennai, India</div>
               <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-3-list job-3-tags">show details</button>
               <ul class="job-list" id="job-3-list">
                 <li>
@@ -2215,8 +2200,8 @@
               </div>
               <p>
                 A GitHub issue-triage agent with a hand-written multi-step tool
-                loop — labeling, duplicate detection, comments, proposed
-                assignees and escalation — with step caps and tool-failure
+                loop (labeling, duplicate detection, comments, proposed
+                assignees, escalation), with step caps and tool-failure
                 recovery.
               </p>
               <div class="detail-label">// how it's guarded</div>
@@ -2255,7 +2240,7 @@
               <p>
                 Engineered features across seven relational tables, then
                 compared logistic regression, random forest and a PyTorch
-                deep neural network — 0.73 AUC, top 40% of the leaderboard.
+                deep neural network: 0.73 AUC, top 40% of the leaderboard.
               </p>
               <div class="tag-row">
                 <span class="tag">Python</span>
@@ -2307,7 +2292,7 @@
                 <span class="org">iu-bloomington</span
                 ><span class="role">/ms-cs</span><span class="ext">.md</span>
               </h3>
-              <div class="edu-meta">// 2024 — 2026 · Bloomington, IN</div>
+              <div class="edu-meta">// 2024 - 2026 · Bloomington, IN</div>
               <dl class="edu-kv">
                 <div><dt>degree</dt><dd>MS, Computer Science</dd></div>
                 <div><dt>school</dt><dd>Indiana University Bloomington</dd></div>
@@ -2320,7 +2305,7 @@
                 <span class="org">anna-university</span
                 ><span class="role">/be-cs</span><span class="ext">.md</span>
               </h3>
-              <div class="edu-meta">// 2018 — 2022 · Chennai, India</div>
+              <div class="edu-meta">// 2018 - 2022 · Chennai, India</div>
               <dl class="edu-kv">
                 <div><dt>degree</dt><dd>BE, Computer Science</dd></div>
                 <div><dt>school</dt><dd>Anna University</dd></div>
@@ -2336,7 +2321,7 @@
           <h2 class="reveal">Contact</h2>
           <p class="section-sub reveal">
             Open to SDE roles and to relocation. Let’s build something that
-            matters — get in touch.
+            matters. Get in touch.
           </p>
           <div class="contact-grid">
             <div class="terminal reveal">
