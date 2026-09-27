@@ -92,15 +92,20 @@ not part of the site.
   phrase ships in the HTML and the loop starts by deleting it, so no-JS and
   reduced motion both show a complete sentence. Screen readers get the full
   list once from an `.sr-only` span; the animated copy is `aria-hidden`.
-- There is NO prose summary in the hero. Under the cycler sits `.hero-stack`,
-  a static lowercase mono row: react / spring boot / fastapi / aws / langchain.
-  History, all Harish's calls on 2026-09-24: java/python/typescript/react/
-  postgres was rejected as "simple"; react/fastapi/langchain/neo4j/
-  opentelemetry came next; then he asked for Spring Boot, dropped neo4j, and
-  took AWS over Docker (AWS reads as production experience, Docker as table
-  stakes). Every name must appear in an experience bullet or tag. Spans are
-  `white-space: nowrap` so "spring boot" never splits. `tools/og.html`
-  carries the same row; keep them in step. It must stay static.
+- There is NO prose summary in the hero, and as of 2026-09-27 NO tech-stack
+  row either. `.hero-stack` (react / spring boot / fastapi / aws / langchain,
+  iterated repeatedly through 2026-09-24: rejected java/python/typescript/
+  react/postgres as "simple", then neo4j swapped for Spring Boot, Docker
+  swapped for AWS) was removed once the skills wall existed: the wall opens
+  on the exact same five words, large and bold, one scroll away, so the hero
+  copy was carrying information the page already stated. The hero now ends
+  on the cycler; `.hero-line`'s margin-bottom grew from 18px to 32px to give
+  the CTAs the room the removed row used to.
+- The five core tools still have ONE canonical list: the wall's `.t1` items.
+  `tools/og.html`'s stack row and the JSON-LD `knowsAbout` array are
+  independent copies (not read from the DOM) and must be kept in step by
+  hand if the five ever change. `whoami` in the terminal reads them live from
+  `.wall .t1`, so it needs no separate update.
 - The hero meta line is JUST "San Jose, CA · MS CS, Indiana University"
   (2026-09-27). "open to relocation" was dropped from it: Contact's sub-line
   already says "Open to SDE roles and to relocation", and an earlier version
@@ -120,7 +125,7 @@ not part of the site.
 - On phones the badge drops its `.badge-role` ("software engineer, ") so it
   reads "// 2+ yrs · open to SDE roles" on one line; the full badge wrapped as
   "open to / SDE roles".
-- Under the forced line break (<=800px) `.hero-meta` and `.hero-stack` use
+- Under the forced line break (<=480px) `.hero-meta` uses
   `row-gap: 0`. The `.wrap-here` element is its own zero-height flex line, so
   it collected a row gap on both sides and every wrap got double spacing; a
   zero-height line can't take a negative margin, so the gap has to go.
@@ -291,7 +296,9 @@ not part of the site.
 - SKILLS WALL (2026-09-27): all 44 skills (resume skills, plus Node.js and
   MongoDB for Sirius) are one `<ul class="wall">`,
   weighted by size and brightness instead of boxes. `.t1` = the five the hero
-  leads with (keep in step with `.hero-stack`), `.t2` = named in an
+  leads with (also the hero badge/meta era's old .hero-stack; that row is
+  gone, this is the one place the five are still spelled out on the page),
+  `.t2` = named in an
   experience or project tag, `.t3` = the rest; the order interleaves sizes so
   no tier clusters. Each `<li>` carries `data-group` so the terminal's `stack`
   command still prints skills by category. Word spacing is `margin-right:
@@ -345,7 +352,8 @@ not part of the site.
   only as a `data-group` value the terminal's `stack` command prints as a
   category name.
 - Positioning is stated in EIGHT places and they must agree (and none may
-  lean backend): the hero `.hero-stack` row, the cycler `phrases` (plus its
+  lean backend): the wall's `.t1` row (the hero's own stack row was
+  removed 2026-09-27), the cycler `phrases` (plus its
   `.sr-only` twin), the `#contact` sub-line, `meta[name=description]`,
   `og:description`, `twitter:description`, `og:image:alt`, and the role line
   rendered INSIDE `assets/og.png` (an image: it silently keeps saying the old
