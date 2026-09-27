@@ -101,11 +101,19 @@ not part of the site.
   stakes). Every name must appear in an experience bullet or tag. Spans are
   `white-space: nowrap` so "spring boot" never splits. `tools/og.html`
   carries the same row; keep them in step. It must stay static.
+- The hero meta line is JUST "San Jose, CA · MS CS, Indiana University"
+  (2026-09-27). "open to relocation" was dropped from it: Contact's sub-line
+  already says "Open to SDE roles and to relocation", and an earlier version
+  forced the meta to break after "relocation" at EVERY width, including
+  2000px, to avoid a two-dot line, wasting the row's width on every screen
+  size. Now it only breaks where the content doesn't fit.
 - The hero's two wrapping rows break at a chosen separator marked
   `.wrap-here` (a full-width invisible line break), each on its OWN measured
-  breakpoint: the meta line below 800px, the keyword row below 750px (it fits
-  on one line from ~760). Left to wrap freely they stranded a `·` or `/` at a
-  line end. If you change either row's text, re-run the width sweep.
+  breakpoint: the meta line below 480px (measured 2026-09-27, after dropping
+  "open to relocation"; re-check if the text changes again), the keyword row
+  below 750px (it fits on one line from ~760). Left to wrap freely they
+  stranded a `·` or `/` at a line end. If you change either row's text,
+  re-run the width sweep.
 - The hero meta line ALWAYS breaks after "relocation" (its `.wrap-here` rule
   applies at every width, not just phones), so it's two lines everywhere:
   "San Jose, CA · open to relocation" / "MS CS, Indiana University".

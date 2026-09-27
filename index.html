@@ -665,19 +665,21 @@
       }
       /* Phones: both hero rows wrap, and left alone they wrap wherever they
          like and strand a separator at the end of a line. .wrap-here marks
-         the one separator that becomes a full-width, invisible line break. */
-      /* Breakpoints are measured, one per row: the meta line wraps up to
-         ~800px, the keyword row only up to ~750px. */
-      /* The meta line ALWAYS breaks after "relocation", so it carries one
-         middle dot, not two (one separator per line). */
-      .hero-meta .wrap-here {
-        flex-basis: 100%;
-        height: 0;
-        overflow: hidden;
-        font-size: 0;
-      }
-      .hero-meta {
-        row-gap: 0;
+         the one separator that becomes a full-width, invisible line break.
+         Breakpoints are measured, one per row. The meta line's own fact
+         ("open to relocation") moved out on 2026-09-27 when it forced a
+         break even at 2000px wide to make room for something the Contact
+         sub-line already says; now the row only breaks where it must. */
+      @media (max-width: 480px) {
+        .hero-meta .wrap-here {
+          flex-basis: 100%;
+          height: 0;
+          overflow: hidden;
+          font-size: 0;
+        }
+        .hero-meta {
+          row-gap: 0;
+        }
       }
       @media (max-width: 800px) {
         .hero-stack .wrap-here {
@@ -2038,8 +2040,7 @@
               </div>
               <h1>Harish Suresh</h1>
               <div class="hero-meta">
-                <span>San Jose, CA</span><span class="dot">·</span>
-                <span>open to relocation</span><span class="dot wrap-here">·</span>
+                <span>San Jose, CA</span><span class="dot wrap-here">·</span>
                 <span>MS CS, Indiana University</span>
               </div>
               <p class="hero-line">
