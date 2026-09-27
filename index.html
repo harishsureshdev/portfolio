@@ -224,17 +224,46 @@
       }
 
       /* ---------- Reveal on scroll ---------- */
+      /* Scroll entrances. Nothing is hidden by CSS alone: the script adds
+         .reveal-pending only once it can guarantee the reveal, so if it fails
+         to load, content simply shows. Only the skills wall uses this now —
+         every section fading up the same way read as a template. */
       .reveal {
-        opacity: 0;
-        transform: translateY(16px);
         transition:
           opacity 0.6s cubic-bezier(0.22, 0.61, 0.24, 1),
           transform 0.6s cubic-bezier(0.22, 0.61, 0.24, 1);
-        transition-delay: var(--d, 0ms);
       }
-      .reveal.is-visible {
+      .reveal.reveal-pending {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      /* The wall itself doesn't move; its words settle in by weight, big ones
+         first, so the hierarchy arrives in order. */
+      .wall.reveal-pending {
         opacity: 1;
         transform: none;
+      }
+      .wall.reveal-pending li {
+        opacity: 0;
+      }
+      .wall.is-visible li {
+        animation: settle 0.55s cubic-bezier(0.22, 0.61, 0.24, 1) both;
+      }
+      .wall.is-visible .t2 {
+        animation-delay: 0.18s;
+      }
+      .wall.is-visible .t3 {
+        animation-delay: 0.36s;
+      }
+      @keyframes settle {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
       }
 
       /* ---------- Nav ---------- */
@@ -1727,10 +1756,15 @@
         .hb-hot {
           display: none;
         }
-        .reveal {
+        .reveal,
+        .reveal.reveal-pending,
+        .wall.reveal-pending li {
           opacity: 1;
           transform: none;
           transition: none;
+        }
+        .wall.is-visible li {
+          animation: none;
         }
         .tcaret,
         .badge-current .dot {
@@ -1873,7 +1907,7 @@
 
       <section id="work">
         <div class="wrap">
-          <h2 class="reveal work-title">What I build with</h2>
+          <h2 class="work-title">What I build with</h2>
           <!-- The wall: every skill as one flowing block, weighted by evidence.
                t1 = the five the hero leads with (keep in step with .hero-stack),
                t2 = named in an experience or project tag, t3 = the rest.
@@ -1921,36 +1955,36 @@
             <li class="t2" data-group="frontend">Redux</li>
           </ul>
 
-          <div class="group-label reveal beyond-label">// Beyond the stack</div>
+          <div class="group-label beyond-label">// Beyond the stack</div>
           <div class="beyond-grid">
-            <div class="beyond-item reveal">
+            <div class="beyond-item">
               <span class="plus" aria-hidden="true">+</span>
               <h3>Concurrency correctness</h3>
               <p>
                 Exclusion constraints and idempotency keys, not retry-and-hope.
               </p>
             </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
+            <div class="beyond-item">
               <span class="plus" aria-hidden="true">+</span>
               <h3>Async processing</h3>
               <p>Move heavy work off the request path and onto workers.</p>
             </div>
-            <div class="beyond-item reveal">
+            <div class="beyond-item">
               <span class="plus" aria-hidden="true">+</span>
               <h3>Tracing &amp; observability</h3>
               <p>OpenTelemetry spans that cross the API and worker boundary.</p>
             </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
+            <div class="beyond-item">
               <span class="plus" aria-hidden="true">+</span>
               <h3>CI/CD pipelines</h3>
               <p>Automate the path from merge to deployment.</p>
             </div>
-            <div class="beyond-item reveal">
+            <div class="beyond-item">
               <span class="plus" aria-hidden="true">+</span>
               <h3>Cloud &amp; containers</h3>
               <p>AWS and Docker: enough to debug prod, not just deploy to it.</p>
             </div>
-            <div class="beyond-item reveal" style="--d: 60ms">
+            <div class="beyond-item">
               <span class="plus" aria-hidden="true">+</span>
               <h3>AI in the loop</h3>
               <p>LangChain agents with policy enforced in code, not in prompts.</p>
@@ -1961,10 +1995,10 @@
 
       <section class="band" id="experience">
         <div class="wrap">
-          <h2 class="reveal">Experience</h2>
-          <p class="section-sub reveal">Where I've worked, and what I owned</p>
+          <h2>Experience</h2>
+          <p class="section-sub">Where I've worked, and what I owned</p>
           <div class="timeline">
-            <article class="job is-current reveal">
+            <article class="job is-current">
               <h3 class="job-id">
                 <span class="job-path"
                   ><span class="org">heartland</span
@@ -2019,7 +2053,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job">
               <h3 class="job-id">
                 <span class="job-path"
                   ><span class="org">sify</span
@@ -2074,7 +2108,7 @@
               </div>
             </article>
 
-            <article class="job reveal">
+            <article class="job">
               <h3 class="job-id">
                 <span class="job-path"
                   ><span class="org">sirius</span
@@ -2112,10 +2146,10 @@
 
       <section id="projects">
         <div class="wrap">
-          <h2 class="reveal">Projects</h2>
-          <p class="section-sub reveal">Things I've built on my own time</p>
+          <h2>Projects</h2>
+          <p class="section-sub">Things I've built on my own time</p>
           <div class="project-grid">
-            <div class="project-card reveal">
+            <div class="project-card">
               <div class="project-head">
                 <h3 class="proj-path"><span class="org">warden</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
@@ -2149,7 +2183,7 @@
               </div>
             </div>
 
-            <div class="project-card reveal" style="--d: 80ms">
+            <div class="project-card">
               <div class="project-head">
                 <h3 class="proj-path"><span class="org">home-credit-default-risk</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
@@ -2179,7 +2213,7 @@
               </div>
             </div>
 
-            <div class="project-card reveal" style="--d: 160ms">
+            <div class="project-card">
               <div class="project-head">
                 <h3 class="proj-path"><span class="org">snapsend</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
@@ -2213,9 +2247,9 @@
 
       <section class="band" id="education">
         <div class="wrap">
-          <h2 class="reveal edu-heading">Education</h2>
+          <h2 class="edu-heading">Education</h2>
           <div class="edu-grid">
-            <article class="edu-card reveal">
+            <article class="edu-card">
               <h3 class="edu-path">
                 <span class="org">iu-bloomington</span
                 ><span class="role">/ms-cs</span><span class="ext">.md</span>
@@ -2228,7 +2262,7 @@
               </dl>
             </article>
 
-            <article class="edu-card reveal" style="--d: 60ms">
+            <article class="edu-card">
               <h3 class="edu-path">
                 <span class="org">anna-university</span
                 ><span class="role">/be-cs</span><span class="ext">.md</span>
@@ -2246,13 +2280,13 @@
 
       <section id="contact">
         <div class="wrap">
-          <h2 class="reveal">Contact</h2>
-          <p class="section-sub reveal">
+          <h2>Contact</h2>
+          <p class="section-sub">
             Open to SDE roles and to relocation. Let’s build something that
             matters. Get in touch.
           </p>
           <div class="contact-grid">
-            <div class="terminal reveal">
+            <div class="terminal">
               <div class="terminal-cmd">
                 <span class="prompt">$</span>mail --to harish
               </div>
@@ -2274,7 +2308,7 @@
                 >Open in mail app</a
               >
             </div>
-            <div class="terminal reveal" style="--d: 60ms">
+            <div class="terminal">
               <div class="terminal-cmd">
                 <span class="prompt">$</span>ls ~/links
               </div>
@@ -2404,15 +2438,12 @@
 
         /* ---- Scroll reveals ---- */
         var revealEls = document.querySelectorAll(".reveal");
-        if (reduced || !("IntersectionObserver" in window)) {
-          revealEls.forEach(function (el) {
-            el.classList.add("is-visible");
-          });
-        } else {
+        if (!reduced && "IntersectionObserver" in window) {
           var io = new IntersectionObserver(
             function (entries) {
               entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
+                  entry.target.classList.remove("reveal-pending");
                   entry.target.classList.add("is-visible");
                   io.unobserve(entry.target);
                 }
@@ -2421,6 +2452,8 @@
             { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
           );
           revealEls.forEach(function (el) {
+            /* Hidden only from here on, once the observer exists to undo it. */
+            el.classList.add("reveal-pending");
             io.observe(el);
           });
         }

@@ -288,10 +288,19 @@ not part of the site.
   Row neighbours stretch to equal height, and without it the shorter item
   spread the slack between its heading and its text.
 - No heavy shadows, no gradients beyond the one subtle radial glow in the hero
-- Motion: sections fade-slide-up on scroll via IntersectionObserver (`.reveal`,
-  staggered with `--d`). Hero has its own staggered entrance, the nav mark and
-  hero cycler share a blinking caret, and the current-role dot pulses. Every one
-  of these is disabled under `prefers-reduced-motion` — keep it that way.
+- Motion (2026-09-27): sections NO LONGER fade up on scroll. Every section
+  entering the same way read as a template and dulled the moments that
+  matter. `.reveal` is used by exactly ONE element, the skills wall, whose
+  words settle in by weight (t1, then t2 at 0.18s, then t3 at 0.36s). The
+  other scroll-linked motion is the timeline drawing itself. The hero keeps
+  its one-shot entrance, the nav mark and cycler share a blinking caret, and
+  the current-role dot pulses. All of it is off under
+  `prefers-reduced-motion`.
+- No-JS safety: CSS never hides content on its own. JS adds `.reveal-pending`
+  (the hidden state) only once an IntersectionObserver exists to remove it,
+  so if the script fails to load, everything simply shows. Verified by
+  loading the page with the main script stripped out. Don't reintroduce a
+  bare `.reveal { opacity: 0 }`.
 
 - AESTHETIC, named: "warm terminal" — the site is a code editor used as a
   portfolio. Filenames as titles, `//` comments as labels, `$` prompts, mono
