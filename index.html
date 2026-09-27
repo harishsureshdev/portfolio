@@ -1802,6 +1802,123 @@
         }
       }
 
+      /* ---------- Print (2026-09-27) ----------
+         Printing gives a clean, light, resume-like document: light tokens,
+         no nav or effects, every job expanded, a static tagline instead of
+         the cycler, and nothing split across a page break. */
+      @media print {
+        /* :not(#_) lifts this above the theme blocks, whose
+           :root:not([data-theme="dark"]) otherwise outranks a bare :root. */
+        :root:not(#_) {
+          --bg: #ffffff;
+          --band: #ffffff;
+          --surface: #ffffff;
+          --surface-2: #ffffff;
+          --text: #15140f;
+          --text-muted: #3a3833;
+          --text-soft: #3a3833;
+          --text-dim: #5a574f;
+          --border: #d8d2c4;
+          --border-strong: #b3aa99;
+          --rail: #b3aa99;
+          --accent: #1a6238;
+          --accent-border: #1a6238;
+          --accent-soft: transparent;
+          color-scheme: light;
+        }
+        header,
+        .hero-bg,
+        .hero .portrait,
+        .hero-badge,
+        .cta-row,
+        .job-toggle,
+        .copy-btn,
+        .terminal .btn-primary,
+        .timeline-fill,
+        .footer-mark,
+        dialog {
+          display: none !important;
+        }
+        body {
+          font-size: 11pt;
+        }
+        section {
+          padding: 18pt 0 !important;
+          border-top: 1px solid var(--border);
+          min-height: 0 !important;
+        }
+        .hero {
+          min-height: 0 !important;
+          padding: 0 0 12pt !important;
+        }
+        .hero h1 {
+          font-size: 26pt;
+        }
+        /* the cycler would print mid-word; print its static sentence */
+        .hero-line > [aria-hidden="true"] {
+          display: none;
+        }
+        .hero-line .sr-only {
+          position: static;
+          width: auto;
+          height: auto;
+          margin: 0;
+          clip: auto;
+          overflow: visible;
+          white-space: normal;
+        }
+        .hero-line {
+          font-size: 14pt;
+        }
+        /* entrance and scroll-driven states: always fully shown on paper
+           (a printer never plays the hero's load-in animation) */
+        .hero-content > *,
+        .portrait,
+        .reveal-pending,
+        .wall.reveal-pending li,
+        .wall li {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+        .job > .job-list,
+        .job > .tag-row {
+          display: flex !important;
+        }
+        .job > .job-list {
+          display: flex !important;
+          flex-direction: column;
+        }
+        .wall .t1 {
+          font-size: 20pt;
+        }
+        .wall .t2 {
+          font-size: 13pt;
+        }
+        .wall .t3 {
+          font-size: 10pt;
+        }
+        .job,
+        .project-card,
+        .edu-card,
+        .beyond-item,
+        .terminal {
+          break-inside: avoid;
+        }
+        h2 {
+          break-after: avoid;
+        }
+        /* a printed link needs its address */
+        .project-link::after {
+          content: " (" attr(href) ")";
+          color: var(--text-dim);
+        }
+        .project-card:hover,
+        .job:hover {
+          transform: none;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;

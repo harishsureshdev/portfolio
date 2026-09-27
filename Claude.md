@@ -465,6 +465,23 @@ not part of the site.
 - After any visual change, describe what changed in plain terms rather than
   just diffing code, since I'm reviewing on look/feel, not implementation.
 
+## Deploy-ready pieces
+
+- `404.html` (repo root) is a standalone shell-error page: `cd /missing:
+  No such file or directory`, an `ls` of the sections and a `cd ~` home
+  button. Hosts (Cloudflare Pages, Netlify, GitHub Pages) serve it for any
+  missing path, so every URL in it is ROOT-ABSOLUTE (`/assets/...`,
+  `/#work`); opened from disk its font falls back, which is expected. Its
+  colours are COPIES of the site tokens (it can't share the stylesheet);
+  change both if the palette changes. The missing path is inserted as text
+  only, and a malformed %-escape falls back to the raw path.
+- Print stylesheet (`@media print` in index.html): white tokens (the
+  `:root:not(#_)` selector is deliberate, it must outrank the light-theme
+  `:root:not([data-theme="dark"])`), no nav/portrait/effects/buttons, the
+  cycler replaced by its static sentence, every job expanded, entrance
+  animations forced visible (a printer never plays them, and the hero once
+  printed EMPTY), nothing split across a page break. Six A4/Letter pages.
+
 ## Deployment target
 
 - Domain: harishsuresh.dev (GoDaddy, not yet pointed anywhere)
