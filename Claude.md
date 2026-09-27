@@ -251,6 +251,12 @@ not part of the site.
   credited in `help`. Harish chose console-only placement for it: keep it off
   the visible page, since a "no" joke on a hiring page can read as arrogant. The nav button stays visible at
   every width.
+- Projects read as repos (2026-09-27): each title is a README path
+  (`warden/README.md`, `home-credit-default-risk/README.md`,
+  `snapsend/README.md`) with a `<wbr>` after the slash so the long one breaks
+  there on phones. At >=1000px the tags move into a right "// stack" rail,
+  same pattern as `.job`. The terminal's project keys split on "/" so
+  `cat warden` and Tab completion stay clean.
 - Project cards print everything inline — lead paragraph, a `// label`, the
   detail paragraph, then tags. They used to expand (whole-card click, a
   `grid-template-rows: 0fr -> 1fr` panel). That was REMOVED on 2026-09-23 after

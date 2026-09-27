@@ -1102,6 +1102,7 @@
         font-size: 21px;
         font-weight: 600;
         letter-spacing: -0.025em;
+        overflow-wrap: anywhere;
       }
       .project-head h3 .ext {
         color: var(--text-dim);
@@ -1129,6 +1130,40 @@
         font-size: 12px;
         color: var(--accent);
         margin-bottom: 8px;
+      }
+      /* Projects read as repos, like Experience and Education read as files:
+         a README path for the title, and on wide screens the tags move into a
+         right-hand "// stack" rail that the 78ch text cap used to leave empty. */
+      @media (min-width: 1000px) {
+        .project-card {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 250px;
+          column-gap: 48px;
+          align-items: start;
+        }
+        .project-card > .project-head {
+          grid-column: 1 / -1;
+        }
+        .project-card > p,
+        .project-card > .detail-label {
+          grid-column: 1;
+        }
+        .project-card > .tag-row {
+          grid-column: 2;
+          grid-row: 2 / span 3;
+          padding-top: 3px;
+        }
+        .project-card > .tag-row::before {
+          content: "// stack";
+          flex-basis: 100%;
+          font-family: var(--font-mono);
+          font-size: 12px;
+          color: var(--text-dim);
+          margin-bottom: 4px;
+        }
+        .project-card > p:last-of-type {
+          margin-bottom: 0;
+        }
       }
 
       /* ---------- Education ---------- */
@@ -2082,7 +2117,7 @@
           <div class="project-grid">
             <div class="project-card reveal">
               <div class="project-head">
-                <h3>Warden<span class="ext">.py</span></h3>
+                <h3 class="proj-path"><span class="org">warden</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
                   class="project-link"
                   href="https://github.com/harishsureshdev"
@@ -2116,7 +2151,7 @@
 
             <div class="project-card reveal" style="--d: 80ms">
               <div class="project-head">
-                <h3>Home Credit Default Risk<span class="ext">.py</span></h3>
+                <h3 class="proj-path"><span class="org">home-credit-default-risk</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
                   class="project-link"
                   href="https://github.com/harishsureshdev"
@@ -2146,7 +2181,7 @@
 
             <div class="project-card reveal" style="--d: 160ms">
               <div class="project-head">
-                <h3>SnapSend<span class="ext">.java</span></h3>
+                <h3 class="proj-path"><span class="org">snapsend</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
                   class="project-link"
                   href="https://github.com/harishsureshdev"
@@ -2762,7 +2797,7 @@
               var title = clean(h ? h.textContent : "");
               return {
                 el: card,
-                key: title.toLowerCase().split(/[\s.]/)[0],
+                key: title.toLowerCase().split(/[\s./]/)[0],
                 title: title,
                 paras: Array.prototype.map.call(
                   card.querySelectorAll("p"),
