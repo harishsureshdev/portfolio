@@ -303,8 +303,10 @@ not part of the site.
   part"). It kept coming back because this file used to carry a rule saying
   to keep the word "backend" in search copy. That rule is reversed: search
   relevance comes from the concrete tech names in the tags and JSON-LD
-  `knowsAbout`, not from the word. The only "backend" on the page is the
-  neutral `// Backend & APIs` chip-group label.
+  `knowsAbout`, not from the word. Since the skills wall replaced the chip groups
+  (2026-09-27), "backend" appears nowhere visible on the page; it survives
+  only as a `data-group` value the terminal's `stack` command prints as a
+  category name.
 - Positioning is stated in EIGHT places and they must agree (and none may
   lean backend): the hero `.hero-stack` row, the cycler `phrases` (plus its
   `.sr-only` twin), the `#contact` sub-line, `meta[name=description]`,
