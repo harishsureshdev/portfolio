@@ -358,8 +358,8 @@ not part of the site.
   1. Sirius Technologies (May-Aug 2020) is on the site but NOT on the resume.
      Harish reconfirmed on 2026-09-27: keep it.
   2. Home Credit Default Risk is on the site but NOT on the current resume.
-     Harish asked for it earlier; whether it stays was put to him on
-     2026-09-27.
+     Harish confirmed on 2026-09-27: keep it for now, he'll edit the card
+     later. Don't drop or rewrite it unprompted.
 - ZERO em-dashes (and no en-dashes as separators) in anything a person reads:
   page copy, the `<title>`, meta/OG/Twitter text, `og:image:alt`, the share
   image and terminal output. Date and number ranges use a hyphen
