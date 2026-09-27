@@ -426,6 +426,12 @@ not part of the site.
 - Analytics is NOT wired up. Cloudflare Web Analytics / Umami both need a site
   token from Harish's own account, so it can't be added unattended. If the site
   lands on Cloudflare Pages it's a dashboard toggle and needs no code at all.
+- No `robots.txt` / `sitemap.xml` before 2026-09-27; both now exist at the
+  repo root, referencing `https://harishsuresh.dev/`. Update `sitemap.xml`'s
+  `lastmod` on a real content change, not a typo fix.
+- `.skip-link` (2026-09-27): a keyboard-only "Skip to content" landing on
+  `#main`, `<main id="main">`. Hidden via `top: -100%`, not `display: none`,
+  so it stays in the tab order and simply moves on `:focus-visible`.
 - `assets/og.png` is a GENERATED file, not hand-made — render it from
   `tools/og.html` (that file has the command in `tools/README.md`) rather than
   editing the PNG. It loads the self-hosted fonts from `assets/fonts/`.
@@ -464,6 +470,16 @@ not part of the site.
   `scroll-behavior: smooth` swallows programmatic scrolls.
 - Pseudo-elements are invisible to `querySelectorAll('*')` overflow probes —
   isolate one by injecting `display: none` and re-measuring `scrollWidth`.
+- Reading `getComputedStyle` right after triggering a CSS TRANSITION (focus,
+  hover, a class toggle) can catch it mid-interpolation under virtual time,
+  reporting neither the start nor end value and looking like the rule never
+  matched. Verified on `.skip-link:focus-visible` on 2026-09-27: reading
+  `top` immediately after `.focus()` showed no change; injecting
+  `transition: none !important` first showed the correct `12px`. Isolate
+  transition timing from a cascade question the same way, or use
+  `:focus-visible` matched via `.matches(':focus-visible')` rather than
+  `.focus()` alone — script-triggered `.focus()` alone does not reliably
+  produce `:focus-visible` outside headless either.
 
 ## Editing this file safely
 
