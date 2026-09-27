@@ -195,7 +195,7 @@ not part of the site.
 - GitHub and LinkedIn are both `harishsureshdev`
   (github.com/harishsureshdev, linkedin.com/in/harishsureshdev) as of
   2026-09-24. The old `github.com/harishs2000` returned 404, so every GitHub
-  link on the site had been dead. `resume.pdf` still carries the old handles.
+  link on the site had been dead. The new `resume.pdf` carries the new handles too.
 - There is NO top scroll-progress bar. It was removed on 2026-09-24: with
   the timeline fill growing down while the bar grew right, two green bars
   moved in different directions on every scroll and read as awkward.
@@ -280,7 +280,8 @@ not part of the site.
 - `html` carries `overflow-x: clip`. Do NOT add `overflow-x: hidden` to `body`:
   together they make body the scroll container, which silently kills the
   sticky nav. Verified — it is not a theoretical concern.
-- SKILLS WALL (2026-09-27): all 39 skills are one `<ul class="wall">`,
+- SKILLS WALL (2026-09-27): all 44 skills (resume skills, plus Node.js and
+  MongoDB for Sirius) are one `<ul class="wall">`,
   weighted by size and brightness instead of boxes. `.t1` = the five the hero
   leads with (keep in step with `.hero-stack`), `.t2` = named in an
   experience or project tag, `.t3` = the rest; the order interleaves sizes so
@@ -344,17 +345,21 @@ not part of the site.
 
 - Every claim must be true and traceable to my actual resume/projects — do not
   invent metrics, testimonials, or experience I don't have.
-- The experience bullets and project copy were reconciled against `resume.pdf`
-  on 2026-09-23 and now carry its full detail (HTTP 409 on conflicting
-  reservations, SHA-256 change detection, capped backoff retries, step caps and
-  tool-failure recovery, and so on). If the resume changes, re-reconcile.
-- Two deliberate divergences from `resume.pdf`, both Harish's call — don't
-  "fix" either silently:
+- `resume.pdf` was replaced on 2026-09-27 with Harish's current resume
+  (source: ~/Downloads/Latest Resumes/Harish-Suresh.pdf), and the site was
+  re-reconciled to it the same day: Heartland title "Software Development
+  Engineer", 5 bullets incl. draft-state cleanup; Sify 7 bullets incl.
+  AngularJS dashboards and code reviews; Warden now Gemini API, 39-40/40 eval,
+  12/12 blocked vs 3-5/12 prompt-only (the old "11 of 12" and "step caps" are
+  gone); SnapSend JWT, 24-hour links, 2 GB presigned multipart uploads; Anna
+  CGPA 8.6. The resume uses en-dashes; the site converts them to hyphens.
+  If the resume changes again, re-reconcile the same way.
+- Deliberate divergences from `resume.pdf` — don't "fix" either silently:
   1. Sirius Technologies (May-Aug 2020) is on the site but NOT on the resume.
-     He wants it kept on the site.
-  2. Home Credit Default Risk is on the site but NOT in the committed
-     `resume.pdf` — that file is STALE relative to the newer resume he has.
-     Replacing `resume.pdf` is still outstanding.
+     Harish reconfirmed on 2026-09-27: keep it.
+  2. Home Credit Default Risk is on the site but NOT on the current resume.
+     Harish asked for it earlier; whether it stays was put to him on
+     2026-09-27.
 - ZERO em-dashes (and no en-dashes as separators) in anything a person reads:
   page copy, the `<title>`, meta/OG/Twitter text, `og:image:alt`, the share
   image and terminal output. Date and number ranges use a hyphen

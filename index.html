@@ -68,7 +68,9 @@
           "Redis",
           "React",
           "TypeScript",
-          "AWS"
+          "AWS",
+          "Python",
+          "LangChain"
         ],
         "sameAs": [
           "https://github.com/harishsureshdev",
@@ -2090,39 +2092,44 @@
             <li class="t2" data-group="languages">Python</li>
             <li class="t3" data-group="languages">SQL</li>
             <li class="t2" data-group="languages">TypeScript</li>
-            <li class="t3" data-group="backend">SQLAlchemy</li>
-            <li class="t1" data-group="backend">Spring Boot</li>
-            <li class="t2" data-group="backend">Node.js</li>
-            <li class="t3" data-group="backend">Pydantic</li>
-            <li class="t2" data-group="backend">Celery</li>
             <li class="t3" data-group="backend">REST</li>
-            <li class="t2" data-group="backend">JPA/Hibernate</li>
+            <li class="t2" data-group="backend">Node.js</li>
+            <li class="t1" data-group="backend">Spring Boot</li>
             <li class="t3" data-group="ai">RAG</li>
-            <li class="t1" data-group="backend">FastAPI</li>
-            <li class="t2" data-group="data">PostgreSQL</li>
+            <li class="t2" data-group="backend">Celery</li>
             <li class="t3" data-group="ai">Vector search</li>
-            <li class="t2" data-group="data">Redis</li>
+            <li class="t2" data-group="backend">JPA/Hibernate</li>
             <li class="t3" data-group="ai">Tool-calling agents</li>
-            <li class="t2" data-group="data">MongoDB</li>
+            <li class="t2" data-group="data">PostgreSQL</li>
             <li class="t3" data-group="ai">LLM evaluation</li>
-            <li class="t1" data-group="cloud">AWS</li>
-            <li class="t2" data-group="data">Neo4j</li>
-            <li class="t3" data-group="cloud">Linux</li>
-            <li class="t2" data-group="data">Qdrant</li>
+            <li class="t1" data-group="backend">FastAPI</li>
+            <li class="t2" data-group="data">Redis</li>
             <li class="t3" data-group="testing">JUnit</li>
-            <li class="t2" data-group="cloud">Docker</li>
+            <li class="t2" data-group="data">MongoDB</li>
             <li class="t3" data-group="testing">Mockito</li>
-            <li class="t1" data-group="ai">LangChain</li>
-            <li class="t2" data-group="cloud">Jenkins</li>
+            <li class="t2" data-group="data">Neo4j</li>
             <li class="t3" data-group="testing">pytest</li>
-            <li class="t2" data-group="cloud">GitHub Actions</li>
+            <li class="t2" data-group="data">Qdrant</li>
+            <li class="t1" data-group="cloud">AWS</li>
             <li class="t3" data-group="testing">Vitest</li>
-            <li class="t2" data-group="cloud">OpenTelemetry</li>
+            <li class="t2" data-group="cloud">Docker</li>
             <li class="t3" data-group="frontend">Zustand</li>
-            <li class="t2" data-group="testing">OAuth 2.0</li>
+            <li class="t2" data-group="cloud">Jenkins</li>
             <li class="t3" data-group="frontend">Tailwind</li>
+            <li class="t2" data-group="cloud">GitHub Actions</li>
+            <li class="t3" data-group="frontend">Next.js</li>
+            <li class="t1" data-group="ai">LangChain</li>
+            <li class="t2" data-group="cloud">OpenTelemetry</li>
+            <li class="t3" data-group="frontend">HTML/CSS</li>
+            <li class="t2" data-group="testing">OAuth 2.0</li>
+            <li class="t3" data-group="backend">Kafka</li>
             <li class="t2" data-group="testing">JWT</li>
+            <li class="t3" data-group="cloud">Kubernetes</li>
             <li class="t2" data-group="frontend">Redux</li>
+            <li class="t3" data-group="cloud">Git</li>
+            <li class="t2" data-group="frontend">AngularJS</li>
+            <li class="t2" data-group="backend">Spring Security</li>
+            <li class="t2" data-group="ai">Gemini API</li>
           </ul>
 
           <div class="group-label beyond-label">// Beyond the stack</div>
@@ -2172,7 +2179,7 @@
               <h3 class="job-id">
                 <span class="job-path"
                   ><span class="org">heartland</span
-                  ><span class="role">/software-engineer</span
+                  ><wbr /><span class="role">/software-development-engineer</span
                   ><span class="ext">.py</span></span
                 >
                 <span class="badge-current"><span class="dot"></span>current</span>
@@ -2181,31 +2188,35 @@
               <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-1-list job-1-tags">show details</button>
               <ul class="job-list" id="job-1-list">
                 <li>
-                  Shipped a React/TypeScript and FastAPI campaign builder on a
-                  3-4 engineer team for a digital out-of-home ad marketplace,
-                  replacing email handoffs for 15-20 planners and cutting brief
-                  turnaround from 2-3 days to same-day across 200 briefs.
+                  Shipped a React/TypeScript and FastAPI campaign builder with a
+                  3-4 engineer team for Adtua, an out-of-home ad marketplace,
+                  replacing email handoffs for 15-20 planners; 200 briefs went
+                  from 2-3 days to same-day.
+                </li>
+                <li>
+                  Implemented draft-state cleanup after planner feedback showed
+                  abandoned drafts holding live inventory, releasing screen holds
+                  and uploads whenever a planner revises an earlier selection.
                 </li>
                 <li class="hl">
                   <strong
-                    >Designed idempotent FastAPI reservation APIs with Postgres
-                    exclusion constraints</strong
+                    >Designed FastAPI reservation APIs with idempotency keys and
+                    PostgreSQL exclusion constraints</strong
                   >, returning the original booking on retries and HTTP 409 on
-                  conflicting screen reservations, verified by 25 integration
-                  and concurrency tests.
+                  conflicts, with 25 integration and concurrency tests covering
+                  both.
                 </li>
                 <li>
-                  Moved media validation, H.264 transcoding and thumbnail
-                  generation off the request path into Celery/Redis/S3/FFmpeg
-                  workers, with capped backoff retries, terminal failure states
-                  and OpenTelemetry spans across API and worker.
+                  Proposed and moved media validation, H.264 transcoding and
+                  thumbnails off the request path into Celery workers (Redis,
+                  S3, FFmpeg) with capped backoff retries, terminal failure
+                  states and end-to-end OpenTelemetry tracing.
                 </li>
                 <li>
-                  Built a LangChain campaign planner with eligibility enforced
-                  in code (budget, location, availability), Qdrant ranking and an
-                  LLM drafting from the ranked set. In a 42-brief pilot, all 40
-                  eligible briefs produced valid plans and both ineligible
-                  briefs returned no match.
+                  Engineered a LangChain campaign planner that enforces budget,
+                  location and availability in code, ranks screens with Qdrant,
+                  and has an LLM draft the plan; all 42 pilot briefs passed
+                  validation, including 2 correct no-matches.
                 </li>
               </ul>
               <div class="tag-row" id="job-1-tags">
@@ -2235,31 +2246,43 @@
               <button type="button" class="job-toggle" aria-expanded="false" aria-controls="job-2-list job-2-tags">show details</button>
               <ul class="job-list" id="job-2-list">
                 <li>
-                  Built and maintained 6 Java/Spring Boot microservices
-                  integrating SNMP and NETCONF to poll status and push
-                  configuration across 10,000+ production network devices from
-                  Cisco, Juniper and others.
+                  Developed and maintained 6 Java/Spring Boot microservices in a
+                  distributed platform managing 10,000+ production network
+                  devices over SNMP and NETCONF, troubleshooting issues through
+                  log analysis and debugging.
                 </li>
                 <li class="hl">
-                  <strong
-                    >Built a Java ETL pipeline normalizing vendor CLI and
-                    NETCONF/YANG data into a Neo4j graph</strong
-                  >
-                  of 10k devices and 50k links, replacing spreadsheet tracing with
-                  path and impact APIs for NOC engineers; SHA-256 change detection
-                  and parallel parsing cut nightly refresh from 45 to 30 minutes.
+                  <strong>Built a Java ETL pipeline into a Neo4j graph</strong>
+                  of 10k devices and 50k links, replacing spreadsheet tracing
+                  with NOC path and impact APIs; SHA-256 change detection cut
+                  nightly refresh from 45 to 30 min.
                 </li>
                 <li>
-                  Secured REST APIs over JPA/Hibernate with OAuth 2.0 and Spring
-                  Security RBAC; Redis caching with TTL and change-driven
-                  invalidation cut average latency from 820ms to 310ms.
+                  Secured device-management REST APIs with OAuth 2.0 and Spring
+                  Security role-based access control, built on JPA/Hibernate
+                  mappings for device metadata, configuration snapshots and user
+                  roles.
                 </li>
                 <li>
-                  Replaced manual artifact copies and restarts with Jenkins
-                  pipelines building Docker images to ECR and deploying to EC2
-                  across 12 services (the original 6 plus 6 from a cross-team
-                  standardization effort); layer caching and parallel tests cut
-                  merge-to-deployment from 25-30 to 20 minutes.
+                  Profiled slow device-management endpoints and added Redis
+                  caching with TTL expiry and invalidation on configuration
+                  pushes, cutting average API latency from 820 to 310 ms.
+                </li>
+                <li>
+                  Automated Jenkins deploys for 6 owned services and partnered
+                  across teams to standardize 6 more, shipping Docker images
+                  through ECR to EC2; layer caching and parallel tests cut
+                  merge-to-deployment from 25-30 to 20 min.
+                </li>
+                <li>
+                  Added virtual scrolling and client-side caching to AngularJS
+                  NOC dashboards used by 35 ops engineers for live device status,
+                  alarms and topology, keeping large tables responsive under 30s
+                  polling.
+                </li>
+                <li>
+                  Conducted code reviews for teammates, wrote design
+                  documentation, and onboarded new engineers to the platform.
                 </li>
               </ul>
               <div class="tag-row" id="job-2-tags">
@@ -2275,6 +2298,7 @@
                 <span class="tag">Jenkins</span>
                 <span class="tag">Docker</span>
                 <span class="tag">AWS</span>
+                <span class="tag">AngularJS</span>
               </div>
             </article>
 
@@ -2331,24 +2355,22 @@
                 >
               </div>
               <p>
-                A GitHub issue-triage agent with a hand-written multi-step tool
-                loop (labeling, duplicate detection, comments, proposed
-                assignees, escalation), with step caps and tool-failure
-                recovery.
+                A GitHub issue-triage agent on a hand-written tool-calling loop
+                that labels, comments, flags duplicates and escalates. It scores
+                39-40/40 on an end-state evaluation that gates every push in
+                GitHub Actions.
               </p>
               <div class="detail-label">// how it's guarded</div>
               <p>
-                Policy is enforced at the tool-call layer, not the prompt:
-                comment deletion is denied outright, and issue closure or
-                assignment requires human approval. Blocked 11 of 12 unsafe
-                or injected actions in testing.
+                AUTO/APPROVE/DENY policy is enforced in code before any API
+                call, backed by a token scoped to one repository's issues. It
+                blocked 12/12 unsafe or injected actions across 3 runs, versus
+                3-5/12 with prompt-only enforcement.
               </p>
               <div class="tag-row">
                 <span class="tag">Python</span>
-                <span class="tag">FastAPI</span>
-                <span class="tag">GitHub API</span>
+                <span class="tag">Gemini API</span>
                 <span class="tag">OpenTelemetry</span>
-                <span class="tag">Docker</span>
                 <span class="tag">GitHub Actions</span>
               </div>
             </div>
@@ -2394,11 +2416,16 @@
                   >GitHub →</a
                 >
               </div>
-              <p>A file-sharing service with time-bound, expiring links.</p>
+              <p>
+                A file-sharing service with JWT authentication and 24-hour
+                expiring links, using Redis TTL for expiry checks, AWS S3 for
+                storage and PostgreSQL for file and link records.
+              </p>
               <div class="detail-label">// design note</div>
               <p>
-                Redis TTL handles instant expiry checks without a background
-                sweep, and AWS S3 handles storage behind a Spring Boot API.
+                Uploads up to 2 GB go directly from the React/TypeScript client
+                to S3 through presigned multipart URLs, keeping large transfers
+                off the Spring Boot server.
               </p>
               <div class="tag-row">
                 <span class="tag">Java</span>
@@ -2409,6 +2436,7 @@
                 <span class="tag">TypeScript</span>
                 <span class="tag">Docker</span>
                 <span class="tag">AWS</span>
+                <span class="tag">JWT</span>
               </div>
             </div>
           </div>
@@ -2441,7 +2469,7 @@
               <dl class="edu-kv">
                 <div><dt>degree</dt><dd>BE, Computer Science</dd></div>
                 <div><dt>school</dt><dd>Anna University</dd></div>
-                <div><dt>cgpa</dt><dd class="acc">8.63 / 10</dd></div>
+                <div><dt>cgpa</dt><dd class="acc">8.6 / 10</dd></div>
               </dl>
             </article>
           </div>
