@@ -556,5 +556,11 @@ not part of the site.
 
 ## Deployment target
 
-- Domain: harishsuresh.dev (GoDaddy, not yet pointed anywhere)
-- Planned host: TBD (Vercel/Netlify/GitHub Pages — ask before assuming one)
+- Domain: harishsuresh.dev, bought on Cloudflare Registrar 2026-09-27 (not
+  GoDaddy). ICANN email verification is due within 14 days of purchase.
+- Host: Cloudflare Workers static assets. `./deploy.sh` copies ONLY the public
+  files into `dist/` (gitignored) and runs `npx wrangler deploy`;
+  `wrangler.jsonc` serves `dist/`, uses `404.html` for missing paths and binds
+  the apex domain as a custom domain. NEVER point the assets directory at the
+  repo root: that would publish Claude.md, tools/ and the hook configs. A new
+  public file must be added to deploy.sh's copy list, or it won't ship.
