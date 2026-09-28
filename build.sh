@@ -6,6 +6,6 @@ set -e
 cd "$(dirname "$0")"
 rm -rf ./dist
 mkdir -p ./dist/assets
-cp index.html 404.html robots.txt sitemap.xml resume.pdf ./dist/
+cp index.html 404.html robots.txt sitemap.xml resume.pdf _headers ./dist/
 cp assets/favicon.svg assets/apple-touch-icon.png assets/avatar.jpg assets/og.png ./dist/assets/
 cp -R assets/fonts ./dist/assets/fonts
