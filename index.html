@@ -807,9 +807,12 @@
         .hero-content {
           align-self: stretch;
         }
-        /* Smaller portrait keeps the CTAs above the fold on a phone. */
+        /* Centred and a little larger: at 130px on the left it sat small
+           and stranded above the text, with the right half of the row empty.
+           Still sized so the CTAs clear the fold on a 360x740 phone. */
         .portrait {
-          width: 130px;
+          width: 160px;
+          align-self: center;
         }
         section {
           padding: 56px 0;

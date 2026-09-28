@@ -71,8 +71,9 @@ not part of the site.
   flat and the pattern stays unmasked. Don't reach for the gradient again.
 - On phones the hero exceeds one screen because the layout stacks. That is
   correct — `min-height` is a floor, not a cap. But the CTAs must stay above
-  the fold, including on a 360x740 Android: the portrait drops to 130px and
-  mobile hero padding is 40/48px. Measure `.cta-row`'s BOTTOM edge against
+  the fold, including on a 360x740 Android: the portrait is 160px and
+  CENTRED on phones (130px on the left read as small and stranded, Harish
+  2026-09-27; 360x740 CTA bottom now 680) and mobile hero padding is 40/48px. Measure `.cta-row`'s BOTTOM edge against
   the viewport height at 390x844 and 360x740 after any hero change.
 - The hero has ONE perpetually moving thing: the cycler. The section
   typewriter and the rotating stack-line underline were REMOVED on 2026-09-24
