@@ -559,9 +559,15 @@ not part of the site.
 - Domain: harishsuresh.dev, bought on Cloudflare Registrar 2026-09-27 (not
   GoDaddy). ICANN email verification is due within 14 days of purchase.
 - LIVE at https://harishsuresh.dev since 2026-09-27 (Worker `harishsuresh-dev`).
-- Host: Cloudflare Workers static assets. `./deploy.sh` copies ONLY the public
-  files into `dist/` (gitignored) and runs `npx wrangler deploy`;
-  `wrangler.jsonc` serves `dist/`, uses `404.html` for missing paths and binds
-  the apex domain as a custom domain. NEVER point the assets directory at the
+- Host: Cloudflare Workers static assets. `build.sh` copies ONLY the public
+  files into `dist/` (gitignored); `wrangler.jsonc` runs it as its build
+  command, so every `npx wrangler deploy` (`./deploy.sh`, or Cloudflare's own
+  build on push) rebuilds it. `404.html` serves missing paths. `worker.js`
+  301s `www.harishsuresh.dev` to the apex with path and query kept; that needs
+  `run_worker_first: true`, or a www request for an existing file would be
+  served without redirecting. Both hostnames are custom domains on the Worker.
+- Source is the PRIVATE repo github.com/harishsureshdev/portfolio (private
+  because Claude.md holds working notes). Auto-deploy is Cloudflare Workers
+  Builds connected to `main`. NEVER point the assets directory at the
   repo root: that would publish Claude.md, tools/ and the hook configs. A new
   public file must be added to deploy.sh's copy list, or it won't ship.

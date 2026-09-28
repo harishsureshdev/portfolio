@@ -1,11 +1,19 @@
 {
-  // Static site on Cloudflare Workers. Only ./dist is uploaded; deploy.sh
-  // builds it from the public files, so notes and tools never go live.
+  // Static site on Cloudflare Workers. Only ./dist is uploaded; build.sh
+  // fills it from the public files, so notes and tools never go live.
   "name": "harishsuresh-dev",
+  "main": "worker.js",
   "compatibility_date": "2026-09-27",
+  "build": { "command": "sh build.sh" },
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // the worker must see www requests before a matching file is served
+    "run_worker_first": true
   },
-  "routes": [{ "pattern": "harishsuresh.dev", "custom_domain": true }]
+  "routes": [
+    { "pattern": "harishsuresh.dev", "custom_domain": true },
+    { "pattern": "www.harishsuresh.dev", "custom_domain": true }
+  ]
 }
