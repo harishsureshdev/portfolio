@@ -867,22 +867,27 @@
       /* Spacing in each word's own em, so large words get proportionally
          more room than small ones; a flat gap crowded the big words. */
       .wall li {
+        --p: 0;
+        --tier: var(--text-dim);
         margin-right: 0.5em;
-        transition: color 0.2s ease;
+        color: color-mix(in srgb, var(--accent) calc(var(--p) * 100%), var(--tier));
+        /* the individual translate property, not transform: the settle-in
+           animation holds transform:none forever with fill-mode both */
+        translate: 0 calc(var(--p) * -3px);
       }
       .wall .t1 {
         font-size: clamp(30px, 4vw, 52px);
         font-weight: 700;
-        color: var(--text);
+        --tier: var(--text);
       }
       .wall .t2 {
         font-size: clamp(19px, 2.2vw, 28px);
         font-weight: 500;
-        color: var(--text-muted);
+        --tier: var(--text-muted);
       }
       .wall .t3 {
         font-size: clamp(14px, 1.4vw, 17px);
-        color: var(--text-dim);
+        --tier: var(--text-dim);
       }
       .wall li:hover {
         color: var(--accent);
@@ -1246,6 +1251,213 @@
         }
         .project-card > p:last-of-type {
           margin-bottom: 0;
+        }
+      }
+
+      /* ---------- pinned horizontal pan for Experience ---------- */
+      /* Progressive enhancement: JS adds .is-pinned only on wide, tall screens
+         with motion allowed. Everywhere else (phones, short windows, reduced
+         motion, no JS) Experience is the ordinary vertical timeline. */
+      .hpin-rail,
+      .hpin-gap {
+        display: none;
+      }
+      .hpin.is-pinned {
+        padding: 0;
+      }
+      .hpin.is-pinned .hpin-sticky {
+        position: sticky;
+        top: var(--header-h);
+        overflow: clip; /* clip, not hidden: focus can never scroll it sideways */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .hpin.is-pinned .wrap {
+        width: 100%;
+      }
+      .hpin.is-pinned h2 {
+        margin-bottom: 6px;
+      }
+      /* The rail is fixed in the frame: a line that fills as you pan, one
+         station per role. */
+      .hpin.is-pinned .hpin-rail {
+        --p: 0;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .hpin-rail::before,
+      .hpin-rail::after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 7px;
+        height: 2px;
+        background: var(--rail);
+      }
+      .hpin-rail::before {
+        right: 7px;
+      }
+      .hpin-rail::after {
+        width: calc((100% - 14px) * var(--p));
+        background: var(--accent);
+      }
+      .hpin-st {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: var(--fs-1);
+        color: var(--text-dim);
+        transition: color 0.25s ease;
+      }
+      .hpin-st:nth-child(2) {
+        align-items: center;
+      }
+      .hpin-st:last-child {
+        align-items: flex-end;
+      }
+      .hpin-st b {
+        font-weight: 500;
+        margin-left: 6px;
+      }
+      .hpin-st i {
+        width: 14px;
+        height: 14px;
+        box-sizing: border-box;
+        border-radius: 50%;
+        border: 2px solid var(--rail);
+        background: var(--band);
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+      }
+      .hpin-st.is-reached i {
+        border-color: var(--accent);
+      }
+      .hpin-st[aria-current="true"] {
+        color: var(--text);
+      }
+      .hpin-st[aria-current="true"] i {
+        background: var(--accent);
+      }
+      .hpin-st:hover {
+        color: var(--text);
+      }
+      .hpin.is-pinned .timeline {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 48px;
+        width: max-content;
+        will-change: transform;
+      }
+      .hpin.is-pinned .timeline-fill {
+        display: none;
+      }
+      .hpin.is-pinned .job {
+        flex: 0 0 auto;
+        width: min(calc(var(--max-w) - 64px), calc(100vw - 64px));
+        padding: 22px 30px 24px;
+        border: 1px solid var(--border);
+        border-top: 2px solid var(--rail);
+        border-radius: var(--radius);
+        background: var(--surface);
+        border-image: none;
+      }
+      .hpin.is-pinned .job.is-current {
+        border-top-color: var(--accent);
+      }
+      /* One screen has to hold the whole card, so the bullets run in two
+         columns and the stack row drops underneath instead of beside. */
+      .hpin.is-pinned .section-sub {
+        display: none;
+      }
+      .hpin.is-pinned .job {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hpin.is-pinned .job > .job-list {
+        display: block; /* columns do not apply to a flex container */
+        column-count: 2;
+        column-gap: 44px;
+      }
+      .hpin.is-pinned .job > .job-id {
+        font-size: clamp(18px, 1.5vw, 22px);
+        margin-bottom: 4px;
+      }
+      .hpin.is-pinned .job > .job-when {
+        margin-bottom: 16px;
+      }
+      .hpin.is-pinned .job > .job-list li {
+        break-inside: avoid;
+        font-size: var(--fs-3);
+        line-height: 1.55;
+        margin-bottom: 10px;
+        max-width: none;
+      }
+      .hpin.is-pinned .job > .tag-row {
+        grid-column: 1;
+        grid-row: auto;
+        margin-top: 12px;
+        padding-top: 0;
+      }
+      .hpin.is-pinned .job > .job-list {
+        margin-bottom: 0;
+      }
+      .hpin.is-pinned .job::before {
+        display: none;
+      }
+      /* the two years between Sify and Heartland, as empty track */
+      .hpin.is-pinned .hpin-gap {
+        flex: 0 0 auto;
+        align-self: stretch;
+        width: 240px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        border-top: 2px dashed var(--rail);
+        padding-top: 18px;
+        font-family: var(--font-mono);
+        font-size: var(--fs-1);
+        color: var(--text-dim);
+      }
+      .hpin-gap strong {
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+
+      /* pointer lens over the skills wall */
+      .wall li:hover {
+        --p: 1;
+      }
+      @media print {
+        .hpin .hpin-runway {
+          height: auto !important;
+        }
+        .hpin .hpin-sticky {
+          position: static !important;
+          height: auto !important;
+          overflow: visible !important;
+        }
+        .hpin .hpin-rail,
+        .hpin .hpin-gap {
+          display: none !important;
+        }
+        .hpin .timeline {
+          flex-direction: column !important;
+          width: auto !important;
+          transform: none !important;
+        }
+        .hpin .job {
+          width: auto !important;
+          opacity: 1 !important;
+          scale: none !important;
         }
       }
 
@@ -2172,11 +2384,18 @@
         </div>
       </section>
 
-      <section class="band" id="experience">
+      <section class="band hpin" id="experience">
+        <div class="hpin-runway" id="hpin-runway">
+          <div class="hpin-sticky" id="hpin-sticky">
         <div class="wrap">
           <h2>Experience</h2>
           <p class="section-sub">Where I've worked, and what I owned</p>
-          <div class="timeline">
+          <div class="hpin-rail" id="hpin-rail" aria-label="Jump to a role">
+            <button type="button" class="hpin-st" aria-current="true"><i></i><span>2026 <b>heartland</b></span></button>
+            <button type="button" class="hpin-st" aria-current="false"><i></i><span>2022 - 2024 <b>sify</b></span></button>
+            <button type="button" class="hpin-st" aria-current="false"><i></i><span>2020 <b>sirius</b></span></button>
+          </div>
+          <div class="timeline" id="hpin-track">
             <article class="job is-current">
               <h3 class="job-id">
                 <span class="job-path"
@@ -2236,6 +2455,10 @@
               </div>
             </article>
 
+            <div class="hpin-gap" aria-hidden="true">
+              <span>// 2024 - 2026</span>
+              <strong>MS CS, Indiana University</strong>
+            </div>
             <article class="job">
               <h3 class="job-id">
                 <span class="job-path"
@@ -2336,6 +2559,8 @@
                 <span class="tag">JWT</span>
               </div>
             </article>
+          </div>
+        </div>
           </div>
         </div>
       </section>
@@ -2843,6 +3068,162 @@
             drawTimeline();
           });
         });
+
+        /* ---- Experience, pinned horizontal pan ---- */
+        var hp = document.getElementById("experience");
+        var hpRunway = document.getElementById("hpin-runway");
+        var hpSticky = document.getElementById("hpin-sticky");
+        var hpTrack = document.getElementById("hpin-track");
+        var hpRail = document.getElementById("hpin-rail");
+        if (hp && hpRunway && hpSticky && hpTrack && hpRail) {
+          var hpPanels = Array.prototype.slice.call(hpTrack.querySelectorAll(".job"));
+          var hpStops = Array.prototype.slice.call(hpRail.querySelectorAll(".hpin-st"));
+          var hpMQ = window.matchMedia("(min-width: 1000px) and (min-height: 700px)");
+          var hpPinned = false;
+          var hpOffsets = [0];
+          var hpTravel = 1;
+          var hpHeader = 77;
+          var hpTicking = false;
+          function hpStart() {
+            return hpRunway.getBoundingClientRect().top + window.scrollY - hpHeader;
+          }
+          function hpProgress() {
+            return Math.max(0, Math.min(1, (window.scrollY - hpStart()) / hpTravel));
+          }
+          /* Cards are not evenly spaced (the study gap sits between two), so
+             progress maps to the track offset piecewise, card to card. */
+          function hpShift(pos) {
+            var i = Math.min(hpPanels.length - 2, Math.floor(pos));
+            i = Math.max(0, i);
+            return hpOffsets[i] + (hpOffsets[i + 1] - hpOffsets[i]) * (pos - i);
+          }
+          function hpUpdate() {
+            hpTicking = false;
+            if (!hpPinned) return;
+            var p = hpProgress();
+            var pos = p * (hpPanels.length - 1);
+            hpTrack.style.transform = "translate3d(" + -hpShift(pos) + "px,0,0)";
+            hpRail.style.setProperty("--p", p.toFixed(4));
+            hpPanels.forEach(function (el, i) {
+              var d = Math.min(1, Math.abs(pos - i));
+              el.style.opacity = (1 - 0.65 * d).toFixed(3);
+              el.style.scale = (1 - 0.04 * d).toFixed(3);
+            });
+            var idx = Math.round(pos);
+            hpStops.forEach(function (t, i) {
+              t.setAttribute("aria-current", i === idx ? "true" : "false");
+              t.classList.toggle("is-reached", pos >= i - 0.02);
+            });
+          }
+          function hpUnpin() {
+            hp.classList.remove("is-pinned");
+            hpPinned = false;
+            hpRunway.style.height = "";
+            hpSticky.style.height = "";
+            hpTrack.style.transform = "";
+            hpPanels.forEach(function (el) {
+              el.style.opacity = "";
+              el.style.scale = "";
+            });
+          }
+          function hpLayout() {
+            if (!hpMQ.matches || reduced) {
+              if (hpPinned) hpUnpin();
+              return;
+            }
+            var hdr = document.querySelector("header");
+            hpHeader = hdr ? hdr.getBoundingClientRect().height : 77;
+            hp.classList.add("is-pinned");
+            hpPinned = true;
+            var stickyH = window.innerHeight - hpHeader;
+            hpSticky.style.height = stickyH + "px";
+            hpTrack.style.transform = "none";
+            var x0 = hpPanels[0].offsetLeft;
+            hpOffsets = hpPanels.map(function (el) {
+              return el.offsetLeft - x0;
+            });
+            hpTravel = Math.max(1, hpOffsets[hpOffsets.length - 1]);
+            hpRunway.style.height = stickyH + hpTravel + "px";
+            /* If the tallest card plus header cannot fit one screen, a pinned
+               frame would clip it: fall back to the plain vertical timeline. */
+            if (hpSticky.firstElementChild.offsetHeight > stickyH) {
+              hpUnpin();
+              return;
+            }
+            hpUpdate();
+          }
+          function hpGoTo(i, smooth) {
+            window.scrollTo({
+              top: hpStart() + hpTravel * (i / (hpPanels.length - 1)),
+              /* "auto" would inherit the site's scroll-behavior: smooth, so a
+                 focus jump would glide instead of landing; say "instant". */
+              behavior: smooth && !reduced ? "smooth" : "instant"
+            });
+          }
+          hpStops.forEach(function (t, i) {
+            t.addEventListener("click", function () {
+              hpGoTo(i, true);
+            });
+          });
+          /* A keyboard user tabbing into an off-screen card must bring it in. */
+          hpTrack.addEventListener("focusin", function (e) {
+            if (!hpPinned) return;
+            var i = hpPanels.indexOf(e.target.closest(".job"));
+            if (i < 0) return;
+            if (Math.abs(hpProgress() * (hpPanels.length - 1) - i) > 0.5) hpGoTo(i, false);
+          });
+          window.addEventListener(
+            "scroll",
+            function () {
+              if (hpPinned && !hpTicking) {
+                hpTicking = true;
+                requestAnimationFrame(hpUpdate);
+              }
+            },
+            { passive: true }
+          );
+          window.addEventListener("resize", hpLayout);
+          if (hpMQ.addEventListener) hpMQ.addEventListener("change", hpLayout);
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(hpLayout);
+          window.addEventListener("load", hpLayout);
+          hpLayout();
+        }
+
+        /* ---- a lens over the skills wall (fine pointers only) ---- */
+        var lensWall = document.querySelector(".wall");
+        if (
+          lensWall &&
+          !reduced &&
+          window.matchMedia("(hover: hover) and (pointer: fine)").matches
+        ) {
+          var lensItems = Array.prototype.slice.call(lensWall.children);
+          var lensX = -9999;
+          var lensY = -9999;
+          var lensTicking = false;
+          function lensPaint() {
+            lensTicking = false;
+            lensItems.forEach(function (li) {
+              var r = li.getBoundingClientRect();
+              var dx = lensX - (r.left + r.width / 2);
+              var dy = lensY - (r.top + r.height / 2);
+              var p = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy) / 150);
+              li.style.setProperty("--p", (p * p).toFixed(3));
+            });
+          }
+          lensWall.addEventListener("pointermove", function (e) {
+            lensX = e.clientX;
+            lensY = e.clientY;
+            if (!lensTicking) {
+              lensTicking = true;
+              requestAnimationFrame(lensPaint);
+            }
+          });
+          lensWall.addEventListener("pointerleave", function () {
+            lensItems.forEach(function (li) {
+              li.style.removeProperty("--p");
+            });
+          });
+        }
 
         /* ---- Copy email ---- */
         var copyBtn = document.getElementById("copy-email");

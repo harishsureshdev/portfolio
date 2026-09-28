@@ -172,6 +172,28 @@ not part of the site.
   old rail was `--border-strong` at 1.6:1 — invisible — which left past roles
   indented for no visible reason. `--rail` is #66625A dark / #8F8676 light,
   ~3:1 on the band.
+- EXPERIENCE PANS SIDEWAYS (2026-09-27, Harish asked for "horizontal scroll or
+  something lively"; he had rejected a static Warden diagram). `#experience` is
+  `.hpin`: a tall `.hpin-runway` holding a `position: sticky` `.hpin-sticky`,
+  and JS drives the `.timeline` track with `translate3d` from scroll progress.
+  Newest role on the left. A fixed rail with three stations (heartland, sify,
+  sirius) fills as you pan and its dots are buttons that jump to a role; a
+  dashed `.hpin-gap` marks 2024-2026 (MS CS). Cards get two-column bullets and
+  the stack row underneath, at 14px, because a card plus header has to fit one
+  screen. Progressive enhancement: JS adds `.is-pinned` only at
+  `(min-width:1000px) and (min-height:700px)` with motion allowed, and UNPINS
+  again if the tallest card plus header does not fit the sticky frame (about
+  675px of usable height). Everywhere else, the vertical self-drawing timeline
+  and the phone collapse buttons above are what shows, unchanged. Focus moving
+  into an off-screen card scrolls it in (`behavior: "instant"`, since "auto"
+  inherits `scroll-behavior: smooth`). Cards are unevenly spaced, so progress
+  maps to the track offset piecewise. Projects stay a normal vertical stack; a
+  pan needs richer cards than three thin ones. A Warden "policy gate" animation
+  was prototyped and cut until Harish's project content exists.
+- The skills wall has a pointer lens: `--p` (0..1) per word, set from cursor
+  distance (150px), mixes the tier colour toward the accent with `color-mix()`
+  and lifts the word 3px with the individual `translate` property (not
+  `transform`, which the settle-in animation holds). Fine pointers only.
 - At >=1000px each `.job` is a grid: bullets hold their 74ch column on the
   left and the tag row takes the right column under a CSS-generated
   `// stack` label, filling the space the measure cap used to leave empty.
