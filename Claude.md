@@ -123,9 +123,12 @@ not part of the site.
 - The hero meta line ALWAYS breaks after "relocation" (its `.wrap-here` rule
   applies at every width, not just phones), so it's two lines everywhere:
   "San Jose, CA · open to relocation" / "MS CS, Indiana University".
-- On phones the badge drops its `.badge-role` ("software engineer, ") so it
-  reads "// 2+ yrs · open to SDE roles" on one line; the full badge wrapped as
-  "open to / SDE roles".
+- The badge always says what the years ARE: "2+ yrs experience". Bare
+  "2+ yrs · open to SDE roles" read as two years of job hunting (Harish,
+  2026-09-27). Widths, all one line: >=820 "// software engineer, 2+ yrs
+  experience · open to SDE roles"; 760-819 the same with "exp"; <=759 drops
+  `.badge-role` too: "// 2+ yrs exp · open to SDE roles". `.badge-short`
+  ("exp") is aria-hidden and whoami strips it. 320px wraps; accepted.
 - Under the forced line break (<=480px) `.hero-meta` uses
   `row-gap: 0`. The `.wrap-here` element is its own zero-height flex line, so
   it collected a row gap on both sides and every wrap got double spacing; a

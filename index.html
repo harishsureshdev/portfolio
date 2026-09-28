@@ -660,7 +660,23 @@
       }
       /* Phones: the full badge wrapped to two lines ("open to / SDE roles").
          The role is the least needed part — the name and lines below say it. */
-      @media (max-width: 680px) {
+      /* "2+ yrs" alone next to "open to SDE roles" read as two years of job
+         hunting, so the years always name what they are: "experience", or
+         "exp" where the full word would wrap the badge. */
+      .badge-short {
+        display: none;
+      }
+      /* the full word wraps the badge below ~800px (measured 2026-09-27) */
+      @media (max-width: 819px) {
+        .badge-long {
+          display: none;
+        }
+        .badge-short {
+          display: inline;
+        }
+      }
+      /* and with the role it wraps below 760px (it already did at 681-700) */
+      @media (max-width: 759px) {
         .badge-role {
           display: none;
         }
@@ -2265,7 +2281,7 @@
             </div>
             <div class="hero-content">
               <div class="hero-badge">
-                // <span class="badge-role">software engineer, </span>2+ yrs · open to SDE roles
+                // <span class="badge-role">software engineer, </span>2+ yrs <span class="badge-long">experience</span><span class="badge-short" aria-hidden="true">exp</span> · open to SDE roles
               </div>
               <h1>Harish Suresh</h1>
               <div class="hero-meta">
@@ -3532,7 +3548,12 @@
               var meta = document.querySelector(".hero-meta");
               var wallCore = document.querySelectorAll(".wall .t1");
               w([[clean(h1 && (h1.getAttribute("aria-label") || h1.textContent)), "big"]]);
-              if (badge) w([[clean(badge.textContent).replace(/^\/\/\s*/, ""), "acc"]]);
+              if (badge) {
+                /* the short phone form is a visual duplicate; drop it */
+                var bc = badge.cloneNode(true);
+                bc.querySelectorAll(".badge-short").forEach(function (e) { e.remove(); });
+                w([[clean(bc.textContent).replace(/^\/\/\s*/, ""), "acc"]]);
+              }
               /* Join the row items explicitly: textContent drops the spacing
                  the flex layout adds around the separators. */
               function items(el, skip) {
