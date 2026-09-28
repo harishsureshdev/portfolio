@@ -736,6 +736,14 @@
         gap: 12px;
         flex-wrap: wrap;
       }
+      /* Phones: the two buttons share the row edge to edge, so the pair sits
+         centred between the gutters instead of hanging left with a gap. */
+      @media (max-width: 480px) {
+        .hero .cta-row .btn {
+          flex: 1 1 auto;
+          text-align: center;
+        }
+      }
       @media (min-width: 1100px) {
         .hero .cta-row .btn {
           font-size: var(--fs-4);
@@ -794,6 +802,10 @@
         .hero-inner {
           flex-direction: column;
           align-items: flex-start;
+        }
+        /* full row width, so the CTA pair can span it */
+        .hero-content {
+          align-self: stretch;
         }
         /* Smaller portrait keeps the CTAs above the fold on a phone. */
         .portrait {
@@ -1240,7 +1252,7 @@
       /* ---------- Education ---------- */
       .edu-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
         gap: 16px;
       }
       /* Education reads as files, like Experience: a path title, a //
@@ -1310,7 +1322,7 @@
          a 1120px wrap read as fallen to one side. */
       .contact-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
         gap: 16px;
       }
       .terminal {
@@ -1342,7 +1354,7 @@
         gap: 12px;
       }
       .terminal-addr > span {
-        word-break: break-all;
+        overflow-wrap: anywhere;
       }
       .copy-btn {
         font-family: var(--font-mono);
@@ -1377,9 +1389,10 @@
       }
       .link-row {
         display: flex;
+        flex-wrap: wrap;
         align-items: baseline;
         justify-content: space-between;
-        gap: 14px;
+        gap: 2px 14px;
         padding: 11px 0;
         border-bottom: 1px solid var(--border);
         font-family: var(--font-mono);
@@ -1392,6 +1405,8 @@
         padding-bottom: 0;
       }
       .link-row .meta {
+        margin-left: auto;
+        overflow-wrap: anywhere;
         font-size: var(--fs-1);
         color: var(--text-dim);
         transition: color 0.15s ease;
@@ -1781,6 +1796,12 @@
         .link-row {
           padding: 14px 0;
           gap: 10px;
+        }
+        /* The address is 33 monospace characters: size it to the pane so it
+           fits on one line instead of breaking mid-word. The pane's inner
+           width is 100vw - 76px. */
+        .terminal-addr > span {
+          font-size: clamp(12px, calc(5vw - 4.5px), var(--fs-5));
         }
         .nav-mark {
           padding: 10px 0;

@@ -236,6 +236,13 @@ not part of the site.
   `<details>` because details would break the >=1000px `.job` grid. The
   390px page went from ~10,000px to ~7,300px.
 - Phones (<=680px) get tighter Beyond-the-stack and project-card padding.
+- Narrow-phone fit (2026-09-27): the `.contact-grid` and `.edu-grid` columns use
+  `minmax(min(Npx, 100%), 1fr)`, because a bare 330/340px minimum overflowed
+  the right gutter below ~370px wide. On <=480px the hero CTA pair spans the row
+  (`flex: 1 1 auto`, and `.hero-content` stretches in the column layout), and the
+  contact email is sized to the pane (`clamp(12px, 5vw - 4.5px, --fs-5)`) so its
+  33 characters never break mid-word. Link rows wrap, so the LinkedIn handle
+  drops under its label instead of overflowing.
 - Tap targets on phones are enlarged with invisible `::after` hit areas
   (icons, copy) and padding/negative-margin pairs (project
   links, footer and nav marks) so every visible control reaches ~44px without
