@@ -558,6 +558,7 @@ not part of the site.
 
 - Domain: harishsuresh.dev, bought on Cloudflare Registrar 2026-09-27 (not
   GoDaddy). ICANN email verification is due within 14 days of purchase.
+- LIVE at https://harishsuresh.dev since 2026-09-27 (Worker `harishsuresh-dev`).
 - Host: Cloudflare Workers static assets. `./deploy.sh` copies ONLY the public
   files into `dist/` (gitignored) and runs `npx wrangler deploy`;
   `wrangler.jsonc` serves `dist/`, uses `404.html` for missing paths and binds
