@@ -2120,14 +2120,21 @@
         .wall .t3 {
           font-size: 10pt;
         }
-        .job,
+        /* Jobs may split between bullets: kept whole, each tall job took a
+           page of its own and left the page before it nearly empty. */
+        .job-list li,
+        .tag-row,
         .project-card,
         .edu-card,
         .beyond-item,
         .terminal {
           break-inside: avoid;
         }
-        h2 {
+        h2,
+        .section-sub,
+        .job-id,
+        .job-when,
+        .job-list li:last-child {
           break-after: avoid;
         }
         /* a printed link needs its address */

@@ -552,7 +552,7 @@ not part of the site.
   `:root:not([data-theme="dark"])`), no nav/portrait/effects/buttons, the
   cycler replaced by its static sentence, every job expanded, entrance
   animations forced visible (a printer never plays them, and the hero once
-  printed EMPTY), nothing split across a page break. Six A4/Letter pages.
+  printed EMPTY), no card, bullet or tag row split across a page break (jobs themselves MAY split between bullets: kept whole, each tall job took its own page and printing ran to 8 pages), and headings, sub-lines and job titles never end a page. Seven Letter pages as of 2026-09-27.
 
 ## Deployment target
 
