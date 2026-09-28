@@ -1,3 +1,11 @@
 .DS_Store
 dist/
 .wrangler/
+# Local only: editor/agent config, working notes, unused images
+.codex/
+.cursor/
+.impeccable/
+Claude.md
+CLAUDE.md
+assets/au.png
+assets/iu.png
