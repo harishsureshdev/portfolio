@@ -2575,7 +2575,7 @@
                 <h3 class="proj-path"><span class="org">warden</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
                   class="project-link"
-                  href="https://github.com/harishsureshdev"
+                  href="https://github.com/harishsureshdev/github-triage-agent"
                   target="_blank"
                   rel="noopener"
                   >GitHub →</a
@@ -2594,6 +2594,14 @@
                 blocked 12/12 unsafe or injected actions across 3 runs, versus
                 3-5/12 with prompt-only enforcement.
               </p>
+              <div class="detail-label">// what the eval showed</div>
+              <p>
+                With the policy layer off, the same agent closed or assigned
+                real issues on 5-6 of 6 direct requests and went along with 2-3
+                of 6 disguised injections. The 12/12 holds by construction, so
+                the comparison measures the enforcement, not the model's
+                restraint.
+              </p>
               <div class="tag-row">
                 <span class="tag">Python</span>
                 <span class="tag">Gemini API</span>
@@ -2604,10 +2612,10 @@
 
             <div class="project-card">
               <div class="project-head">
-                <h3 class="proj-path"><span class="org">home-credit-default-risk</span>/<wbr />README<span class="ext">.md</span></h3>
+                <h3 class="proj-path"><span class="org">home-credit-default-analysis</span>/<wbr />README<span class="ext">.md</span></h3>
                 <a
                   class="project-link"
-                  href="https://github.com/harishsureshdev"
+                  href="https://github.com/harishsureshdev/home-credit-default-analysis"
                   target="_blank"
                   rel="noopener"
                   >GitHub →</a
@@ -2620,8 +2628,10 @@
               <div class="detail-label">// approach</div>
               <p>
                 Engineered features across seven relational tables, then
-                compared logistic regression, random forest and a PyTorch
-                deep neural network: 0.73 AUC, top 40% of the leaderboard.
+                compared logistic regression, random forest, a decision tree
+                and a PyTorch neural network. Tuned logistic regression scored
+                best at 0.734 on Kaggle (top 40% of the leaderboard), ahead of
+                the neural network's 0.728.
               </p>
               <div class="tag-row">
                 <span class="tag">Python</span>

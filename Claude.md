@@ -307,7 +307,7 @@ not part of the site.
   the visible page, since a "no" joke on a hiring page can read as arrogant. The nav button stays visible at
   every width.
 - Projects read as repos (2026-09-27): each title is a README path
-  (`warden/README.md`, `home-credit-default-risk/README.md`,
+  (`warden/README.md`, `home-credit-default-analysis/README.md`,
   `snapsend/README.md`) with a `<wbr>` after the slash so the long one breaks
   there on phones. At >=1000px the tags move into a right "// stack" rail,
   same pattern as `.job`. The terminal's project keys split on "/" so
@@ -450,8 +450,14 @@ not part of the site.
   resume has on each project is now on the page, so there is nothing left to
   import — more depth (architecture, trade-offs) has to be written by Harish.
   Don't invent it.
-- All three projects link to `github.com/harishsureshdev`, the profile, not to
-  per-project repos. Harish still owes the specific repo URLs.
+- Warden links to `github-triage-agent` and Home Credit to
+  `home-credit-default-analysis` (2026-09-27). SnapSend still links to the
+  profile; Harish owes that repo URL. The HCDR repo is one notebook with no
+  README and reads as a course project ("our" team write-up): its best model
+  was tuned logistic regression at 0.734 (top 40%), ahead of the PyTorch MLP at
+  0.728, which the card now says. Whether to label it a course/team project is
+  Harish's call. The Warden card's "what the eval showed" paragraph comes from
+  that repo's README, including its own caveat that 12/12 holds by construction.
 - Analytics is NOT wired up. Cloudflare Web Analytics / Umami both need a site
   token from Harish's own account, so it can't be added unattended. If the site
   lands on Cloudflare Pages it's a dashboard toggle and needs no code at all.
