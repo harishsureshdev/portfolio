@@ -249,6 +249,14 @@ not part of the site.
 - Cursor spotlight: `.hb-hot` is a second dot grid in `--hero-dot-hot`,
   masked to a 220px circle at `--mx/--my`, only under
   `(hover: hover) and (pointer: fine)`.
+- The light palette declares `color-scheme: only light` (index.html AND
+  404.html). Plain `light` let Chrome's Android auto dark mode (and similar
+  browser dark modes) re-darken the light theme into a muddy dark page, so the
+  toggle looked broken on Harish's phone (2026-09-27); the dark theme escaped
+  only because it declares `dark`. Reproduce in headless with
+  `--enable-features=WebContentsForceDark --force-dark-mode`. `syncToggle()`
+  also sets `meta[name=theme-color]` from `--bg`, so the phone's address bar
+  follows the theme.
 - `--selection` and `--hero-dot-hot` are tokens in both palettes; text
   selection, scrollbar and the palette caret/focus are themed from them.
 - On phones (<=680px) EVERY job collapses to title and dates behind a

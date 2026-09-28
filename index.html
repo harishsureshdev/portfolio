@@ -198,7 +198,7 @@
           --accent-soft: rgba(26, 98, 56, 0.09);
           --accent-line: rgba(26, 98, 56, 0.3);
           --hero-dot: rgba(0, 0, 0, 0.32);
-          color-scheme: light;
+          color-scheme: only light; /* "only": stops Chrome auto dark mode re-darkening it */
         }
       }
 
@@ -222,7 +222,7 @@
         --accent-soft: rgba(26, 98, 56, 0.09);
         --accent-line: rgba(26, 98, 56, 0.3);
         --hero-dot: rgba(0, 0, 0, 0.32);
-        color-scheme: light;
+        color-scheme: only light; /* "only": stops Chrome auto dark mode re-darkening it */
       }
 
       * {
@@ -2840,8 +2840,15 @@
           if (t === "light" || t === "dark") return t;
           return lightQuery.matches ? "light" : "dark";
         }
+        /* The phone's address bar follows the theme, not just the page. */
+        var themeMeta = document.querySelector('meta[name="theme-color"]');
         function syncToggle() {
           var r = resolvedTheme();
+          if (themeMeta)
+            themeMeta.setAttribute(
+              "content",
+              getComputedStyle(root).getPropertyValue("--bg").trim()
+            );
           btn.classList.toggle("is-light", r === "light");
           btn.classList.toggle("is-dark", r === "dark");
           btn.setAttribute(
