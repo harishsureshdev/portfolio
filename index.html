@@ -668,8 +668,15 @@
       }
       /* the full word wraps the badge below ~800px (measured 2026-09-27) */
       @media (max-width: 819px) {
+        /* visually hidden, not display:none, so screen readers still hear
+           "experience" (the visible "exp" is aria-hidden) */
         .badge-long {
-          display: none;
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip: rect(0 0 0 0);
+          white-space: nowrap;
         }
         .badge-short {
           display: inline;
